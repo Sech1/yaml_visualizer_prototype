@@ -1,0 +1,14 @@
+# namespace:
+# - kind: Cluster
+#   group: cluster.x-k8s.io
+#   version: v1alpha3
+#   path: spec/infrastructureRef/namespace
+#   create: true
+ 
+nameReference:
+- kind: Cluster
+  fieldSpecs:
+  - kind: BareMetalCluster
+    group: cluster.x-k8s.io
+    version: v1alpha3
+    path: spec/infrastructureRef
