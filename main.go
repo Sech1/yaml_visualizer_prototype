@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -14,6 +17,12 @@ type BindFile struct {
 	Name  string                `form:"name" binding:"required"`
 	Email string                `form:"email" binding:"required"`
 	File  *multipart.FileHeader `form:"file" binding:"required"`
+}
+
+type JsonData struct {
+	Name string
+	Included bool
+	ParentObjects []interface{}
 }
 
 func check(e error) {
@@ -40,11 +49,25 @@ func main() {
 	fmt.Println(err)
 
 	// Read all yaml files into an array
-	var strArray []string
+	var yamlArray []interface{}
 	for i, v := range yamlFiles {
-		readFile(v, &strArray)
-		fmt.Println(strArray[i])
+		readYaml(v, &yamlArray)
+		fmt.Println(yamlArray[i])
 	}
+	router.GET("/graphJson", func(c *gin.Context) {
+		// You also can use a struct
+		var msg struct {
+			Name    string `json:"user"`
+			Message string
+			Number  int
+		}
+		msg.Name = "Lena"
+		msg.Message = "hey"
+		msg.Number = 123
+		// Note that msg.Name becomes "user" in the JSON
+		// Will output  :   {"user": "Lena", "Message": "hey", "Number": 123}
+		c.JSON(http.StatusOK, msg)
+	})
 	router.POST("/upload", func(c *gin.Context) {
 		var bindFile BindFile
 
@@ -96,4 +119,39 @@ func readFile(filePath string, yaml *[]string) {
 		return
 	}
 	*yaml = append(*yaml, string(data))
+}
+
+func readYaml(filePath string, yamlArray *[]interface{}) {
+
+	yamlFile, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		log.Printf("yamlFile.Get err   #%v ", err)
+	}
+	var body interface{}
+	if err := yaml.Unmarshal(yamlFile, &body); err != nil {
+		panic(err)
+	}
+	body = convert(body)
+	if b, err := json.Marshal(body); err != nil {
+		panic(err)
+	} else {
+		fmt.Printf("Output: %s\n", b)
+	}
+	*yamlArray = append(*yamlArray, &body)
+}
+
+func convert(i interface{}) interface{} {
+	switch x := i.(type) {
+	case map[interface{}]interface{}:
+		m2 := map[string]interface{}{}
+		for k, v := range x {
+			m2[k.(string)] = convert(v)
+		}
+		return m2
+	case []interface{}:
+		for i, v := range x {
+			x[i] = convert(v)
+		}
+	}
+	return i
 }
