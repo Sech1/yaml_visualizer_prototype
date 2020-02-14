@@ -55,7 +55,7 @@ func main() {
 		// Read all yaml files into an array
 		var yamlArray []interface{}
 		for i, v := range yamlFiles {
-			yamlArray = readYaml(v, yamlArray)
+			yamlArray = ReadYaml(v, yamlArray)
 			fmt.Println(yamlArray[i])
 		}
 		msg := ReturnGraphJson(yamlArray)
@@ -140,7 +140,7 @@ func readFile(filePath string, yaml *[]string) {
 	*yaml = append(*yaml, string(data))
 }
 
-func readYaml(filePath string, yamlArray []interface{}) []interface{} {
+func ReadYaml(filePath string, yamlArray []interface{}) []interface{} {
 	yamlFile, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
