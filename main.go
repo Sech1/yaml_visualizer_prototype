@@ -20,9 +20,13 @@ type BindFile struct {
 }
 
 type JsonData struct {
+	Name          string          `json:"name"`
+	Included      bool            `json:"included"`
+	ParentObjects []ParentObjects `json:"parentObjects"`
+}
+
+type ParentObjects struct {
 	Name string
-	Included bool
-	ParentObjects []interface{}
 }
 
 func check(e error) {
@@ -35,39 +39,29 @@ func main() {
 	router := gin.Default()
 	// Set a lower memory limit for multipart forms (default is 32 MiB)
 	router.MaxMultipartMemory = 8 << 20 // 8 MiB
-	router.Static("/", "./public")
+	router.Static("/index", "./public")
 
 	// Get current working directory
 	myDir, err := os.Getwd()
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(myDir)
-	// Return list of all yaml file locations
-	yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "*.yaml")
-	fmt.Println(yamlFiles)
-	fmt.Println(err)
 
-	// Read all yaml files into an array
-	var yamlArray []interface{}
-	for i, v := range yamlFiles {
-		readYaml(v, &yamlArray)
-		fmt.Println(yamlArray[i])
-	}
-	router.GET("/graphJson", func(c *gin.Context) {
-		// You also can use a struct
-		var msg struct {
-			Name    string `json:"user"`
-			Message string
-			Number  int
+	router.GET("/api", func(c *gin.Context) {
+		// Return list of all yaml file locations
+		yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "*.yaml")
+		fmt.Println(err)
+
+		// Read all yaml files into an array
+		var yamlArray []interface{}
+		for i, v := range yamlFiles {
+			yamlArray = readYaml(v, yamlArray)
+			fmt.Println(yamlArray[i])
 		}
-		msg.Name = "Lena"
-		msg.Message = "hey"
-		msg.Number = 123
-		// Note that msg.Name becomes "user" in the JSON
-		// Will output  :   {"user": "Lena", "Message": "hey", "Number": 123}
-		c.JSON(http.StatusOK, msg)
+		msg := ReturnGraphJson(yamlArray)
+		c.JSON(http.StatusOK, string(msg))
 	})
+
 	router.POST("/upload", func(c *gin.Context) {
 		var bindFile BindFile
 
@@ -88,6 +82,31 @@ func main() {
 		c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully with fields name=%s and email=%s.", file.Filename, bindFile.Name, bindFile.Email))
 	})
 	router.Run(":8080")
+}
+
+func ReturnGraphJson(yamlArray []interface{}) []byte {
+	var jsonData []JsonData
+	for i, v := range yamlArray {
+		log.Printf("Processing Yaml # %d", i)
+		log.Printf(" [x] Pulled JSON: %s", v)
+		//test := .(map[string]interface{})["metadata"].(map[string]interface{})["name"]
+		if v != nil {
+			if val, ok := v.(map[string]interface{})["metadata"]; ok {
+				var newNode JsonData
+				if valObj, ok := val.(map[string]interface{}); ok {
+					newNode.Name = valObj["name"].(string)
+					newNode.Included = true
+					newNode.ParentObjects = []ParentObjects{}
+					jsonData = append(jsonData, newNode)
+				}
+			}
+		}
+	}
+	returnArray, err := json.Marshal(jsonData)
+	if err != nil {
+		log.Println(err)
+	}
+	return returnArray
 }
 
 func WalkMatch(root, pattern string) ([]string, error) {
@@ -121,8 +140,7 @@ func readFile(filePath string, yaml *[]string) {
 	*yaml = append(*yaml, string(data))
 }
 
-func readYaml(filePath string, yamlArray *[]interface{}) {
-
+func readYaml(filePath string, yamlArray []interface{}) []interface{} {
 	yamlFile, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
@@ -137,7 +155,8 @@ func readYaml(filePath string, yamlArray *[]interface{}) {
 	} else {
 		fmt.Printf("Output: %s\n", b)
 	}
-	*yamlArray = append(*yamlArray, &body)
+	yamlArray = append(yamlArray, body)
+	return yamlArray
 }
 
 func convert(i interface{}) interface{} {
