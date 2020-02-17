@@ -7,7 +7,8 @@ function loadGraph() {
         url: "/api",
         success: function (json) {
             data = atob(json);
-            main($("#graphContainer"));
+            //main($("#graphContainer"));
+            $("#json-text-container").val(data);
         },
         error: function (error) {
             alert(error);
