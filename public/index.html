@@ -1,12 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!-- Sets the basepath for the library if not in same directory -->
+    <script type="text/javascript">
+        mxBasePath = 'mxGraph/src';
+    </script>
     <meta charset="utf-8">
     <title>YAML Visualizer Prototype</title>
 </head>
 <body>
 <h1>Yaml Graph</h1>
-<div id="yaml-graph-container"></div>
+<!-- Creates a container for the graph with a grid wallpaper -->
+<div id="graphContainer"
+     style="overflow:hidden;width:400px;height:400px;background:url('https://jgraph.github.io/mxgraph/javascript/examples/editors/images/grid.gif')">
+</div>
 </body>
 
 <script src="jquery-3.4.1.min.js"></script>
