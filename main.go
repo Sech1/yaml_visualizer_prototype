@@ -35,6 +35,8 @@ func check(e error) {
 	}
 }
 
+const Debug = false
+
 func main() {
 	router := gin.Default()
 	// Set a lower memory limit for multipart forms (default is 32 MiB)
@@ -81,7 +83,11 @@ func main() {
 
 		c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully with fields name=%s and email=%s.", file.Filename, bindFile.Name, bindFile.Email))
 	})
-	router.Run(":8080")
+	if Debug {
+		router.RunTLS(":8080", "cert.pem", "privkey.pem")
+	} else {
+		router.Run(":8080")
+	}
 }
 
 func ReturnGraphJson(yamlArray []interface{}) []byte {
