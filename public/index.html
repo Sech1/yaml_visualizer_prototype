@@ -2,14 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>File binding</title>
+    <title>YAML Visualizer Prototype</title>
 </head>
 <body>
-<h1>Bind file with fields</h1>
-<form action="/upload" method="post" enctype="multipart/form-data">
-    Name: <input type="text" name="name"><br>
-    Email: <input type="email" name="email"><br>
-    File: <input type="file" name="file"><br><br>
-    <input type="submit" value="Submit">
-</form>
+<h1>Yaml Graph</h1>
+<div id="yaml-graph-container"></div>
 </body>
+
+<script src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="mxGraph/mxClient.min.js"></script>
+<script type="text/javascript" src="graph.js"></script>
+
+<script>
+   $(function(){
+       loadGraph();
+   });
+</script>
