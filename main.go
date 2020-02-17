@@ -84,9 +84,9 @@ func main() {
 		c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully with fields name=%s and email=%s.", file.Filename, bindFile.Name, bindFile.Email))
 	})
 	if Debug {
-		router.RunTLS(":8080", "cert.pem", "privkey.pem")
-	} else {
 		router.Run(":8080")
+	} else {
+		router.RunTLS(":8080", "cert.pem", "privkey.pem")
 	}
 }
 
