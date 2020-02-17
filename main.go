@@ -59,7 +59,7 @@ func main() {
 			fmt.Println(yamlArray[i])
 		}
 		msg := ReturnGraphJson(yamlArray)
-		c.JSON(http.StatusOK, string(msg))
+		c.JSON(http.StatusOK, msg)
 	})
 
 	router.POST("/upload", func(c *gin.Context) {
