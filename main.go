@@ -40,7 +40,7 @@ func main() {
 	if os.Args[1] == "-d" {
 		debug = true
 	} else if os.Args[1] == "-p" {
-		debug = true
+		debug = false
 	}
 
 	router := gin.Default()
