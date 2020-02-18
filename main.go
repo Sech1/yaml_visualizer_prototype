@@ -39,6 +39,8 @@ func main() {
 	var debug = false
 	if os.Args[1] == "-d" {
 		debug = true
+	} else if os.Args[1] == "-p" {
+		debug = true
 	}
 
 	router := gin.Default()
