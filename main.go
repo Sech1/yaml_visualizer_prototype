@@ -86,7 +86,7 @@ func main() {
 	if Debug {
 		router.Run(":8080")
 	} else {
-		router.RunTLS(":8080", "cert.pem", "privkey.pem")
+		router.RunTLS(":8080", "/server_keys/cert.pem", "/server_keys/privkey.pem")
 	}
 }
 
