@@ -6,9 +6,11 @@ function loadGraph() {
         type: "GET",
         url: "/api",
         success: function (json) {
-            data = atob(json);
-            //main($("#graphContainer"));
-            $("#json-text-container").val(data);
+            data = JSON.parse(atob(json));
+            console.log(data);
+            let div = document.getElementById("graphContainer");
+            main(div);
+            $("#json-text-container").val(JSON.stringify(data));
         },
         error: function (error) {
             alert(error);
@@ -50,7 +52,7 @@ function main(container)
                 var name = element.name;
                 // create graph element
                 var graphElement = graph.insertVertex(parent, null,
-                    name, 20, 20, 80, 30);
+                    name, 20, 20, 150, 30);
                 // check if any parent element
                 if(element.parentObjects.length > 0) {
                     // run through each parent element
@@ -74,7 +76,7 @@ function main(container)
 
             // Creates a layout algorithm to be used
             // with the graph
-            var layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
+            var layout = new mxStackLayout(graph, true);
 
             // Moves stuff wider apart than usual
             layout.forceConstant = 140;
