@@ -13,4 +13,9 @@ This project should be put in $GOPATH/src
 > cd yaml_visualizer_prototype <br>
 > go run main.go <br>
 
+ To run the graph server in debug mode type:
+ > go run main.go -d 
+
+To run the graph server in production mode type:
+> go run main.go -p
  
