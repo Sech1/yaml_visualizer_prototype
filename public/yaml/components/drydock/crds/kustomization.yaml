@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./DrydockBaremetalNode.yaml
+- ./DrydockBootAction.yaml
+- ./DrydockHardwareProfile.yaml
+- ./DrydockHostProfile.yaml
+- ./DrydockNetworkLink.yaml
+- ./DrydockNetwork.yaml
+- ./DrydockRack.yaml
+- ./DrydockRegion.yaml

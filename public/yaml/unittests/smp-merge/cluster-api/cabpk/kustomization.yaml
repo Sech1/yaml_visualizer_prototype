@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: cabpk-system
+
+namePrefix: cabpk-
+
+commonLabels:
+   control-plane: cabpk-controller-manager
+
+resources:
+- ./bootstrap-components.yaml

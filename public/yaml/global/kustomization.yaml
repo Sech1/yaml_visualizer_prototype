@@ -1,0 +1,25 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./common
+
+- ./software/charts/ucp/core/postgresql.yaml
+- ./software/charts/ucp/core/chart-group.yaml
+- ./software/charts/ucp/core/rabbitmq.yaml
+- ./software/charts/ucp/core/ingress.yaml
+- ./software/charts/ucp/core/mariadb.yaml
+- ./software/charts/ucp/keystone/memcached.yaml
+- ./software/charts/ucp/keystone/keystone.yaml
+- ./software/charts/ucp/keystone/chart-group.yaml
+- ./software/charts/osh/openstack-keystone/keystone.yaml
+- ./software/charts/osh/openstack-keystone/chart-group.yaml
+- ./software/charts/osh/openstack-keystone/rabbitmq.yaml
+- ./software/charts/osh/openstack-memcached/memcached.yaml
+- ./software/charts/osh/openstack-memcached/chart-group.yaml
+- ./software/charts/osh/openstack-mariadb/chart-group.yaml
+- ./software/charts/osh/openstack-mariadb/mariadb.yaml
+- ./software/config/versions.yaml
+
+vars:

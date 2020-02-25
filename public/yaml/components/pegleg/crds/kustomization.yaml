@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./PeglegAccountCatalogue.yaml
+- ./PeglegAppArmorProfile.yaml
+- ./PeglegCommonAddresses.yaml
+- ./PeglegCommonSoftwareConfig.yaml
+- ./PeglegDevConfigurables.yaml
+- ./PeglegEndpointCatalogue.yaml
+- ./PeglegScript.yaml
+- ./PeglegSeccompProfile.yaml
+- ./PeglegSiteDefinition.yaml
+- ./PeglegSoftwareVersions.yaml
