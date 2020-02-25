@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type JsonData struct {
@@ -24,18 +25,18 @@ type ParentObjects struct {
 
 // Individual graph object as directed by jsMind.
 type JsMindGraphObj struct {
-	Id string `json:"id"`
-	Topic string `json:"topic"`
-	Direction string `json:"direction"`
-	Expanded bool `json:"expanded"`
-	Children []JsMindGraphObj `json:"children"`
+	Id        string           `json:"id"`
+	Topic     string           `json:"topic"`
+	Direction string           `json:"direction"`
+	Expanded  bool             `json:"expanded"`
+	Children  []JsMindGraphObj `json:"children"`
 }
 
 // Master JSON object containing meta data and root node.
 type JsMindJsonObj struct {
-	Meta MetaObj `json:"meta"`
-	Format string `json:"format"`
-	Data JsMindGraphObj `json:"data"`
+	Meta   MetaObj        `json:"meta"`
+	Format string         `json:"format"`
+	Data   JsMindGraphObj `json:"data"`
 }
 
 // Struct to hold misc. metadata.
@@ -48,6 +49,7 @@ type MetaObj struct {
 // Yaml data obj to tie directories to their kustomization files.
 type YamlDataObj struct {
 	YamlPath string
+	YamlName string
 	YamlObj  interface{}
 }
 
@@ -89,6 +91,8 @@ func main() {
 			fmt.Println(yamlArray[i])
 		}
 		msg := ReturnGraphJson(yamlArray)
+		var test = string(msg)
+		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
 	})
 
@@ -101,24 +105,31 @@ func main() {
 
 // Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
 func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
-	var jsonData []JsonData
+	var children []JsMindGraphObj
 	for i, v := range yamlArray {
 		log.Printf("Processing Yaml # %d", i)
 		log.Printf(" [x] Pulled JSON: %s", v)
 		//test := .(map[string]interface{})["metadata"].(map[string]interface{})["name"]
 		if v.YamlObj != nil {
-			if val, ok := v.YamlObj.(map[string]interface{})["metadata"]; ok {
-				var newNode JsonData
+			if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
+				var newNode JsMindGraphObj
 				if valObj, ok := val.(map[string]interface{}); ok {
-					newNode.Name = valObj["name"].(string)
-					newNode.Included = true
-					newNode.ParentObjects = []ParentObjects{}
-					jsonData = append(jsonData, newNode)
+					newNode.Id = v.YamlName
+					newNode.Expanded = true
+					newNode.Direction = "right"
+					newNode.Topic = v.YamlName
+					newNode.Children = []JsMindGraphObj{}
+					children = append(children, newNode)
+					log.Printf(valObj["resources"].(string))
 				}
 			}
 		}
 	}
-	returnArray, err := json.Marshal(jsonData)
+
+	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
+		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
+			Children: children}}
+	returnArray, err := json.Marshal(jsonRoot)
 	if err != nil {
 		log.Println(err)
 	}
@@ -173,7 +184,13 @@ func ReadYaml(filePath string, yamlArray []YamlDataObj) []YamlDataObj {
 	} else {
 		fmt.Printf("Output: %s\n", b)
 	}
-	yamlObj := YamlDataObj{filePath, body}
+	myDir, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+	}
+	yamlName := strings.Replace(filePath, fmt.Sprintf("%s/public/yaml/", myDir), "", 1)
+	yamlName = strings.Replace(yamlName, "/kustomization.yaml", "", 1)
+	yamlObj := YamlDataObj{filePath, yamlName, body}
 	yamlArray = append(yamlArray, yamlObj)
 	return yamlArray
 }
