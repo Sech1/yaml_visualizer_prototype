@@ -8,8 +8,7 @@ function loadGraph() {
         success: function (json) {
             data = JSON.parse(atob(json));
             console.log(data);
-            let div = document.getElementById("graphContainer");
-            main(div);
+            load_jsMind(data);
             $("#json-text-container").val(JSON.stringify(data));
         },
         error: function (error) {
@@ -18,9 +17,23 @@ function loadGraph() {
     });
 }
 
-// Program starts here. Creates a sample graph in the
-// DOM node with the specified ID. This function is invoked
-// from the onLoad event handler of the document (see below).
+function load_jsMind(mind){
+    var options = {
+        container:'jsmind_container',
+        editable:true,
+        theme:'orange'
+    };
+    var jm = new jsMind(options);
+    // show it
+    jm.show(mind);
+    // jm.set_readonly(true);
+    // var mind_data = jm.get_data();
+    // alert(mind_data);
+    //jm.add_node("sub2","sub23", "new node", {"background-color":"red"});
+    //jm.set_node_color('sub21', 'green', '#ccc');
+}
+
+// Old mxGraph function, probably won't be used.
 function main(container)
 {
     // Checks if the browser is supported
