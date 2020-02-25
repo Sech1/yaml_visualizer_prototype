@@ -7,17 +7,10 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
-	"mime/multipart"
 	"net/http"
 	"os"
 	"path/filepath"
 )
-
-type BindFile struct {
-	Name  string                `form:"name" binding:"required"`
-	Email string                `form:"email" binding:"required"`
-	File  *multipart.FileHeader `form:"file" binding:"required"`
-}
 
 type JsonData struct {
 	Name          string          `json:"name"`
@@ -27,6 +20,35 @@ type JsonData struct {
 
 type ParentObjects struct {
 	Name string
+}
+
+// Individual graph object as directed by jsMind.
+type JsMindGraphObj struct {
+	Id string `json:"id"`
+	Topic string `json:"topic"`
+	Direction string `json:"direction"`
+	Expanded bool `json:"expanded"`
+	Children []JsMindGraphObj `json:"children"`
+}
+
+// Master JSON object containing meta data and root node.
+type JsMindJsonObj struct {
+	Meta MetaObj `json:"meta"`
+	Format string `json:"format"`
+	Data JsMindGraphObj `json:"data"`
+}
+
+// Struct to hold misc. metadata.
+type MetaObj struct {
+	Name    string `json:"name"`
+	Author  string `json:"author"`
+	Version string `json:"version"`
+}
+
+// Yaml data obj to tie directories to their kustomization files.
+type YamlDataObj struct {
+	YamlPath string
+	YamlObj  interface{}
 }
 
 func check(e error) {
@@ -54,13 +76,14 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// Get route for API endpoint to return json data to build mindmap
 	router.GET("/api", func(c *gin.Context) {
 		// Return list of all yaml file locations
-		yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "*.yaml")
+		yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "kustomization.yaml")
 		fmt.Println(err)
 
 		// Read all yaml files into an array
-		var yamlArray []interface{}
+		var yamlArray []YamlDataObj
 		for i, v := range yamlFiles {
 			yamlArray = ReadYaml(v, yamlArray)
 			fmt.Println(yamlArray[i])
@@ -69,25 +92,6 @@ func main() {
 		c.JSON(http.StatusOK, msg)
 	})
 
-	router.POST("/upload", func(c *gin.Context) {
-		var bindFile BindFile
-
-		// Bind file
-		if err := c.ShouldBind(&bindFile); err != nil {
-			c.String(http.StatusBadRequest, fmt.Sprintf("err: %s", err.Error()))
-			return
-		}
-
-		// Save uploaded file
-		file := bindFile.File
-		dst := filepath.Base(file.Filename)
-		if err := c.SaveUploadedFile(file, dst); err != nil {
-			c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
-			return
-		}
-
-		c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully with fields name=%s and email=%s.", file.Filename, bindFile.Name, bindFile.Email))
-	})
 	if debug {
 		router.Run(":8080")
 	} else {
@@ -95,14 +99,15 @@ func main() {
 	}
 }
 
-func ReturnGraphJson(yamlArray []interface{}) []byte {
+// Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
+func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 	var jsonData []JsonData
 	for i, v := range yamlArray {
 		log.Printf("Processing Yaml # %d", i)
 		log.Printf(" [x] Pulled JSON: %s", v)
 		//test := .(map[string]interface{})["metadata"].(map[string]interface{})["name"]
-		if v != nil {
-			if val, ok := v.(map[string]interface{})["metadata"]; ok {
+		if v.YamlObj != nil {
+			if val, ok := v.YamlObj.(map[string]interface{})["metadata"]; ok {
 				var newNode JsonData
 				if valObj, ok := val.(map[string]interface{}); ok {
 					newNode.Name = valObj["name"].(string)
@@ -120,6 +125,7 @@ func ReturnGraphJson(yamlArray []interface{}) []byte {
 	return returnArray
 }
 
+//
 func WalkMatch(root, pattern string) ([]string, error) {
 	var matches []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -151,7 +157,8 @@ func readFile(filePath string, yaml *[]string) {
 	*yaml = append(*yaml, string(data))
 }
 
-func ReadYaml(filePath string, yamlArray []interface{}) []interface{} {
+// Handles reading yaml files and putting the data into interfaces
+func ReadYaml(filePath string, yamlArray []YamlDataObj) []YamlDataObj {
 	yamlFile, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
@@ -166,10 +173,13 @@ func ReadYaml(filePath string, yamlArray []interface{}) []interface{} {
 	} else {
 		fmt.Printf("Output: %s\n", b)
 	}
-	yamlArray = append(yamlArray, body)
+	yamlObj := YamlDataObj{filePath, body}
+	yamlArray = append(yamlArray, yamlObj)
 	return yamlArray
 }
 
+// Recursive helper function for ReadYaml
+// Creates interfaces objects of unknown depth.
 func convert(i interface{}) interface{} {
 	switch x := i.(type) {
 	case map[interface{}]interface{}:
