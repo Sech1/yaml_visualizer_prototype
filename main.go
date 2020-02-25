@@ -113,14 +113,19 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 		if v.YamlObj != nil {
 			if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
 				var newNode JsMindGraphObj
-				if valObj, ok := val.(map[string]interface{}); ok {
+				if valObj, ok := val.([]interface{}); ok {
 					newNode.Id = v.YamlName
 					newNode.Expanded = true
 					newNode.Direction = "right"
 					newNode.Topic = v.YamlName
 					newNode.Children = []JsMindGraphObj{}
+					for _, vk := range valObj  {
+						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
+							Direction:"", Expanded:true, Children:[]JsMindGraphObj{}}
+						newNode.Children = append(newNode.Children, tempObj)
+					}
 					children = append(children, newNode)
-					log.Printf(valObj["resources"].(string))
+					log.Printf(valObj[0].(string))
 				}
 			}
 		}
