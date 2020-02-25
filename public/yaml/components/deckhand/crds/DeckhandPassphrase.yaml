@@ -17,7 +17,7 @@ spec:
     kind: DeckhandPassphrase
     plural: deckhandpassphrases
     shortNames:
-    - dpass
+      - dpass
   scope: Namespaced
   subresources:
     status: {}

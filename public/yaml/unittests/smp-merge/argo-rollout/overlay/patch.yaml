@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-      - name: guestbook
-        env:
-        - name: test
-          value: bar
+        - name: guestbook
+          env:
+            - name: test
+              value: bar

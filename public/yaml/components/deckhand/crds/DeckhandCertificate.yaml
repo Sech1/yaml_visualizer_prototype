@@ -17,7 +17,7 @@ spec:
     kind: DeckhandCertificate
     plural: deckhandcertificates
     shortNames:
-    - dcert
+      - dcert
   scope: Namespaced
   subresources:
     status: {}

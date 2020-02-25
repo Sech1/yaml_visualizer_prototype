@@ -12,7 +12,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: DockerCluster
     plural: dockerclusters
   scope: Namespaced
@@ -53,8 +53,8 @@ spec:
                     description: Port is the port on which the API server is serving.
                     type: integer
                 required:
-                - host
-                - port
+                  - host
+                  - port
                 type: object
               type: array
             ready:
@@ -62,14 +62,14 @@ spec:
                 is ready.
               type: boolean
           required:
-          - ready
+            - ready
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -86,7 +86,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: DockerMachine
     plural: dockermachines
   scope: Namespaced
@@ -127,14 +127,14 @@ spec:
               description: Ready denotes that the machine (docker container) is ready
               type: boolean
           required:
-          - ready
+            - ready
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -151,7 +151,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: DockerMachineTemplate
     plural: dockermachinetemplates
   scope: Namespaced
@@ -193,17 +193,17 @@ spec:
                       type: string
                   type: object
               required:
-              - spec
+                - spec
               type: object
           required:
-          - template
+            - template
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -217,32 +217,32 @@ metadata:
   name: leader-election-role
   namespace: system
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - configmaps/status
-  verbs:
-  - get
-  - update
-  - patch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps/status
+    verbs:
+      - get
+      - update
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -250,73 +250,73 @@ metadata:
   creationTimestamp: null
   name: manager-role
 rules:
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - clusters
-  - machines
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - dockerclusters
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - dockerclusters/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - dockermachines
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - dockermachines/status
-  verbs:
-  - get
-  - patch
-  - update
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - clusters
+      - machines
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - dockerclusters
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - dockerclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - dockermachines
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - dockermachines/status
+    verbs:
+      - get
+      - patch
+      - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: proxy-role
 rules:
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
-- apiGroups:
-  - authorization.k8s.io
-  resources:
-  - subjectaccessreviews
-  verbs:
-  - create
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -328,9 +328,9 @@ roleRef:
   kind: Role
   name: leader-election-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -341,9 +341,9 @@ roleRef:
   kind: ClusterRole
   name: manager-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -354,9 +354,9 @@ roleRef:
   kind: ClusterRole
   name: proxy-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: v1
 kind: Service
@@ -369,9 +369,9 @@ metadata:
   namespace: system
 spec:
   ports:
-  - name: https
-    port: 8443
-    targetPort: https
+    - name: https
+      port: 8443
+      targetPort: https
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -383,35 +383,35 @@ spec:
   template:
     spec:
       containers:
-      - args:
-        - --secure-listen-address=0.0.0.0:8443
-        - --upstream=http://127.0.0.1:8080/
-        - --logtostderr=true
-        - --v=10
-        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
-        name: kube-rbac-proxy
-        ports:
-        - containerPort: 8443
-          name: https
-      - args:
-        - --metrics-addr=127.0.0.1:8080
-        - --enable-leader-election
-        - -v=4
-        image: gcr.io/kubernetes1-226021/manager:v0.2.0
-        name: manager
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /var/run/docker.sock
-          name: dockersock
-        - mountPath: /var/lib/docker
-          name: dockerlib
+        - args:
+            - --secure-listen-address=0.0.0.0:8443
+            - --upstream=http://127.0.0.1:8080/
+            - --logtostderr=true
+            - --v=10
+          image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
+          name: kube-rbac-proxy
+          ports:
+            - containerPort: 8443
+              name: https
+        - args:
+            - --metrics-addr=127.0.0.1:8080
+            - --enable-leader-election
+            - -v=4
+          image: gcr.io/kubernetes1-226021/manager:v0.2.0
+          name: manager
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: dockersock
+            - mountPath: /var/lib/docker
+              name: dockerlib
       terminationGracePeriodSeconds: 10
       volumes:
-      - hostPath:
-          path: /var/run/docker.sock
-          type: Socket
-        name: dockersock
-      - hostPath:
-          path: /var/lib/docker
-        name: dockerlib
+        - hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+          name: dockersock
+        - hostPath:
+            path: /var/lib/docker
+          name: dockerlib

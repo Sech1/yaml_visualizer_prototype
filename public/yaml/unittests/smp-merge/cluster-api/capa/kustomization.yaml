@@ -6,14 +6,14 @@ namespace: capa-system
 namePrefix: capa-
 
 commonLabels:
-   control-plane: capa-controller-manager
+  control-plane: capa-controller-manager
 
 resources:
-- ./infrastructure-components.yaml
+  - ./infrastructure-components.yaml
 
 secretGenerator:
-- name: manager-bootstrap-credentials
-  namespace: system
-  type: Opaque
-  envs:
-  - secrets.txt
+  - name: manager-bootstrap-credentials
+    namespace: system
+    type: Opaque
+    envs:
+      - secrets.txt

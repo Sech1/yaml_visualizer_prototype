@@ -6,7 +6,7 @@ kind: Kustomization
 # YAML string, with resources separated by document
 # markers ("---").
 resources:
-- role_binding.yaml
-- role.yaml
-- leader_election_role.yaml
-- leader_election_role_binding.yaml
+  - role_binding.yaml
+  - role.yaml
+  - leader_election_role.yaml
+  - leader_election_role_binding.yaml

@@ -6,7 +6,7 @@
  *   https://github.com/hizzgdev/jsmind/
  */
 
-; (function ($w) {
+;(function ($w) {
     'use strict';
     // set 'jsMind' as the library name.
     // __name__ should be a const value, Never try to change it easily.
@@ -17,7 +17,8 @@
     var __author__ = 'hizzgdev@163.com';
 
     // an noop function define
-    var _noop = function () { };
+    var _noop = function () {
+    };
     var logger = (typeof console === 'undefined') ? {
         log: _noop, debug: _noop, error: _noop, warn: _noop, info: _noop
     } : console;
@@ -32,9 +33,19 @@
 
     // shortcut of methods in dom
     var $d = $w.document;
-    var $g = function (id) { return $d.getElementById(id); };
-    var $c = function (tag) { return $d.createElement(tag); };
-    var $t = function (n, t) { if (n.hasChildNodes()) { n.firstChild.nodeValue = t; } else { n.appendChild($d.createTextNode(t)); } };
+    var $g = function (id) {
+        return $d.getElementById(id);
+    };
+    var $c = function (tag) {
+        return $d.createElement(tag);
+    };
+    var $t = function (n, t) {
+        if (n.hasChildNodes()) {
+            n.firstChild.nodeValue = t;
+        } else {
+            n.appendChild($d.createTextNode(t));
+        }
+    };
 
     var $h = function (n, t) {
         if (t instanceof HTMLElement) {
@@ -45,8 +56,14 @@
         }
     };
     // detect isElement
-    var $i = function (el) { return !!el && (typeof el === 'object') && (el.nodeType === 1) && (typeof el.style === 'object') && (typeof el.ownerDocument === 'object'); };
-    if (typeof String.prototype.startsWith != 'function') { String.prototype.startsWith = function (p) { return this.slice(0, p.length) === p; }; }
+    var $i = function (el) {
+        return !!el && (typeof el === 'object') && (el.nodeType === 1) && (typeof el.style === 'object') && (typeof el.ownerDocument === 'object');
+    };
+    if (typeof String.prototype.startsWith != 'function') {
+        String.prototype.startsWith = function (p) {
+            return this.slice(0, p.length) === p;
+        };
+    }
 
     var DEFAULT_OPTIONS = {
         container: '',   // id of the container
@@ -74,8 +91,7 @@
         },
         shortcut: {
             enable: true,
-            handles: {
-            },
+            handles: {},
             mapping: {
                 addchild: 45, // Insert
                 addbrother: 13, // Enter
@@ -111,14 +127,22 @@
     };
 
     // ============= static object =============================================
-    jm.direction = { left: -1, center: 0, right: 1 };
-    jm.event_type = { show: 1, resize: 2, edit: 3, select: 4 };
-    jm.key = { meta: 1 << 13, ctrl: 1 << 12, alt: 1 << 11, shift: 1 << 10 };
+    jm.direction = {left: -1, center: 0, right: 1};
+    jm.event_type = {show: 1, resize: 2, edit: 3, select: 4};
+    jm.key = {meta: 1 << 13, ctrl: 1 << 12, alt: 1 << 11, shift: 1 << 10};
 
     jm.node = function (sId, iIndex, sTopic, oData, bIsRoot, oParent, eDirection, bExpanded) {
-        if (!sId) { logger.error('invalid nodeid'); return; }
-        if (typeof iIndex != 'number') { logger.error('invalid node index'); return; }
-        if (typeof bExpanded === 'undefined') { bExpanded = true; }
+        if (!sId) {
+            logger.error('invalid nodeid');
+            return;
+        }
+        if (typeof iIndex != 'number') {
+            logger.error('invalid node index');
+            return;
+        }
+        if (typeof bExpanded === 'undefined') {
+            bExpanded = true;
+        }
         this.id = sId;
         this.index = iIndex;
         this.topic = sTopic;
@@ -235,7 +259,13 @@
                     var children = parent_node.children;
                     var children_len = children.length;
                     var r = 0;
-                    for (var i = 0; i < children_len; i++) { if (children[i].direction === jm.direction.left) { r--; } else { r++; } }
+                    for (var i = 0; i < children_len; i++) {
+                        if (children[i].direction === jm.direction.left) {
+                            r--;
+                        } else {
+                            r++;
+                        }
+                    }
                     d = (children_len > 1 && r > 0) ? jm.direction.left : jm.direction.right
                 } else {
                     d = (direction != jm.direction.left) ? jm.direction.right : jm.direction.left;
@@ -278,7 +308,9 @@
                     return this.get_node_before(the_node);
                 }
             }
-            if (node.isroot) { return null; }
+            if (node.isroot) {
+                return null;
+            }
             var idx = node.index - 2;
             if (idx >= 0) {
                 return node.parent.children[idx];
@@ -311,7 +343,9 @@
                     return this.get_node_after(the_node);
                 }
             }
-            if (node.isroot) { return null; }
+            if (node.isroot) {
+                return null;
+            }
             var idx = node.index;
             var brothers = node.parent.children;
             if (brothers.length >= idx) {
@@ -478,7 +512,7 @@
                     "version": __version__
                 },
                 "format": "node_tree",
-                "data": { "id": "root", "topic": "jsMind Example" }
+                "data": {"id": "root", "topic": "jsMind Example"}
             },
             get_mind: function (source) {
                 var df = jm.format.node_tree;
@@ -543,7 +577,9 @@
 
             _buildnode: function (node) {
                 var df = jm.format.node_tree;
-                if (!(node instanceof jm.node)) { return; }
+                if (!(node instanceof jm.node)) {
+                    return;
+                }
                 var o = {
                     id: node.id,
                     topic: node.topic,
@@ -578,7 +614,7 @@
                 },
                 "format": "node_array",
                 "data": [
-                    { "id": "root", "topic": "jsMind Example", "isroot": true }
+                    {"id": "root", "topic": "jsMind Example", "isroot": true}
                 ]
             },
 
@@ -681,7 +717,9 @@
 
             _array_node: function (node, node_array) {
                 var df = jm.format.node_array;
-                if (!(node instanceof jm.node)) { return; }
+                if (!(node instanceof jm.node)) {
+                    return;
+                }
                 var o = {
                     id: node.id,
                     topic: node.topic,
@@ -893,7 +931,8 @@
                 } else {
                     try {
                         xhr = new ActiveXObject('Microsoft.XMLHTTP');
-                    } catch (e) { }
+                    } catch (e) {
+                    }
                 }
                 return xhr;
             },
@@ -911,7 +950,9 @@
                     p = tmp_param.join('&');
                 }
                 var xhr = a._xhr();
-                if (!xhr) { return; }
+                if (!xhr) {
+                    return;
+                }
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4) {
                         if (xhr.status == 200 || xhr.status == 0) {
@@ -975,7 +1016,7 @@
             save: function (file_data, type, name) {
                 var blob;
                 if (typeof $w.Blob === 'function') {
-                    blob = new Blob([file_data], { type: type });
+                    blob = new Blob([file_data], {type: type});
                 } else {
                     var BlobBuilder = $w.BlobBuilder || $w.MozBlobBuilder || $w.WebKitBlobBuilder || $w.MSBlobBuilder;
                     var bb = new BlobBuilder();
@@ -1055,7 +1096,9 @@
 
         text: {
             is_empty: function (s) {
-                if (!s) { return true; }
+                if (!s) {
+                    return true;
+                }
                 return s.replace(/\s*/, '').length == 0;
             }
         }
@@ -1063,7 +1106,9 @@
 
     jm.prototype = {
         init: function () {
-            if (this.inited) { return; }
+            if (this.inited) {
+                return;
+            }
             this.inited = true;
 
             var opts = this.options;
@@ -1211,7 +1256,9 @@
                     return this.toggle_node(the_node);
                 }
             }
-            if (node.isroot) { return; }
+            if (node.isroot) {
+                return;
+            }
             this.view.save_location(node);
             this.layout.toggle_node(node);
             this.view.relayout();
@@ -1228,7 +1275,9 @@
                     return this.expand_node(the_node);
                 }
             }
-            if (node.isroot) { return; }
+            if (node.isroot) {
+                return;
+            }
             this.view.save_location(node);
             this.layout.expand_node(node);
             this.view.relayout();
@@ -1245,7 +1294,9 @@
                     return this.collapse_node(the_node);
                 }
             }
-            if (node.isroot) { return; }
+            if (node.isroot) {
+                return;
+            }
             this.view.save_location(node);
             this.layout.collapse_node(node);
             this.view.relayout();
@@ -1293,7 +1344,7 @@
             this.view.show(true);
             logger.debug('view.show ok');
 
-            this.invoke_event_handle(jm.event_type.show, { data: [mind] });
+            this.invoke_event_handle(jm.event_type.show, {data: [mind]});
         },
 
         show: function (mind) {
@@ -1331,7 +1382,11 @@
                     this.view.show(false);
                     this.view.reset_node_custom_style(node);
                     this.expand_node(parent_node);
-                    this.invoke_event_handle(jm.event_type.edit, { evt: 'add_node', data: [parent_node.id, nodeid, topic, data], node: nodeid });
+                    this.invoke_event_handle(jm.event_type.edit, {
+                        evt: 'add_node',
+                        data: [parent_node.id, nodeid, topic, data],
+                        node: nodeid
+                    });
                 }
                 return node;
             } else {
@@ -1348,7 +1403,11 @@
                     this.view.add_node(node);
                     this.layout.layout();
                     this.view.show(false);
-                    this.invoke_event_handle(jm.event_type.edit, { evt: 'insert_node_before', data: [beforeid, nodeid, topic, data], node: nodeid });
+                    this.invoke_event_handle(jm.event_type.edit, {
+                        evt: 'insert_node_before',
+                        data: [beforeid, nodeid, topic, data],
+                        node: nodeid
+                    });
                 }
                 return node;
             } else {
@@ -1365,7 +1424,11 @@
                     this.view.add_node(node);
                     this.layout.layout();
                     this.view.show(false);
-                    this.invoke_event_handle(jm.event_type.edit, { evt: 'insert_node_after', data: [afterid, nodeid, topic, data], node: nodeid });
+                    this.invoke_event_handle(jm.event_type.edit, {
+                        evt: 'insert_node_after',
+                        data: [afterid, nodeid, topic, data],
+                        node: nodeid
+                    });
                 }
                 return node;
             } else {
@@ -1398,7 +1461,7 @@
                 this.layout.layout();
                 this.view.show(false);
                 this.view.restore_location(parent_node);
-                this.invoke_event_handle(jm.event_type.edit, { evt: 'remove_node', data: [nodeid], node: parentid });
+                this.invoke_event_handle(jm.event_type.edit, {evt: 'remove_node', data: [nodeid], node: parentid});
                 return true;
             } else {
                 logger.error('fail, this mind map is not editable');
@@ -1423,7 +1486,11 @@
                     this.view.update_node(node);
                     this.layout.layout();
                     this.view.show(false);
-                    this.invoke_event_handle(jm.event_type.edit, { evt: 'update_node', data: [nodeid, topic], node: nodeid });
+                    this.invoke_event_handle(jm.event_type.edit, {
+                        evt: 'update_node',
+                        data: [nodeid, topic],
+                        node: nodeid
+                    });
                 }
             } else {
                 logger.error('fail, this mind map is not editable');
@@ -1438,7 +1505,11 @@
                     this.view.update_node(node);
                     this.layout.layout();
                     this.view.show(false);
-                    this.invoke_event_handle(jm.event_type.edit, { evt: 'move_node', data: [nodeid, beforeid, parentid, direction], node: nodeid });
+                    this.invoke_event_handle(jm.event_type.edit, {
+                        evt: 'move_node',
+                        data: [nodeid, beforeid, parentid, direction],
+                        node: nodeid
+                    });
                 }
             } else {
                 logger.error('fail, this mind map is not editable');
@@ -1492,7 +1563,9 @@
                     return this.find_node_before(the_node);
                 }
             }
-            if (node.isroot) { return null; }
+            if (node.isroot) {
+                return null;
+            }
             var n = null;
             if (node.parent.isroot) {
                 var c = node.parent.children;
@@ -1523,7 +1596,9 @@
                     return this.find_node_after(the_node);
                 }
             }
-            if (node.isroot) { return null; }
+            if (node.isroot) {
+                return null;
+            }
             var n = null;
             if (node.parent.isroot) {
                 var c = node.parent.children;
@@ -1735,7 +1810,7 @@
         },
         reset: function () {
             logger.debug('layout.reset');
-            this.bounds = { n: 0, s: 0, w: 0, e: 0 };
+            this.bounds = {n: 0, s: 0, w: 0, e: 0};
         },
         layout: function () {
             logger.debug('layout.layout');
@@ -1934,7 +2009,7 @@
             if (('_offset_' in layout_data) && this.cache_valid) {
                 offset_cache = layout_data._offset_;
             } else {
-                offset_cache = { x: -1, y: -1 };
+                offset_cache = {x: -1, y: -1};
                 layout_data._offset_ = offset_cache;
             }
             if (offset_cache.x == -1 || offset_cache.y == -1) {
@@ -1973,7 +2048,7 @@
             if (('_pout_' in layout_data) && this.cache_valid) {
                 pout_cache = layout_data._pout_;
             } else {
-                pout_cache = { x: -1, y: -1 };
+                pout_cache = {x: -1, y: -1};
                 layout_data._pout_ = pout_cache;
             }
             if (pout_cache.x == -1 || pout_cache.y == -1) {
@@ -2011,8 +2086,12 @@
             for (var nodeid in nodes) {
                 node = nodes[nodeid];
                 pout = this.get_node_point_out(node);
-                if (pout.x > this.bounds.e) { this.bounds.e = pout.x; }
-                if (pout.x < this.bounds.w) { this.bounds.w = pout.x; }
+                if (pout.x > this.bounds.e) {
+                    this.bounds.e = pout.x;
+                }
+                if (pout.x < this.bounds.w) {
+                    this.bounds.w = pout.x;
+                }
             }
             return {
                 w: this.bounds.e - this.bounds.w,
@@ -2080,7 +2159,9 @@
         },
 
         expand_to_depth: function (target_depth, curr_nodes, curr_depth) {
-            if (target_depth < 1) { return; }
+            if (target_depth < 1) {
+                return;
+            }
             var nodes = curr_nodes || this.jm.mind.root.children;
             var depth = curr_depth || 1;
             var i = nodes.length;
@@ -2158,7 +2239,7 @@
         this.opts = view.opts;
         this.e_canvas = $c('canvas');
         this.canvas_ctx = this.e_canvas.getContext('2d');
-        this.size = { w: 0, h: 0 };
+        this.size = {w: 0, h: 0};
     };
 
     jm.graph_canvas.prototype = {
@@ -2214,7 +2295,7 @@
         this.view = view;
         this.opts = view.opts;
         this.e_svg = jm.graph_svg.c('svg');
-        this.size = { w: 0, h: 0 };
+        this.size = {w: 0, h: 0};
         this.lines = [];
     };
 
@@ -2280,7 +2361,7 @@
         this.e_panel = null;
         this.e_nodes = null;
 
-        this.size = { w: 0, h: 0 };
+        this.size = {w: 0, h: 0};
 
         this.selected_node = null;
         this.editing_node = null;
@@ -2318,7 +2399,10 @@
             var v = this;
             jm.util.dom.add_event(this.e_editor, 'keydown', function (e) {
                 var evt = e || event;
-                if (evt.keyCode == 13) { v.edit_node_end(); evt.stopPropagation(); }
+                if (evt.keyCode == 13) {
+                    v.edit_node_end();
+                    evt.stopPropagation();
+                }
             });
             jm.util.dom.add_event(this.e_editor, 'blur', function (e) {
                 v.edit_node_end();
@@ -2388,8 +2472,12 @@
             var min_height = min_size.h + this.opts.vmargin * 2;
             var client_w = this.e_panel.clientWidth;
             var client_h = this.e_panel.clientHeight;
-            if (client_w < min_width) { client_w = min_width; }
-            if (client_h < min_height) { client_h = min_height; }
+            if (client_w < min_width) {
+                client_w = min_width;
+            }
+            if (client_h < min_height) {
+                client_h = min_height;
+            }
             this.size.w = client_w;
             this.size.h = client_h;
         },
@@ -2561,7 +2649,7 @@
             var bounds = this.layout.bounds;
             var _x = (this.size.w - bounds.e - bounds.w) / 2;
             var _y = this.size.h / 2;
-            return { x: _x, y: _y };
+            return {x: _x, y: _y};
         },
 
         resize: function () {
@@ -2580,7 +2668,7 @@
             this.show_nodes();
             this.show_lines();
             //this.layout.cache_valid = true;
-            this.jm.invoke_event_handle(jm.event_type.resize, { data: [] });
+            this.jm.invoke_event_handle(jm.event_type.resize, {data: []});
         },
 
         zoomIn: function () {
@@ -2598,7 +2686,8 @@
             this.actualZoom = zoom;
             for (var i = 0; i < this.e_panel.children.length; i++) {
                 this.e_panel.children[i].style.transform = 'scale(' + zoom + ')';
-            };
+            }
+            ;
             this.show(true);
             return true;
 
@@ -2780,8 +2869,12 @@
             var _offset = this.get_view_offset();
             for (var nodeid in nodes) {
                 node = nodes[nodeid];
-                if (!!node.isroot) { continue; }
-                if (('visible' in node._data.layout) && !node._data.layout.visible) { continue; }
+                if (!!node.isroot) {
+                    continue;
+                }
+                if (('visible' in node._data.layout) && !node._data.layout.visible) {
+                    continue;
+                }
                 pin = this.layout.get_node_point_in(node);
                 pout = this.layout.get_node_point_out(node.parent);
                 this.graph.draw_line(pout, pin, _offset);
@@ -2828,9 +2921,13 @@
         },
 
         handler: function (e) {
-            if (this.jm.view.is_editing()) { return; }
+            if (this.jm.view.is_editing()) {
+                return;
+            }
             var evt = e || event;
-            if (!this.opts.enable) { return true; }
+            if (!this.opts.enable) {
+                return true;
+            }
             var kc = evt.keyCode + (evt.metaKey << 13) + (evt.ctrlKey << 12) + (evt.altKey << 11) + (evt.shiftKey << 10);
             if (kc in this._mapping) {
                 this._mapping[kc].call(this, this.jm, e);
@@ -2939,8 +3036,7 @@
                         }
                     }
                     node = c[children[Math.floor((children.length - 1) / 2)]];
-                }
-                else if (selected_node.direction === d) {
+                } else if (selected_node.direction === d) {
                     var children = selected_node.children;
                     var childrencount = children.length;
                     if (childrencount > 0) {
@@ -3001,7 +3097,9 @@
     if (typeof module !== 'undefined' && typeof exports === 'object') {
         module.exports = jm;
     } else if (typeof define === 'function' && (define.amd || define.cmd)) {
-        define(function () { return jm; });
+        define(function () {
+            return jm;
+        });
     } else {
         $w[__name__] = jm;
     }

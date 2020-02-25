@@ -10,7 +10,7 @@ spec:
   tags:
     - from:
         kind: DockerImage
-        name: $(TO_BE_REPLACE) 
+        name: $(TO_BE_REPLACE)
       name: image-name
       referencePolicy:
         type: Source

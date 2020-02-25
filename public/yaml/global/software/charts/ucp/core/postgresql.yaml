@@ -18,9 +18,9 @@ spec:
     pre:
       create: []
       delete:
-      - labels:
-          release_group: airship-ucp-postgresql
-        type: job
+        - labels:
+            release_group: airship-ucp-postgresql
+          type: job
   values:
     conf:
       postgresql:

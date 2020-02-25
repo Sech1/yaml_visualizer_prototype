@@ -13,7 +13,7 @@ spec:
     kind: DrydockHardwareProfile
     plural: drydockhardwareprofiles
     shortNames:
-    - dhwprof
+      - dhwprof
   scope: Namespaced
   subresources:
     status: {}

@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: nfs
 
 resources:
-- ../../operator
+  - ../../operator

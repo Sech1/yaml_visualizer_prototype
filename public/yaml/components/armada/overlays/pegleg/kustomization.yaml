@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: pegleg
 
 resources:
-- ../../operator
+  - ../../operator

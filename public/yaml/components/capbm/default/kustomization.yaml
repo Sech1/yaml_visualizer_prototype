@@ -11,12 +11,12 @@ commonLabels:
   control-plane: capbm-controller-manager
 
 resources:
-- ../crd
-- ../rbac
-- ../manager
+  - ../crd
+  - ../rbac
+  - ../manager
 
 patchesStrategicMerge:
-- manager_image_patch.yaml
-- manager_auth_proxy_patch.yaml
-- manager_credentials_patch.yaml
+  - manager_image_patch.yaml
+  - manager_auth_proxy_patch.yaml
+  - manager_credentials_patch.yaml
 # - manager_prometheus_metrics_patch.yaml

@@ -17,7 +17,7 @@ spec:
     kind: DeckhandPublicKey
     plural: deckhandpublickeys
     shortNames:
-    - dpubkey
+      - dpubkey
   scope: Namespaced
   subresources:
     status: {}

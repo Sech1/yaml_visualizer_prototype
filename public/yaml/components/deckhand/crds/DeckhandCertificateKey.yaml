@@ -17,7 +17,7 @@ spec:
     kind: DeckhandCertificateKey
     plural: deckhandcertificatekeys
     shortNames:
-    - dcertkey
+      - dcertkey
   scope: Namespaced
   subresources:
     status: {}

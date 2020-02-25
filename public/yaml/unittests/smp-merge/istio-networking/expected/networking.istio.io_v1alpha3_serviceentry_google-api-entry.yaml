@@ -5,10 +5,10 @@ metadata:
   namespace: kubeflow
 spec:
   hosts:
-  - www.googleapis.com
+    - www.googleapis.com
   location: MESH_EXTERNAL
   ports:
-  - name: https
-    number: 443
-    protocol: HTTPS
+    - name: https
+      number: 443
+      protocol: HTTPS
   resolution: DNS

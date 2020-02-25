@@ -11,8 +11,12 @@
     var $d = $w.document;
     var __name__ = 'jsMind';
     var jsMind = $w[__name__];
-    if (!jsMind) { return; }
-    if (typeof jsMind.draggable != 'undefined') { return; }
+    if (!jsMind) {
+        return;
+    }
+    if (typeof jsMind.draggable != 'undefined') {
+        return;
+    }
 
     var jdom = jsMind.util.dom;
     var clear_selection = 'getSelection' in $w ? function () {
@@ -155,15 +159,19 @@
                     ns = node.get_size();
                     nl = node.get_location();
                     if (direct == jsMind.direction.right) {
-                        if (sx - nl.x - ns.w <= 0) { continue; }
+                        if (sx - nl.x - ns.w <= 0) {
+                            continue;
+                        }
                         distance = Math.abs(sx - nl.x - ns.w) + Math.abs(sy + sh / 2 - nl.y - ns.h / 2);
-                        np = { x: nl.x + ns.w - options.line_width, y: nl.y + ns.h / 2 };
-                        sp = { x: sx + options.line_width, y: sy + sh / 2 };
+                        np = {x: nl.x + ns.w - options.line_width, y: nl.y + ns.h / 2};
+                        sp = {x: sx + options.line_width, y: sy + sh / 2};
                     } else {
-                        if (nl.x - sx - sw <= 0) { continue; }
+                        if (nl.x - sx - sw <= 0) {
+                            continue;
+                        }
                         distance = Math.abs(sx + sw - nl.x) + Math.abs(sy + sh / 2 - nl.y - ns.h / 2);
-                        np = { x: nl.x + options.line_width, y: nl.y + ns.h / 2 };
-                        sp = { x: sx + sw - options.line_width, y: sy + sh / 2 };
+                        np = {x: nl.x + options.line_width, y: nl.y + ns.h / 2};
+                        sp = {x: sx + sw - options.line_width, y: sy + sh / 2};
                     }
                     if (distance < min_distance) {
                         closest_node = node;
@@ -224,13 +232,19 @@
         },
 
         dragstart: function (e) {
-            if (!this.jm.get_editable()) { return; }
-            if (this.capture) { return; }
+            if (!this.jm.get_editable()) {
+                return;
+            }
+            if (this.capture) {
+                return;
+            }
             this.active_node = null;
 
             var jview = this.jm.view;
             var el = e.target || event.srcElement;
-            if (el.tagName.toLowerCase() != 'jmnode') { return; }
+            if (el.tagName.toLowerCase() != 'jmnode') {
+                return;
+            }
             var nodeid = jview.get_binded_nodeid(el);
             if (!!nodeid) {
                 var node = this.jm.get_node(nodeid);
@@ -260,7 +274,9 @@
         },
 
         drag: function (e) {
-            if (!this.jm.get_editable()) { return; }
+            if (!this.jm.get_editable()) {
+                return;
+            }
             if (this.capture) {
                 e.preventDefault();
                 this.show_shadow();
@@ -277,7 +293,9 @@
         },
 
         dragend: function (e) {
-            if (!this.jm.get_editable()) { return; }
+            if (!this.jm.get_editable()) {
+                return;
+            }
             if (this.capture) {
                 if (this.hlookup_delay != 0) {
                     $w.clearTimeout(this.hlookup_delay);
@@ -322,7 +340,9 @@
                         }
                     }
                 }
-                if (!!node_before) { beforeid = node_before.id; }
+                if (!!node_before) {
+                    beforeid = node_before.id;
+                }
                 this.jm.move_node(src_node.id, beforeid, target_node.id, target_direct);
             }
             this.active_node = null;

@@ -13,7 +13,7 @@ spec:
     kind: ShipyardDeploymentConfiguration
     plural: shipyarddeploymentconfigurations
     shortNames:
-    - sdepconf
+      - sdepconf
   scope: Namespaced
   subresources:
     status: {}

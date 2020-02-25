@@ -12,16 +12,16 @@ spec:
       app.kubernetes.io/part-of: kubeflow
       app.kubernetes.io/version: v2.3.0
   componentKinds:
-  - group: core
-    kind: ConfigMap
-  - group: apps
-    kind: Deployment
-  - group: core
-    kind: ServiceAccount
-  - group: core
-    kind: Service
-  - group: networking.istio.io
-    kind: VirtualService
+    - group: core
+      kind: ConfigMap
+    - group: apps
+      kind: Deployment
+    - group: core
+      kind: ServiceAccount
+    - group: core
+      kind: Service
+    - group: networking.istio.io
+      kind: VirtualService
   descriptor:
     type: argo
     version: v1beta1
@@ -29,10 +29,10 @@ spec:
     maintainers: []
     owners: []
     keywords:
-     - argo
-     - kubeflow
+      - argo
+      - kubeflow
     links:
-    - description: About
-      url: https://github.com/argoproj/argo
+      - description: About
+        url: https://github.com/argoproj/argo
   addOwnerRef: true
 

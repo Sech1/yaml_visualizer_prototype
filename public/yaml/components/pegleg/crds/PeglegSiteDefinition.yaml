@@ -11,7 +11,7 @@ spec:
     kind: PeglegSiteDefinition
     plural: peglegsitedefinitions
     shortNames:
-    - psitedef
+      - psitedef
   scope: Namespaced
   subresources:
     status: {}
@@ -45,7 +45,7 @@ spec:
                 required:
                   - revision
                   - url
-        
+
             site_type:
               type: string
           required:

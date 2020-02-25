@@ -5,15 +5,15 @@ metadata:
   namespace: kubeflow
 spec:
   hosts:
-  - storage.googleapis.com
+    - storage.googleapis.com
   tls:
-  - match:
-    - port: 443
-      sni_hosts:
-      - storage.googleapis.com
-    route:
-    - destination:
-        host: storage.googleapis.com
-        port:
-          number: 443
-      weight: 100
+    - match:
+        - port: 443
+          sni_hosts:
+            - storage.googleapis.com
+      route:
+        - destination:
+            host: storage.googleapis.com
+            port:
+              number: 443
+          weight: 100

@@ -16,7 +16,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: AWSCluster
     plural: awsclusters
   scope: Namespaced
@@ -131,8 +131,8 @@ spec:
                     description: The port on which the API server is serving.
                     type: integer
                 required:
-                - host
-                - port
+                  - host
+                  - port
                 type: object
               type: array
             bastion:
@@ -194,7 +194,7 @@ spec:
                     and should only be used when running a new instance.
                   type: string
               required:
-              - id
+                - id
               type: object
             network:
               description: Network encapsulates AWS networking resources.
@@ -244,11 +244,11 @@ spec:
                           format: int64
                           type: integer
                       required:
-                      - healthyThreshold
-                      - interval
-                      - target
-                      - timeout
-                      - unhealthyThreshold
+                        - healthyThreshold
+                        - interval
+                        - target
+                        - timeout
+                        - unhealthyThreshold
                       type: object
                     listeners:
                       description: Listeners is an array of classic elb listeners
@@ -273,10 +273,10 @@ spec:
                               for a classic load balancer.
                             type: string
                         required:
-                        - instancePort
-                        - instanceProtocol
-                        - port
-                        - protocol
+                          - instancePort
+                          - instanceProtocol
+                          - port
+                          - protocol
                         type: object
                       type: array
                     name:
@@ -346,10 +346,10 @@ spec:
                               format: int64
                               type: integer
                           required:
-                          - description
-                          - fromPort
-                          - protocol
-                          - toPort
+                            - description
+                            - fromPort
+                            - protocol
+                            - toPort
                           type: object
                         type: array
                       name:
@@ -362,8 +362,8 @@ spec:
                           group.
                         type: object
                     required:
-                    - id
-                    - name
+                      - id
+                      - name
                     type: object
                   description: SecurityGroups is a map from the role/kind of the security
                     group to its unique name, if any.
@@ -372,14 +372,14 @@ spec:
             ready:
               type: boolean
           required:
-          - ready
+            - ready
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -398,7 +398,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: AWSMachine
     plural: awsmachines
   scope: Namespaced
@@ -454,8 +454,8 @@ spec:
                             type: string
                           type: array
                       required:
-                      - name
-                      - values
+                        - name
+                        - values
                       type: object
                     type: array
                   id:
@@ -495,8 +495,8 @@ spec:
                           type: string
                         type: array
                     required:
-                    - name
-                    - values
+                      - name
+                      - values
                     type: object
                   type: array
                 id:
@@ -561,8 +561,8 @@ spec:
                           type: string
                         type: array
                     required:
-                    - name
-                    - values
+                      - name
+                      - values
                     type: object
                   type: array
                 id:
@@ -586,8 +586,8 @@ spec:
                       InternalIP.
                     type: string
                 required:
-                - address
-                - type
+                  - address
+                  - type
                 type: object
               type: array
             errorMessage:
@@ -631,9 +631,9 @@ spec:
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -652,7 +652,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: AWSMachineTemplate
     plural: awsmachinetemplates
   scope: Namespaced
@@ -716,8 +716,8 @@ spec:
                                     type: string
                                   type: array
                               required:
-                              - name
-                              - values
+                                - name
+                                - values
                               type: object
                             type: array
                           id:
@@ -760,8 +760,8 @@ spec:
                                   type: string
                                 type: array
                             required:
-                            - name
-                            - values
+                              - name
+                              - values
                             type: object
                           type: array
                         id:
@@ -829,8 +829,8 @@ spec:
                                   type: string
                                 type: array
                             required:
-                            - name
-                            - values
+                              - name
+                              - values
                             type: object
                           type: array
                         id:
@@ -839,17 +839,17 @@ spec:
                       type: object
                   type: object
               required:
-              - spec
+                - spec
               type: object
           required:
-          - template
+            - template
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -865,26 +865,26 @@ metadata:
   name: capa-leader-election-role
   namespace: capa-system
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - configmaps/status
-  verbs:
-  - get
-  - update
-  - patch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps/status
+    verbs:
+      - get
+      - update
+      - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -894,75 +894,75 @@ metadata:
     control-plane: capa-controller-manager
   name: capa-manager-role
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - clusters
-  - clusters/status
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - machines
-  - machines/status
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - awsclusters
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - awsclusters/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - awsmachines
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - awsmachines/status
-  verbs:
-  - get
-  - patch
-  - update
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - clusters
+      - clusters/status
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - machines
+      - machines/status
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - awsclusters
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - awsclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - awsmachines
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - awsmachines/status
+    verbs:
+      - get
+      - patch
+      - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -971,18 +971,18 @@ metadata:
     control-plane: capa-controller-manager
   name: capa-proxy-role
 rules:
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
-- apiGroups:
-  - authorization.k8s.io
-  resources:
-  - subjectaccessreviews
-  verbs:
-  - create
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -996,9 +996,9 @@ roleRef:
   kind: Role
   name: capa-leader-election-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: capa-system
+  - kind: ServiceAccount
+    name: default
+    namespace: capa-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1011,9 +1011,9 @@ roleRef:
   kind: ClusterRole
   name: capa-manager-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: capa-system
+  - kind: ServiceAccount
+    name: default
+    namespace: capa-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1026,9 +1026,9 @@ roleRef:
   kind: ClusterRole
   name: capa-proxy-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: capa-system
+  - kind: ServiceAccount
+    name: default
+    namespace: capa-system
 ---
 apiVersion: v1
 data:
@@ -1054,9 +1054,9 @@ metadata:
   namespace: capa-system
 spec:
   ports:
-  - name: https
-    port: 8443
-    targetPort: https
+    - name: https
+      port: 8443
+      targetPort: https
   selector:
     control-plane: capa-controller-manager
 ---
@@ -1078,19 +1078,19 @@ spec:
         control-plane: capa-controller-manager
     spec:
       containers:
-      - args:
-        - --enable-leader-election
-        env:
-        - name: AWS_SHARED_CREDENTIALS_FILE
-          value: /home/.aws/credentials
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:v0.4.0
-        imagePullPolicy: Always
-        name: manager
-        volumeMounts:
-        - mountPath: /home/.aws
-          name: credentials
+        - args:
+            - --enable-leader-election
+          env:
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /home/.aws/credentials
+          image: us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:v0.4.0
+          imagePullPolicy: Always
+          name: manager
+          volumeMounts:
+            - mountPath: /home/.aws
+              name: credentials
       terminationGracePeriodSeconds: 10
       volumes:
-      - name: credentials
-        secret:
-          secretName: capa-manager-bootstrap-credentials-2ct67tfkkg
+        - name: credentials
+          secret:
+            secretName: capa-manager-bootstrap-credentials-2ct67tfkkg

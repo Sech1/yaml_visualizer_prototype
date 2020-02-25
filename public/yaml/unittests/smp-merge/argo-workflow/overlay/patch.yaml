@@ -4,6 +4,6 @@ metadata:
   name: nginx
 spec:
   templates:
-  - name: nginx-server
-    container:
-      image: nginx:latest
+    - name: nginx-server
+      container:
+        image: nginx:latest

@@ -9,8 +9,8 @@ spec:
     kind: CompositeController
     plural: compositecontrollers
     shortNames:
-    - cc
-    - cctl
+      - cc
+      - cctl
     singular: compositecontroller
   scope: Cluster
   version: v1alpha1
@@ -38,8 +38,8 @@ spec:
     kind: DecoratorController
     plural: decoratorcontrollers
     shortNames:
-    - dec
-    - decorators
+      - dec
+      - decorators
     singular: decoratorcontroller
   scope: Cluster
   version: v1alpha1

@@ -11,8 +11,12 @@
     var $d = $w.document;
     var __name__ = 'jsMind';
     var jsMind = $w[__name__];
-    if (!jsMind) { return; }
-    if (typeof (jsMind.shell) != 'undefined') { return; }
+    if (!jsMind) {
+        return;
+    }
+    if (typeof (jsMind.shell) != 'undefined') {
+        return;
+    }
 
     var options = {
         play_delay: 1000
@@ -33,7 +37,7 @@
         },
         record: function (action, obj) {
             if (!this.playing) {
-                var command = { action: action, data: obj.data, node: obj.node };
+                var command = {action: action, data: obj.data, node: obj.node};
                 var prev_command = this.commands[this.step - 1];
                 if (command.action === 'update_node' && prev_command.action === 'add_node' && prev_command.data[2] === 'New Node') {
                     prev_command.data[2] = command.data[1];

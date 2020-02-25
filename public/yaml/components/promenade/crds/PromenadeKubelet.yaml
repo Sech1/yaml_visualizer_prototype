@@ -13,7 +13,7 @@ spec:
     kind: PromenadeKubelet
     plural: promenadekubelets
     shortNames:
-    - pkubelet
+      - pkubelet
   scope: Namespaced
   subresources:
     status: {}
@@ -38,7 +38,7 @@ spec:
           #   image:
           #     type: string
           #     # XXX add regex
-        
+
           properties:
             images:
               type: object

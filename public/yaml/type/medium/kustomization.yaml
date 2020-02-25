@@ -3,9 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../common
-- ../../global
-- ../../composites/network/sriov_ovsdpdk
+  - ../common
+  - ../../global
+  - ../../composites/network/sriov_ovsdpdk
 
-- ./config/endpoints.yaml
-- ./config/service_accounts.yaml
+  - ./config/endpoints.yaml
+  - ./config/service_accounts.yaml

@@ -11,21 +11,21 @@ spec:
   componentKinds:
     - group: app.k8s.io
       kind: Application
-  descriptor: 
+  descriptor:
     type: kubeflow
     version: v1beta1
     description: application that aggregates all kubeflow applications
     maintainers:
-    - name: Jeremy Lewi
-      email: jlewi@google.com
-    - name: Kam Kasravi
-      email: kam.d.kasravi@intel.com
+      - name: Jeremy Lewi
+        email: jlewi@google.com
+      - name: Kam Kasravi
+        email: kam.d.kasravi@intel.com
     owners:
-    - name: Jeremy Lewi
-      email: jlewi@google.com
+      - name: Jeremy Lewi
+        email: jlewi@google.com
     keywords:
-     - kubeflow
+      - kubeflow
     links:
-    - description: About
-      url: "https://kubeflow.org"
+      - description: About
+        url: "https://kubeflow.org"
   addOwnerRef: true

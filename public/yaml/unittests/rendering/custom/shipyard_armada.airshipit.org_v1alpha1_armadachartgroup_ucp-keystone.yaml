@@ -7,7 +7,7 @@ metadata:
   namespace: shipyard
 spec:
   chart_group:
-  - ucp-keystone-memcached
-  - ucp-keystone
+    - ucp-keystone-memcached
+    - ucp-keystone
   description: Airship Keystone components
   target_state: uninitialized

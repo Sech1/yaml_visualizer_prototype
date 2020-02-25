@@ -6,12 +6,12 @@ namespace: cabpk-system
 namePrefix: cpbpk-
 
 commonLabels:
-   control-plane: cabpk-controller-manager
+  control-plane: cabpk-controller-manager
 
 resources:
-- ./namespace.yaml
-- ./crd
-- ./certmanager
-- ./manager
-- ./rbac
-- ./webhook
+  - ./namespace.yaml
+  - ./crd
+  - ./certmanager
+  - ./manager
+  - ./rbac
+  - ./webhook

@@ -51,7 +51,7 @@ spec:
                         TODO: Add other useful fields. apiVersion, kind, uid?'
                       type: string
                   required:
-                  - name
+                    - name
                   type: object
                 server:
                   description: Server is the ACME server URL
@@ -83,13 +83,13 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                               host:
                                 type: string
                             required:
-                            - accountSecretRef
-                            - host
+                              - accountSecretRef
+                              - host
                             type: object
                           akamai:
                             description: ACMEIssuerDNS01ProviderAkamai is a structure
@@ -109,7 +109,7 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                               clientSecretSecretRef:
                                 properties:
@@ -124,7 +124,7 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                               clientTokenSecretRef:
                                 properties:
@@ -139,15 +139,15 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                               serviceConsumerDomain:
                                 type: string
                             required:
-                            - accessTokenSecretRef
-                            - clientSecretSecretRef
-                            - clientTokenSecretRef
-                            - serviceConsumerDomain
+                              - accessTokenSecretRef
+                              - clientSecretSecretRef
+                              - clientTokenSecretRef
+                              - serviceConsumerDomain
                             type: object
                           azuredns:
                             description: ACMEIssuerDNS01ProviderAzureDNS is a structure
@@ -168,14 +168,14 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                               environment:
                                 enum:
-                                - AzurePublicCloud
-                                - AzureChinaCloud
-                                - AzureGermanCloud
-                                - AzureUSGovernmentCloud
+                                  - AzurePublicCloud
+                                  - AzureChinaCloud
+                                  - AzureGermanCloud
+                                  - AzureUSGovernmentCloud
                                 type: string
                               hostedZoneName:
                                 type: string
@@ -186,11 +186,11 @@ spec:
                               tenantID:
                                 type: string
                             required:
-                            - clientID
-                            - clientSecretSecretRef
-                            - resourceGroupName
-                            - subscriptionID
-                            - tenantID
+                              - clientID
+                              - clientSecretSecretRef
+                              - resourceGroupName
+                              - subscriptionID
+                              - tenantID
                             type: object
                           clouddns:
                             description: ACMEIssuerDNS01ProviderCloudDNS is a structure
@@ -211,11 +211,11 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                             required:
-                            - project
-                            - serviceAccountSecretRef
+                              - project
+                              - serviceAccountSecretRef
                             type: object
                           cloudflare:
                             description: ACMEIssuerDNS01ProviderCloudflare is a structure
@@ -234,20 +234,20 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                               email:
                                 type: string
                             required:
-                            - apiKeySecretRef
-                            - email
+                              - apiKeySecretRef
+                              - email
                             type: object
                           cnameStrategy:
                             description: CNAMEStrategy configures how the DNS01 provider
                               should handle CNAME records when found in DNS zones.
                             enum:
-                            - None
-                            - Follow
+                              - None
+                              - Follow
                             type: string
                           digitalocean:
                             description: ACMEIssuerDNS01ProviderDigitalOcean is a
@@ -267,10 +267,10 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                             required:
-                            - tokenSecretRef
+                              - tokenSecretRef
                             type: object
                           rfc2136:
                             description: ACMEIssuerDNS01ProviderRFC2136 is a structure
@@ -309,10 +309,10 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                             required:
-                            - nameserver
+                              - nameserver
                             type: object
                           route53:
                             description: ACMEIssuerDNS01ProviderRoute53 is a structure
@@ -355,10 +355,10 @@ spec:
                                       uid?'
                                     type: string
                                 required:
-                                - name
+                                  - name
                                 type: object
                             required:
-                            - region
+                              - region
                             type: object
                           webhook:
                             description: ACMEIssuerDNS01ProviderWebhook specifies
@@ -388,8 +388,8 @@ spec:
                                   typically be the name of the provider, e.g. 'cloudflare'.
                                 type: string
                             required:
-                            - groupName
-                            - solverName
+                              - groupName
+                              - solverName
                             type: object
                         type: object
                       http01:
@@ -528,8 +528,8 @@ spec:
                                                                   type: string
                                                                 type: array
                                                             required:
-                                                            - key
-                                                            - operator
+                                                              - key
+                                                              - operator
                                                             type: object
                                                           type: array
                                                         matchFields:
@@ -582,8 +582,8 @@ spec:
                                                                   type: string
                                                                 type: array
                                                             required:
-                                                            - key
-                                                            - operator
+                                                              - key
+                                                              - operator
                                                             type: object
                                                           type: array
                                                       type: object
@@ -595,8 +595,8 @@ spec:
                                                       format: int32
                                                       type: integer
                                                   required:
-                                                  - preference
-                                                  - weight
+                                                    - preference
+                                                    - weight
                                                   type: object
                                                 type: array
                                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -673,8 +673,8 @@ spec:
                                                                   type: string
                                                                 type: array
                                                             required:
-                                                            - key
-                                                            - operator
+                                                              - key
+                                                              - operator
                                                             type: object
                                                           type: array
                                                         matchFields:
@@ -727,14 +727,14 @@ spec:
                                                                   type: string
                                                                 type: array
                                                             required:
-                                                            - key
-                                                            - operator
+                                                              - key
+                                                              - operator
                                                             type: object
                                                           type: array
                                                       type: object
                                                     type: array
                                                 required:
-                                                - nodeSelectorTerms
+                                                  - nodeSelectorTerms
                                                 type: object
                                             type: object
                                           podAffinity:
@@ -831,8 +831,8 @@ spec:
                                                                       type: string
                                                                     type: array
                                                                 required:
-                                                                - key
-                                                                - operator
+                                                                  - key
+                                                                  - operator
                                                                 type: object
                                                               type: array
                                                             matchLabels:
@@ -879,7 +879,7 @@ spec:
                                                             is not allowed.
                                                           type: string
                                                       required:
-                                                      - topologyKey
+                                                        - topologyKey
                                                       type: object
                                                     weight:
                                                       description: weight associated
@@ -889,8 +889,8 @@ spec:
                                                       format: int32
                                                       type: integer
                                                   required:
-                                                  - podAffinityTerm
-                                                  - weight
+                                                    - podAffinityTerm
+                                                    - weight
                                                   type: object
                                                 type: array
                                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -971,8 +971,8 @@ spec:
                                                                   type: string
                                                                 type: array
                                                             required:
-                                                            - key
-                                                            - operator
+                                                              - key
+                                                              - operator
                                                             type: object
                                                           type: array
                                                         matchLabels:
@@ -1016,7 +1016,7 @@ spec:
                                                         is not allowed.
                                                       type: string
                                                   required:
-                                                  - topologyKey
+                                                    - topologyKey
                                                   type: object
                                                 type: array
                                             type: object
@@ -1114,8 +1114,8 @@ spec:
                                                                       type: string
                                                                     type: array
                                                                 required:
-                                                                - key
-                                                                - operator
+                                                                  - key
+                                                                  - operator
                                                                 type: object
                                                               type: array
                                                             matchLabels:
@@ -1162,7 +1162,7 @@ spec:
                                                             is not allowed.
                                                           type: string
                                                       required:
-                                                      - topologyKey
+                                                        - topologyKey
                                                       type: object
                                                     weight:
                                                       description: weight associated
@@ -1172,8 +1172,8 @@ spec:
                                                       format: int32
                                                       type: integer
                                                   required:
-                                                  - podAffinityTerm
-                                                  - weight
+                                                    - podAffinityTerm
+                                                    - weight
                                                   type: object
                                                 type: array
                                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -1254,8 +1254,8 @@ spec:
                                                                   type: string
                                                                 type: array
                                                             required:
-                                                            - key
-                                                            - operator
+                                                              - key
+                                                              - operator
                                                             type: object
                                                           type: array
                                                         matchLabels:
@@ -1299,7 +1299,7 @@ spec:
                                                         is not allowed.
                                                       type: string
                                                   required:
-                                                  - topologyKey
+                                                    - topologyKey
                                                   type: object
                                                 type: array
                                             type: object
@@ -1412,8 +1412,8 @@ spec:
                     type: object
                   type: array
               required:
-              - privateKeySecretRef
-              - server
+                - privateKeySecretRef
+                - server
               type: object
             ca:
               properties:
@@ -1422,7 +1422,7 @@ spec:
                     issued by this Issuer.
                   type: string
               required:
-              - secretName
+                - secretName
               type: object
             selfSigned:
               type: object
@@ -1451,12 +1451,12 @@ spec:
                                 TODO: Add other useful fields. apiVersion, kind, uid?'
                               type: string
                           required:
-                          - name
+                            - name
                           type: object
                       required:
-                      - path
-                      - roleId
-                      - secretRef
+                        - path
+                        - roleId
+                        - secretRef
                       type: object
                     kubernetes:
                       description: This contains a Role and Secret with a ServiceAccount
@@ -1488,11 +1488,11 @@ spec:
                                 TODO: Add other useful fields. apiVersion, kind, uid?'
                               type: string
                           required:
-                          - name
+                            - name
                           type: object
                       required:
-                      - role
-                      - secretRef
+                        - role
+                        - secretRef
                       type: object
                     tokenSecretRef:
                       description: This Secret contains the Vault token key
@@ -1506,7 +1506,7 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       required:
-                      - name
+                        - name
                       type: object
                   type: object
                 caBundle:
@@ -1523,9 +1523,9 @@ spec:
                   description: Server is the vault connection address
                   type: string
               required:
-              - auth
-              - path
-              - server
+                - auth
+                - path
+                - server
               type: object
             venafi:
               description: VenafiIssuer describes issuer configuration details for
@@ -1548,14 +1548,14 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       required:
-                      - name
+                        - name
                       type: object
                     url:
                       description: URL is the base URL for Venafi Cloud
                       type: string
                   required:
-                  - apiTokenSecretRef
-                  - url
+                    - apiTokenSecretRef
+                    - url
                   type: object
                 tpp:
                   description: TPP specifies Trust Protection Platform configuration
@@ -1580,14 +1580,14 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       required:
-                      - name
+                        - name
                       type: object
                     url:
                       description: URL is the base URL for the Venafi TPP instance
                       type: string
                   required:
-                  - credentialsRef
-                  - url
+                    - credentialsRef
+                    - url
                   type: object
                 zone:
                   description: Zone is the Venafi Policy Zone to use for this issuer.
@@ -1595,7 +1595,7 @@ spec:
                     the named zone policy. This field is required.
                   type: string
               required:
-              - zone
+                - zone
               type: object
           type: object
         status:
@@ -1635,25 +1635,25 @@ spec:
                     description: Status of the condition, one of ('True', 'False',
                       'Unknown').
                     enum:
-                    - "True"
-                    - "False"
-                    - Unknown
+                      - "True"
+                      - "False"
+                      - Unknown
                     type: string
                   type:
                     description: Type of the condition, currently ('Ready').
                     type: string
                 required:
-                - status
-                - type
+                  - status
+                  - type
                 type: object
               type: array
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""

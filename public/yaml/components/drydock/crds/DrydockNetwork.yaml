@@ -13,7 +13,7 @@ spec:
     kind: DrydockNetwork
     plural: drydocknetworks
     shortNames:
-    - dntw
+      - dntw
   scope: Namespaced
   subresources:
     status: {}

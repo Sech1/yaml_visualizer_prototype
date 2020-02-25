@@ -4,4 +4,4 @@ metadata:
   name: service
 spec:
   ports:
-  - port: 443
+    - port: 443

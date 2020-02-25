@@ -6,12 +6,12 @@ namespace: capi-system
 namePrefix: capi-
 
 commonLabels:
-   control-plane: cluster-api-controller-manager
+  control-plane: cluster-api-controller-manager
 
 resources:
-- ./namespace.yaml
-- ./crd
-- ./certmanager
-- ./manager
-- ./rbac
-- ./webhook
+  - ./namespace.yaml
+  - ./crd
+  - ./certmanager
+  - ./manager
+  - ./rbac
+  - ./webhook

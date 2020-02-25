@@ -15,8 +15,8 @@ metadata:
   namespace: kubeflow
 spec:
   ports:
-  - port: 80
-    targetPort: 8001
+    - port: 80
+      targetPort: 8001
   selector:
     app: argo-ui
   sessionAffinity: None

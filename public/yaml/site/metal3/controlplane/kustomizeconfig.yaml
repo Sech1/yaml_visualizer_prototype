@@ -11,19 +11,19 @@
 #   create: true
 
 commonLabels:
-- path: metadata/labels
-  create: true
+  - path: metadata/labels
+    create: true
 
 nameReference:
-- kind: KubeadmConfig
-  fieldSpecs:
-  - kind: Machine
-    group: cluster.x-k8s.io
-    version: v1alpha3
-    path: spec/bootstrap/configRef
-- kind: BareMetalMachine
-  fieldSpecs:
-  - kind: Machine
-    group: cluster.x-k8s.io
-    version: v1alpha3
-    path: spec/infrastructureRef
+  - kind: KubeadmConfig
+    fieldSpecs:
+      - kind: Machine
+        group: cluster.x-k8s.io
+        version: v1alpha3
+        path: spec/bootstrap/configRef
+  - kind: BareMetalMachine
+    fieldSpecs:
+      - kind: Machine
+        group: cluster.x-k8s.io
+        version: v1alpha3
+        path: spec/infrastructureRef

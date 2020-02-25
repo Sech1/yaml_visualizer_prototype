@@ -13,7 +13,7 @@ spec:
     kind: PromenadeKubernetesNetwork
     plural: promenadekubernetesnetworks
     shortNames:
-    - pkubntw
+      - pkubntw
   scope: Namespaced
   subresources:
     status: {}
@@ -57,7 +57,7 @@ spec:
           #   url:
           #     type: string
           #     format: uri
-        
+
           type: object
           properties:
             dns:
@@ -87,7 +87,7 @@ spec:
                 - cluster_domain
                 - service_ip
               # additionalProperties: false
-        
+
             etcd:
               type: object
               properties:
@@ -104,7 +104,7 @@ spec:
                 - container_port
                 - haproxy_port
               # additionalProperties: false
-        
+
             kubernetes:
               type: object
               properties:
@@ -146,7 +146,7 @@ spec:
                       # $ref: '#/definitions/hostname'
                       type: string
                       format: hostname
-        
+
             proxy:
               type: object
               properties:
@@ -164,7 +164,7 @@ spec:
               required:
                 - url
               # additionalProperties: false
-        
+
           required:
             - dns
             - kubernetes

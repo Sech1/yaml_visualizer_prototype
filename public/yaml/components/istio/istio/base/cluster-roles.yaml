@@ -8,8 +8,8 @@ metadata:
     rbac.authorization.kubeflow.org/aggregate-to-kubeflow-admin: "true"
 aggregationRule:
   clusterRoleSelectors:
-  - matchLabels:
-      rbac.authorization.kubeflow.org/aggregate-to-kubeflow-istio-admin: "true"
+    - matchLabels:
+        rbac.authorization.kubeflow.org/aggregate-to-kubeflow-istio-admin: "true"
 rules: []
 
 ---
@@ -22,17 +22,17 @@ metadata:
     rbac.authorization.kubeflow.org/aggregate-to-kubeflow-edit: "true"
     rbac.authorization.kubeflow.org/aggregate-to-kubeflow-istio-admin: "true"
 rules:
-- apiGroups: ["istio.io"]
-  resources: ["*"]
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - delete
-  - deletecollection
-  - patch
-  - update
+  - apiGroups: ["istio.io"]
+    resources: ["*"]
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - delete
+      - deletecollection
+      - patch
+      - update
 
 ---
 
@@ -43,9 +43,9 @@ metadata:
   labels:
     rbac.authorization.kubeflow.org/aggregate-to-kubeflow-view: "true"
 rules:
-- apiGroups: ["istio.io"]
-  resources: ["*"]
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups: ["istio.io"]
+    resources: ["*"]
+    verbs:
+      - get
+      - list
+      - watch

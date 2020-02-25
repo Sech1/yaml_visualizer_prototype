@@ -13,7 +13,7 @@ spec:
     kind: DrydockBaremetalNode
     plural: drydockbaremetalnodes
     shortNames:
-    - dbmn
+      - dbmn
   scope: Namespaced
   subresources:
     status: {}
@@ -176,7 +176,7 @@ spec:
                 type: 'object'
                 properties:
                   device_link:
-                   type: 'string'
+                    type: 'string'
                   slaves:
                     type: 'array'
                     items:

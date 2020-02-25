@@ -16,8 +16,8 @@ namePrefix: capi-
 #- ../certmanager
 
 patchesStrategicMerge:
-- manager_image_patch.yaml
-- manager_label_patch.yaml
+  - manager_image_patch.yaml
+  - manager_label_patch.yaml
 
 # [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in crd/kustomization.yaml
 #- manager_webhook_patch.yaml
@@ -57,6 +57,6 @@ patchesStrategicMerge:
 #    version: v1
 #    name: webhook-service
 resources:
-- ../crd
-- ../rbac
-- ../manager
+  - ../crd
+  - ../rbac
+  - ../manager

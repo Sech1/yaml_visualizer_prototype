@@ -13,7 +13,7 @@ spec:
     kind: PromenadeDocker
     plural: promenadedockers
     shortNames:
-    - pdocker
+      - pdocker
   scope: Namespaced
   subresources:
     status: {}

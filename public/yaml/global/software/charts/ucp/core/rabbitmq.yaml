@@ -15,9 +15,9 @@ spec:
     no_hooks: false
     pre:
       delete:
-      - labels:
-          release_group: airship-ucp-rabbitmq
-        type: job
+        - labels:
+            release_group: airship-ucp-rabbitmq
+          type: job
   values:
     endpoints:
       oslo_messaging:
@@ -43,6 +43,6 @@ spec:
     labels:
       release_group: airship-ucp-rabbitmq
     resources:
-    - type: statefulset
+      - type: statefulset
     timeout: 300
   target_state: uninitialized

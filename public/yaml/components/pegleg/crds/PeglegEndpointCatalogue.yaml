@@ -11,7 +11,7 @@ spec:
     kind: PeglegEndpointCatalogue
     plural: peglegendpointcatalogues
     shortNames:
-    - pendptcat
+      - pendptcat
   scope: Namespaced
   subresources:
     status: {}

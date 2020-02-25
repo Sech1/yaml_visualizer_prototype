@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: openstack
 
 resources:
-- ../../operator
+  - ../../operator

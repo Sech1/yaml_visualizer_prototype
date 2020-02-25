@@ -11,7 +11,7 @@ spec:
     kind: PeglegAccountCatalogue
     plural: peglegaccountcatalogues
     shortNames:
-    - pactcat
+      - pactcat
   scope: Namespaced
   subresources:
     status: {}

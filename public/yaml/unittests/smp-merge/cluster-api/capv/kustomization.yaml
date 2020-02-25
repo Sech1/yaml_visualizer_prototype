@@ -6,14 +6,14 @@ namespace: capv-system
 namePrefix: capv-
 
 commonLabels:
-   control-plane: capv-controller-manager
+  control-plane: capv-controller-manager
 
 resources:
-- ./infrastructure-components.yaml
+  - ./infrastructure-components.yaml
 
 secretGenerator:
-- name: manager-bootstrap-credentials
-  namespace: system
-  type: Opaque
-  envs:
-  - secrets.txt
+  - name: manager-bootstrap-credentials
+    namespace: system
+    type: Opaque
+    envs:
+      - secrets.txt

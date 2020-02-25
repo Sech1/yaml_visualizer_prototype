@@ -13,7 +13,7 @@ spec:
     kind: PromenadePKICatalog
     plural: promenadepkicatalogs
     shortNames:
-    - ppkicat
+      - ppkicat
   scope: Namespaced
   subresources:
     status: {}

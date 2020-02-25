@@ -19,9 +19,9 @@ spec:
     no_hooks: false
     pre:
       delete:
-      - labels:
-          release_group: airship-ingress
-        type: job
+        - labels:
+            release_group: airship-ingress
+          type: job
   values:
     conf:
       ingress:

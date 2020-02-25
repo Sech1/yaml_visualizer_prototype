@@ -13,7 +13,7 @@ spec:
     kind: DrydockRegion
     plural: drydockregions
     shortNames:
-    - dreg
+      - dreg
   scope: Namespaced
   subresources:
     status: {}

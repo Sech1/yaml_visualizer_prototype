@@ -19,7 +19,7 @@ spec:
           # Replace this with the built image name
           image: keleustes/armada-operator-dev:v2.15.0
           command:
-          - armada-operator
+            - armada-operator
           imagePullPolicy: IfNotPresent
           env:
             - name: WATCH_NAMESPACE

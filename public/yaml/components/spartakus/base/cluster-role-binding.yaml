@@ -9,5 +9,5 @@ roleRef:
   kind: ClusterRole
   name: spartakus
 subjects:
-- kind: ServiceAccount
-  name: spartakus
+  - kind: ServiceAccount
+    name: spartakus

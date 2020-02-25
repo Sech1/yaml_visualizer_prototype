@@ -5,19 +5,19 @@ metadata:
   namespace: kubeflow
 spec:
   gateways:
-  - kubeflow-gateway
+    - kubeflow-gateway
   hosts:
-  - '*'
+    - '*'
   http:
-  - match:
-    - method:
-        exact: GET
-      uri:
-        prefix: /istio/grafana/
-    rewrite:
-      uri: /
-    route:
-    - destination:
-        host: grafana.istio-system.svc.cluster.local
-        port:
-          number: 3000
+    - match:
+        - method:
+            exact: GET
+          uri:
+            prefix: /istio/grafana/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: grafana.istio-system.svc.cluster.local
+            port:
+              number: 3000

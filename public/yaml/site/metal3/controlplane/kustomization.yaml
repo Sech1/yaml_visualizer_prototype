@@ -9,6 +9,6 @@ commonLabels:
   cluster.x-k8s.io/cluster-name: $(ConfigMap.global.data.CLUSTER_NAME)
 
 resources:
-- ../common/kustomizeconfig
-- ../common/variables
-- controlplane.yaml
+  - ../common/kustomizeconfig
+  - ../common/variables
+  - controlplane.yaml

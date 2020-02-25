@@ -11,7 +11,7 @@ spec:
     kind: PeglegCommonAddresses
     plural: peglegcommonaddressess
     shortNames:
-    - pcaddr
+      - pcaddr
   scope: Namespaced
   subresources:
     status: {}

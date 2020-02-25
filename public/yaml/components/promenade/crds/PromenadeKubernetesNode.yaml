@@ -13,7 +13,7 @@ spec:
     kind: PromenadeKubernetesNode
     plural: promenadekubernetesnodes
     shortNames:
-    - pkubnode
+      - pkubnode
   scope: Namespaced
   subresources:
     status: {}
@@ -43,24 +43,24 @@ spec:
           #   kubernetes_label:
           #     type: string
           #     # XXX add regex
-        
+
           type: object
           properties:
             hostname:
               # $ref: '#/definitions/hostname'
               type: string
               pattern: '^[a-z][a-z0-9-]+$'
-        
+
             ip:
               # $ref: '#/definitions/ip_address'
               type: string
               pattern: '^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$'
-        
+
             join_ip:
               # $ref: '#/definitions/ip_address'
               type: string
               pattern: '^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$'
-        
+
             labels:
               properties:
                 static:
@@ -74,7 +74,7 @@ spec:
                     # $ref: '#/definitions/kubernetes_label'
                     type: string
               # additionalProperties: false
-        
+
           required:
             - ip
             - join_ip

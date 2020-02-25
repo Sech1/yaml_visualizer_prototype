@@ -11,7 +11,7 @@ spec:
     kind: AirshipFunction
     plural: airshipfunctions
     shortNames:
-    - airshipfunction
+      - airshipfunction
   scope: Namespaced
   subresources:
     status: {}

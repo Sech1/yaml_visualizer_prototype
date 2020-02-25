@@ -13,7 +13,7 @@ spec:
     kind: ShipyardDeploymentStrategy
     plural: shipyarddeploymentstrategys
     shortNames:
-    - sdepstrat
+      - sdepstrat
   scope: Namespaced
   subresources:
     status: {}

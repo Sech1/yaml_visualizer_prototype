@@ -5,7 +5,7 @@ namespace: test-namespace-name
 namePrefix: test-
 
 resources:
-- ../base
+  - ../base
 
 patchesStrategicMerge:
-- ./001-image-stream.yaml
+  - ./001-image-stream.yaml

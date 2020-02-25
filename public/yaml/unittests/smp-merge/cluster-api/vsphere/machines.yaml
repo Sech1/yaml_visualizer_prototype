@@ -25,9 +25,9 @@ spec:
   datacenter: "$(Values.envvalues.spec.VSPHERE_DATACENTER)"
   network:
     devices:
-    - networkName: "$(Values.envvalues.spec.VSPHERE_NETWORK)"
-      dhcp4: true
-      dhcp6: false
+      - networkName: "$(Values.envvalues.spec.VSPHERE_NETWORK)"
+        dhcp4: true
+        dhcp6: false
   numCPUs: $(Values.envvalues.spec.VSPHERE_NUM_CPUS)
   memoryMiB: $(Values.envvalues.spec.VSPHERE_MEM_MIB)
   diskGiB: $(Values.envvalues.spec.VSPHERE_DISK_GIB)
@@ -52,35 +52,35 @@ spec:
         cloud-provider: vsphere
         cloud-config: /etc/kubernetes/vsphere.conf
       extraVolumes:
-      - name: "cloud-config"
-        hostPath: /etc/kubernetes/vsphere.conf
-        mountPath: /etc/kubernetes/vsphere.conf
-        readOnly: true
-        pathType: File
+        - name: "cloud-config"
+          hostPath: /etc/kubernetes/vsphere.conf
+          mountPath: /etc/kubernetes/vsphere.conf
+          readOnly: true
+          pathType: File
     controllerManager:
       extraArgs:
         cloud-provider: vsphere
         cloud-config: /etc/kubernetes/vsphere.conf
       extraVolumes:
-      - name: "cloud-config"
-        hostPath: /etc/kubernetes/vsphere.conf
-        mountPath: /etc/kubernetes/vsphere.conf
-        readOnly: true
-        pathType: File
+        - name: "cloud-config"
+          hostPath: /etc/kubernetes/vsphere.conf
+          mountPath: /etc/kubernetes/vsphere.conf
+          readOnly: true
+          pathType: File
   files:
-  - path: /etc/kubernetes/vsphere.conf
-    owner: root:root
-    permissions: "0600"
-    encoding: base64
-    content: |
-      ${CLOUD_CONFIG_B64ENCODED}
+    - path: /etc/kubernetes/vsphere.conf
+      owner: root:root
+      permissions: "0600"
+      encoding: base64
+      content: |
+        ${CLOUD_CONFIG_B64ENCODED}
   users:
-  - name: capv
-    sudo: "ALL=(ALL) NOPASSWD:ALL"
-    sshAuthorizedKeys:
-    - "${SSH_AUTHORIZED_KEY}"
+    - name: capv
+      sudo: "ALL=(ALL) NOPASSWD:ALL"
+      sshAuthorizedKeys:
+        - "${SSH_AUTHORIZED_KEY}"
   preKubeadmCommands:
-  - hostname "{{ ds.meta_data.hostname }}"
-  - echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
-  - echo "127.0.0.1   localhost {{ ds.meta_data.hostname }}" >>/etc/hosts
-  - echo "{{ ds.meta_data.hostname }}" >/etc/hostname
+    - hostname "{{ ds.meta_data.hostname }}"
+    - echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
+    - echo "127.0.0.1   localhost {{ ds.meta_data.hostname }}" >>/etc/hosts
+    - echo "{{ ds.meta_data.hostname }}" >/etc/hostname

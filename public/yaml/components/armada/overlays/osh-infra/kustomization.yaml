@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: osh-infra
 
 resources:
-- ../../operator
+  - ../../operator

@@ -16,18 +16,18 @@
 #
 
 nameReference:
-- kind: KubeadmConfigTemplate
-  fieldSpecs:
-  - kind: MachineDeployment
-    group: cluster.x-k8s.io
-    path: spec/template/spec/bootstrap/configRef
-- kind: BareMetalMachineTemplate
-  fieldSpecs:
-  - kind: MachineDeployment
-    group: cluster.x-k8s.io
-    path: spec/template/spec/infrastructureRef
+  - kind: KubeadmConfigTemplate
+    fieldSpecs:
+      - kind: MachineDeployment
+        group: cluster.x-k8s.io
+        path: spec/template/spec/bootstrap/configRef
+  - kind: BareMetalMachineTemplate
+    fieldSpecs:
+      - kind: MachineDeployment
+        group: cluster.x-k8s.io
+        path: spec/template/spec/infrastructureRef
 
 replicas:
-- path: spec/replicas
-  create: true
-  kind: MachineDeployment
+  - path: spec/replicas
+    create: true
+    kind: MachineDeployment

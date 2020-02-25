@@ -11,11 +11,17 @@
 
     var __name__ = 'jsMind';
     var jsMind = $w[__name__];
-    if (!jsMind) { return; }
-    if (typeof jsMind.screenshot != 'undefined') { return; }
+    if (!jsMind) {
+        return;
+    }
+    if (typeof jsMind.screenshot != 'undefined') {
+        return;
+    }
 
     var $d = $w.document;
-    var $c = function (tag) { return $d.createElement(tag); };
+    var $c = function (tag) {
+        return $d.createElement(tag);
+    };
 
     var css = function (cstyle, property_name) {
         return cstyle.getPropertyValue(property_name);
@@ -109,7 +115,9 @@
 
     jsMind.screenshot.prototype = {
         init: function () {
-            if (this._inited) { return; }
+            if (this._inited) {
+                return;
+            }
             console.log('init');
             var c = $c('canvas');
             var ctx = c.getContext('2d');
@@ -201,6 +209,7 @@
                     $w.setTimeout(callback, 200);
                 }
             }
+
             check_nodes_ready();
         },
 
@@ -280,7 +289,9 @@
         _draw_expander: function (expander) {
             var ctx = this.canvas_ctx;
             var ncs = getComputedStyle(expander);
-            if (!is_visible(ncs)) { return; }
+            if (!is_visible(ncs)) {
+                return;
+            }
 
             var style_left = css(ncs, 'left');
             var style_top = css(ncs, 'top');

@@ -22,9 +22,9 @@ spec:
       create: []
     pre:
       delete:
-      - labels:
-          release_group: airship-keystone
-        type: job
+        - labels:
+            release_group: airship-keystone
+          type: job
   values:
     bootstrap:
       script: |
@@ -61,9 +61,9 @@ spec:
           class: oslo_log.formatters.FluentFormatter
         formatters:
           keys:
-          - context
-          - default
-          - fluent
+            - context
+            - default
+            - fluent
         handler_fluent:
           args: ('openstack.keystone', 'fluentd-logging.osh-infra', 24224)
           class: fluent.handler.FluentHandler
@@ -82,10 +82,10 @@ spec:
           formatter: context
         handlers:
           keys:
-          - stdout
-          - stderr
-          - "null"
-          - fluent
+            - stdout
+            - stderr
+            - "null"
+            - fluent
         logger_amqp:
           handlers: stderr
           level: WARNING
@@ -104,8 +104,8 @@ spec:
           qualname: eventlet.wsgi.server
         logger_keystone:
           handlers:
-          - stdout
-          - fluent
+            - stdout
+            - fluent
           level: INFO
           qualname: keystone
         logger_root:
@@ -117,8 +117,8 @@ spec:
           qualname: sqlalchemy
         loggers:
           keys:
-          - root
-          - keystone
+            - root
+            - keystone
     endpoints:
       fluentd:
         host_fqdn_override:

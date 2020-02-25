@@ -6,7 +6,7 @@ namespace: cabpk-system
 namePrefix: cabpk-
 
 commonLabels:
-   control-plane: cabpk-controller-manager
+  control-plane: cabpk-controller-manager
 
 resources:
-- ./bootstrap-components.yaml
+  - ./bootstrap-components.yaml

@@ -119,9 +119,9 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 					newNode.Direction = "right"
 					newNode.Topic = v.YamlName
 					newNode.Children = []JsMindGraphObj{}
-					for _, vk := range valObj  {
+					for _, vk := range valObj {
 						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
-							Direction:"", Expanded:true, Children:[]JsMindGraphObj{}}
+							Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
 						newNode.Children = append(newNode.Children, tempObj)
 					}
 					children = append(children, newNode)

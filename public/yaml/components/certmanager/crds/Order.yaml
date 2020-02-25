@@ -5,24 +5,24 @@ metadata:
   name: orders.acme.cert-manager.io
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.state
-    name: State
-    type: string
-  - JSONPath: .spec.issuerRef.name
-    name: Issuer
-    priority: 1
-    type: string
-  - JSONPath: .status.reason
-    name: Reason
-    priority: 1
-    type: string
-  - JSONPath: .metadata.creationTimestamp
-    description: CreationTimestamp is a timestamp representing the server time when
-      this object was created. It is not guaranteed to be set in happens-before order
-      across separate operations. Clients may not set this value. It is represented
-      in RFC3339 form and is in UTC.
-    name: Age
-    type: date
+    - JSONPath: .status.state
+      name: State
+      type: string
+    - JSONPath: .spec.issuerRef.name
+      name: Issuer
+      priority: 1
+      type: string
+    - JSONPath: .status.reason
+      name: Reason
+      priority: 1
+      type: string
+    - JSONPath: .metadata.creationTimestamp
+      description: CreationTimestamp is a timestamp representing the server time when
+        this object was created. It is not guaranteed to be set in happens-before order
+        across separate operations. Clients may not set this value. It is represented
+        in RFC3339 form and is in UTC.
+      name: Age
+      type: date
   group: acme.cert-manager.io
   names:
     kind: Order
@@ -86,11 +86,11 @@ spec:
                 name:
                   type: string
               required:
-              - name
+                - name
               type: object
           required:
-          - csr
-          - issuerRef
+            - csr
+            - issuerRef
           type: object
         status:
           properties:
@@ -128,9 +128,9 @@ spec:
                             from the ACME server.
                           type: string
                       required:
-                      - token
-                      - type
-                      - url
+                        - token
+                        - type
+                        - url
                       type: object
                     type: array
                   identifier:
@@ -149,7 +149,7 @@ spec:
                       will be 'true' and the 'identifier' field will be 'example.com'.
                     type: boolean
                 required:
-                - url
+                  - url
                 type: object
               type: array
             certificate:
@@ -176,13 +176,13 @@ spec:
               description: State contains the current state of this Order resource.
                 States 'success' and 'expired' are 'final'
               enum:
-              - valid
-              - ready
-              - pending
-              - processing
-              - invalid
-              - expired
-              - errored
+                - valid
+                - ready
+                - pending
+                - processing
+                - invalid
+                - expired
+                - errored
               type: string
             url:
               description: URL of the Order. This will initially be empty when the
@@ -192,13 +192,13 @@ spec:
               type: string
           type: object
       required:
-      - metadata
+        - metadata
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""

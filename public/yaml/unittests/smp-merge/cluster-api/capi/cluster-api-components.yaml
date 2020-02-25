@@ -10,19 +10,19 @@ metadata:
   name: clusters.cluster.x-k8s.io
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.phase
-    description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
-    name: Phase
-    type: string
+    - JSONPath: .status.phase
+      description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+      name: Phase
+      type: string
   group: cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: Cluster
     listKind: ClusterList
     plural: clusters
     shortNames:
-    - cl
+      - cl
     singular: cluster
   scope: Namespaced
   subresources:
@@ -62,7 +62,7 @@ spec:
                         type: string
                       type: array
                   required:
-                  - cidrBlocks
+                    - cidrBlocks
                   type: object
                 serviceDomain:
                   description: Domain name for services.
@@ -75,7 +75,7 @@ spec:
                         type: string
                       type: array
                   required:
-                  - cidrBlocks
+                    - cidrBlocks
                   type: object
               type: object
             infrastructureRef:
@@ -133,8 +133,8 @@ spec:
                     description: The port on which the API server is serving.
                     type: integer
                 required:
-                - host
-                - port
+                  - host
+                  - port
                 type: object
               type: array
             controlPlaneInitialized:
@@ -162,9 +162,9 @@ spec:
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -181,12 +181,12 @@ spec:
   group: cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: MachineDeployment
     listKind: MachineDeploymentList
     plural: machinedeployments
     shortNames:
-    - md
+      - md
     singular: machinedeployment
   scope: Namespaced
   subresources:
@@ -274,8 +274,8 @@ spec:
                           type: string
                         type: array
                     required:
-                    - key
-                    - operator
+                      - key
+                      - operator
                     type: object
                   type: array
                 matchLabels:
@@ -298,8 +298,8 @@ spec:
                   properties:
                     maxSurge:
                       anyOf:
-                      - type: string
-                      - type: integer
+                        - type: string
+                        - type: integer
                       description: 'The maximum number of machines that can be scheduled
                         above the desired number of machines. Value can be an absolute
                         number (ex: 5) or a percentage of desired machines (ex: 10%).
@@ -314,8 +314,8 @@ spec:
                         at most 130% of desired machines.'
                     maxUnavailable:
                       anyOf:
-                      - type: string
-                      - type: integer
+                        - type: string
+                        - type: integer
                       description: 'The maximum number of machines that can be unavailable
                         during the update. Value can be an absolute number (ex: 5)
                         or a percentage of desired machines (ex: 10%). Absolute number
@@ -425,10 +425,10 @@ spec:
                             description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                             type: string
                         required:
-                        - apiVersion
-                        - kind
-                        - name
-                        - uid
+                          - apiVersion
+                          - kind
+                          - name
+                          - uid
                         type: object
                       type: array
                   type: object
@@ -619,10 +619,10 @@ spec:
                                 description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                                 type: string
                             required:
-                            - apiVersion
-                            - kind
-                            - name
-                            - uid
+                              - apiVersion
+                              - kind
+                              - name
+                              - uid
                             type: object
                           type: array
                       type: object
@@ -649,13 +649,13 @@ spec:
                         This field is meant to be optionally used by bootstrap providers.
                       type: string
                   required:
-                  - bootstrap
-                  - infrastructureRef
+                    - bootstrap
+                    - infrastructureRef
                   type: object
               type: object
           required:
-          - selector
-          - template
+            - selector
+            - template
           type: object
         status:
           description: MachineDeploymentStatus defines the observed state of MachineDeployment
@@ -701,9 +701,9 @@ spec:
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -718,28 +718,28 @@ metadata:
   name: machines.cluster.x-k8s.io
 spec:
   additionalPrinterColumns:
-  - JSONPath: .spec.providerID
-    description: Provider ID
-    name: ProviderID
-    type: string
-  - JSONPath: .status.phase
-    description: Machine status such as Terminating/Pending/Running/Failed etc
-    name: Phase
-    type: string
-  - JSONPath: .status.nodeRef.name
-    description: Node name associated with this machine
-    name: NodeName
-    priority: 1
-    type: string
+    - JSONPath: .spec.providerID
+      description: Provider ID
+      name: ProviderID
+      type: string
+    - JSONPath: .status.phase
+      description: Machine status such as Terminating/Pending/Running/Failed etc
+      name: Phase
+      type: string
+    - JSONPath: .status.nodeRef.name
+      description: Node name associated with this machine
+      name: NodeName
+      priority: 1
+      type: string
   group: cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: Machine
     listKind: MachineList
     plural: machines
     shortNames:
-    - ma
+      - ma
     singular: machine
   scope: Namespaced
   subresources:
@@ -936,10 +936,10 @@ spec:
                         description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                         type: string
                     required:
-                    - apiVersion
-                    - kind
-                    - name
-                    - uid
+                      - apiVersion
+                      - kind
+                      - name
+                      - uid
                     type: object
                   type: array
               type: object
@@ -964,8 +964,8 @@ spec:
                 is meant to be optionally used by bootstrap providers.
               type: string
           required:
-          - bootstrap
-          - infrastructureRef
+            - bootstrap
+            - infrastructureRef
           type: object
         status:
           description: MachineStatus defines the observed state of Machine
@@ -984,8 +984,8 @@ spec:
                       or InternalIP.
                     type: string
                 required:
-                - address
-                - type
+                  - address
+                  - type
                 type: object
               type: array
             bootstrapReady:
@@ -1079,9 +1079,9 @@ spec:
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -1098,12 +1098,12 @@ spec:
   group: cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: MachineSet
     listKind: MachineSetList
     plural: machinesets
     shortNames:
-    - ms
+      - ms
     singular: machineset
   scope: Namespaced
   subresources:
@@ -1136,9 +1136,9 @@ spec:
                 to delete when downscaling. Defaults to "Random".  Valid values are
                 "Random, "Newest", "Oldest"
               enum:
-              - Random
-              - Newest
-              - Oldest
+                - Random
+                - Newest
+                - Oldest
               type: string
             minReadySeconds:
               description: MinReadySeconds is the minimum number of seconds for which
@@ -1184,8 +1184,8 @@ spec:
                           type: string
                         type: array
                     required:
-                    - key
-                    - operator
+                      - key
+                      - operator
                     type: object
                   type: array
                 matchLabels:
@@ -1292,10 +1292,10 @@ spec:
                             description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                             type: string
                         required:
-                        - apiVersion
-                        - kind
-                        - name
-                        - uid
+                          - apiVersion
+                          - kind
+                          - name
+                          - uid
                         type: object
                       type: array
                   type: object
@@ -1486,10 +1486,10 @@ spec:
                                 description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                                 type: string
                             required:
-                            - apiVersion
-                            - kind
-                            - name
-                            - uid
+                              - apiVersion
+                              - kind
+                              - name
+                              - uid
                             type: object
                           type: array
                       type: object
@@ -1516,12 +1516,12 @@ spec:
                         This field is meant to be optionally used by bootstrap providers.
                       type: string
                   required:
-                  - bootstrap
-                  - infrastructureRef
+                    - bootstrap
+                    - infrastructureRef
                   type: object
               type: object
           required:
-          - selector
+            - selector
           type: object
         status:
           description: MachineSetStatus defines the observed state of MachineSet
@@ -1576,14 +1576,14 @@ spec:
                 selectors: http://kubernetes.io/docs/user-guide/labels#label-selectors'
               type: string
           required:
-          - replicas
+            - replicas
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -1597,32 +1597,32 @@ metadata:
   name: leader-election-role
   namespace: system
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - configmaps/status
-  verbs:
-  - get
-  - update
-  - patch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps/status
+    verbs:
+      - get
+      - update
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1630,103 +1630,103 @@ metadata:
   creationTimestamp: null
   name: manager-role
 rules:
-- apiGroups:
-  - bootstrap.cluster.x-k8s.io
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - '*'
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - clusters
-  - clusters/status
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - machinedeployments
-  - machinedeployments/status
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - machines
-  - machines/status
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - machinesets
-  - machinesets/status
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - get
-  - list
-  - patch
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - create
-  - get
-  - list
-  - patch
-  - watch
+  - apiGroups:
+      - bootstrap.cluster.x-k8s.io
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - '*'
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - clusters
+      - clusters/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - machinedeployments
+      - machinedeployments/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - machines
+      - machines/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - machinesets
+      - machinesets/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1738,9 +1738,9 @@ roleRef:
   kind: Role
   name: leader-election-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1752,9 +1752,9 @@ roleRef:
   kind: ClusterRole
   name: manager-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -1766,15 +1766,15 @@ spec:
   template:
     spec:
       containers:
-      - args:
-        - --enable-leader-election
-        command:
-        - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.2.3
-        name: manager
-        resources:
-          limits:
-            memory: 100Mi
-          requests:
-            memory: 100Mi
+        - args:
+            - --enable-leader-election
+          command:
+            - /manager
+          image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.2.3
+          name: manager
+          resources:
+            limits:
+              memory: 100Mi
+            requests:
+              memory: 100Mi
       terminationGracePeriodSeconds: 10

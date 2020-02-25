@@ -11,7 +11,7 @@ spec:
     kind: PeglegDevConfigurables
     plural: peglegdevconfigurabless
     shortNames:
-    - devconfig
+      - devconfig
   scope: Namespaced
   subresources:
     status: {}

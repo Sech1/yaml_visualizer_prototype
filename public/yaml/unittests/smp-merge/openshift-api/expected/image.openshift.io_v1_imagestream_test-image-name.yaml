@@ -9,9 +9,9 @@ spec:
   lookupPolicy:
     local: false
   tags:
-  - from:
-      kind: DockerImage
-      name: docker.io/hello-world
-    name: image-name
-    referencePolicy:
-      type: Source
+    - from:
+        kind: DockerImage
+        name: docker.io/hello-world
+      name: image-name
+      referencePolicy:
+        type: Source

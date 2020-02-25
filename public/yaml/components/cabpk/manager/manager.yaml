@@ -23,9 +23,9 @@ spec:
         control-plane: cabpk-controller-manager
     spec:
       containers:
-      - image: controller:latest
-        imagePullPolicy: Always
-        name: manager
+        - image: controller:latest
+          imagePullPolicy: Always
+          name: manager
       terminationGracePeriodSeconds: 10
       tolerations:
         - effect: NoSchedule

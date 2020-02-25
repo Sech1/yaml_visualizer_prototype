@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: ceph
 
 resources:
-- ../../operator
+  - ../../operator

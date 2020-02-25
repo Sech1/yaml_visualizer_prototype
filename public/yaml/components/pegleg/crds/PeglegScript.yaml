@@ -11,7 +11,7 @@ spec:
     kind: PeglegScript
     plural: peglegscripts
     shortNames:
-    - pscript
+      - pscript
   scope: Namespaced
   subresources:
     status: {}

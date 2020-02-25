@@ -4,17 +4,17 @@ metadata:
   name: argo-ui
 spec:
   gateways:
-  - kubeflow-gateway
+    - kubeflow-gateway
   hosts:
-  - '*'
+    - '*'
   http:
-  - match:
-    - uri:
-        prefix: /argo/
-    rewrite:
-      uri: /
-    route:
-    - destination:
-        host: argo-ui.$(namespace).svc.$(clusterDomain)
-        port:
-          number: 80
+    - match:
+        - uri:
+            prefix: /argo/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: argo-ui.$(namespace).svc.$(clusterDomain)
+            port:
+              number: 80

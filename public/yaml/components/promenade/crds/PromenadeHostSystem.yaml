@@ -13,7 +13,7 @@ spec:
     kind: PromenadeHostSystem
     plural: promenadehostsystems
     shortNames:
-    - phostsys
+      - phostsys
   scope: Namespaced
   subresources:
     status: {}
@@ -86,9 +86,9 @@ spec:
           #   url:
           #     type: string
           #     # XXX add regex
-        
+
           type: object
-        
+
           properties:
             files:
               type: array
@@ -111,7 +111,7 @@ spec:
                   tar_path:
                     # $ref: '#/definitions/rel_path'
                     type: string
-          
+
                 required:
                   - mode
                   - path
@@ -160,7 +160,7 @@ spec:
                 - helm
                 - kubernetes
               # additionalProperties: false
-        
+
             packages:
               type: object
               properties:
@@ -174,7 +174,7 @@ spec:
                   items:
                     # $ref: '#/definitions/public_key'
                     type: string
-        
+
                 required:
                   type: object
                   properties:
@@ -188,17 +188,17 @@ spec:
                     - docker
                     - socat
                   # additionalProperties: false
-        
+
                 repositories:
                   type: array
                   items:
                     # $ref: '#/definitions/apt_source_line'
                     type: string
-        
+
               required:
                 - required
               # additionalProperties: false
-        
+
           required:
             - images
             - packages

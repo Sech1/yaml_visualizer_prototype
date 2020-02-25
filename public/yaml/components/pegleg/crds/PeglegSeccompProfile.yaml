@@ -13,7 +13,7 @@ spec:
     kind: PeglegSeccompProfile
     plural: peglegseccompprofiles
     shortNames:
-    - psecccompprof
+      - psecccompprof
   scope: Namespaced
   subresources:
     status: {}

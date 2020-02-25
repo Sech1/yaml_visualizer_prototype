@@ -16,9 +16,9 @@ spec:
     no_hooks: false
     pre:
       delete:
-      - labels:
-          release_group: airship-keystone-rabbitmq
-        type: job
+        - labels:
+            release_group: airship-keystone-rabbitmq
+          type: job
   values:
     endpoints:
       oslo_messaging:
@@ -45,6 +45,6 @@ spec:
     labels:
       release_group: airship-keystone-rabbitmq
     resources:
-    - type: statefulset
+      - type: statefulset
     timeout: 900
   target_state: uninitialized

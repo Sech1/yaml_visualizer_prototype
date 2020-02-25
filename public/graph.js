@@ -17,11 +17,11 @@ function loadGraph() {
     });
 }
 
-function load_jsMind(mind){
+function load_jsMind(mind) {
     var options = {
-        container:'jsmind_container',
-        editable:true,
-        theme:'orange'
+        container: 'jsmind_container',
+        editable: true,
+        theme: 'orange'
     };
     var jm = new jsMind(options);
     // show it
@@ -34,15 +34,11 @@ function load_jsMind(mind){
 }
 
 // Old mxGraph function, probably won't be used.
-function main(container)
-{
+function main(container) {
     // Checks if the browser is supported
-    if (!mxClient.isBrowserSupported())
-    {
+    if (!mxClient.isBrowserSupported()) {
         mxUtils.error('Browser is not supported!', 200, false);
-    }
-    else
-    {
+    } else {
         // Creates the graph inside the given container
         var graph = new mxGraph(container);
 
@@ -57,19 +53,18 @@ function main(container)
         // Adds cells to the model in a single step
         graph.getModel().beginUpdate();
 
-        try
-        {
+        try {
             var dict = {};
             // run through each element in json
-            data.forEach(function(element) {
+            data.forEach(function (element) {
                 var name = element.name;
                 // create graph element
                 var graphElement = graph.insertVertex(parent, null,
                     name, 20, 20, 150, 30);
                 // check if any parent element
-                if(element.parentObjects.length > 0) {
+                if (element.parentObjects.length > 0) {
                     // run through each parent element
-                    element.parentObjects.forEach(function(parentObj) {
+                    element.parentObjects.forEach(function (parentObj) {
                         var parentGraphElement = dict[parentObj.name];
                         // add line between current element and parent
                         graph.insertEdge(parent, null, '', parentGraphElement, graphElement);
@@ -81,9 +76,7 @@ function main(container)
                 // add element to dictionary. this is needed to find object later(parent)
                 dict[name] = graphElement;
             });
-        }
-        finally
-        {
+        } finally {
             // Updates the display
             graph.getModel().endUpdate();
 
@@ -93,7 +86,7 @@ function main(container)
 
             // Moves stuff wider apart than usual
             layout.forceConstant = 140;
-            if(root) {
+            if (root) {
                 layout.execute(parent, root);
             }
         }

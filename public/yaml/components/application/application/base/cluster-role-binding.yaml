@@ -7,5 +7,5 @@ roleRef:
   kind: ClusterRole
   name: cluster-role
 subjects:
-- kind: ServiceAccount
-  name: service-account
+  - kind: ServiceAccount
+    name: service-account

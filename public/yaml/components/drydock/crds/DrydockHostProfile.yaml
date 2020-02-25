@@ -13,7 +13,7 @@ spec:
     kind: DrydockHostProfile
     plural: drydockhostprofiles
     shortNames:
-    - dhostprof
+      - dhostprof
   scope: Namespaced
   subresources:
     status: {}
@@ -167,7 +167,7 @@ spec:
                 type: 'object'
                 properties:
                   device_link:
-                   type: 'string'
+                    type: 'string'
                   slaves:
                     type: 'array'
                     items:

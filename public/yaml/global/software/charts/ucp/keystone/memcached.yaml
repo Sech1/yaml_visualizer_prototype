@@ -15,9 +15,9 @@ spec:
     no_hooks: false
     pre:
       delete:
-      - labels:
-          release_group: airship-ucp-keystone-memcached
-        type: job
+        - labels:
+            release_group: airship-ucp-keystone-memcached
+          type: job
   values:
     endpoints:
       oslo_cache: $(PeglegEndpointCatalogue.ucp-endpoints.spec.ucp.oslo_cache)

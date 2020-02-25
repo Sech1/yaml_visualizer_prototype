@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: tenant-ceph
 
 resources:
-- ../../operator
+  - ../../operator

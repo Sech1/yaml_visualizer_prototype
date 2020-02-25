@@ -13,7 +13,7 @@ spec:
     kind: DrydockBootAction
     plural: drydockbootactions
     shortNames:
-    - dba
+      - dba
   scope: Namespaced
   subresources:
     status: {}

@@ -1,4 +1,3 @@
-
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -7,25 +6,25 @@ metadata:
   name: armadamanifests.armada.airshipit.org
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.actual_state
-    description: State
-    name: State
-    type: string
-  - JSONPath: .spec.target_state
-    description: Target State
-    name: Target State
-    type: string
-  - JSONPath: .status.satisfied
-    description: Satisfied
-    name: Satisfied
-    type: boolean
+    - JSONPath: .status.actual_state
+      description: State
+      name: State
+      type: string
+    - JSONPath: .spec.target_state
+      description: Target State
+      name: Target State
+      type: string
+    - JSONPath: .status.satisfied
+      description: Satisfied
+      name: Satisfied
+      type: boolean
   group: armada.airshipit.org
   names:
     kind: ArmadaManifest
     listKind: ArmadaManifestList
     plural: armadamanifests
     shortNames:
-    - amf
+      - amf
     singular: armadamanifest
   scope: Namespaced
   subresources:
@@ -70,9 +69,9 @@ spec:
               description: Target state of the Helm Custom Resources
               type: string
           required:
-          - chart_groups
-          - release_prefix
-          - target_state
+            - chart_groups
+            - release_prefix
+            - target_state
           type: object
         status:
           description: ======= ArmadaManifestStatus Definition ======= ArmadaManifestStatus
@@ -111,8 +110,8 @@ spec:
                   type:
                     type: string
                 required:
-                - status
-                - type
+                  - status
+                  - type
                 type: object
               type: array
             reason:
@@ -123,15 +122,15 @@ spec:
                 its target state
               type: boolean
           required:
-          - actual_state
-          - satisfied
+            - actual_state
+            - satisfied
           type: object
       type: object
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
+    - name: v1alpha1
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""

@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: drydock
 
 resources:
-- ../../operator
+  - ../../operator

@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: ucp
 
 resources:
-- ../../operator
+  - ../../operator

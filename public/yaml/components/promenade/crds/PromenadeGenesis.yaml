@@ -13,7 +13,7 @@ spec:
     kind: PromenadeGenesis
     plural: promenadegenesiss
     shortNames:
-    - pgenesis
+      - pgenesis
   scope: Namespaced
   subresources:
     status: {}
@@ -83,7 +83,7 @@ spec:
           #   rel_path:
           #     type: string
           #     # XXX add regex
-        
+
           type: object
           properties:
             armada:
@@ -92,7 +92,7 @@ spec:
                 target_manifest:
                   type: string
               # additionalProperties: false
-        
+
             apiserver:
               type: object
               properties:
@@ -101,7 +101,7 @@ spec:
                   items:
                     type: string
               # additionalProperties: false
-        
+
             files:
               type: array
               items:
@@ -123,7 +123,7 @@ spec:
                   tar_path:
                     # $ref: '#/definitions/rel_path'
                     type: string
-          
+
                 required:
                   - mode
                   - path
@@ -138,20 +138,20 @@ spec:
                           - tar_url
                           - tar_path
                 # additionalProperties: false
-        
+
             hostname:
               # $ref: '#/definitions/hostname'
               type: string
               pattern: '^[a-z][a-z0-9-]+$'
-        
+
             domain:
               type: string
-        
+
             ip:
               # $ref: '#/definitions/ip_address'
               type: string
               pattern: '^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$'
-        
+
             labels:
               properties:
                 static:
@@ -165,7 +165,7 @@ spec:
                     # $ref: '#/definitions/kubernetes_label'
                     type: string
               # additionalProperties: false
-        
+
             images:
               type: object
               properties:
@@ -207,7 +207,7 @@ spec:
                 - helm
                 - kubernetes
               # additionalProperties: false
-        
+
           required:
             - hostname
             - ip

@@ -9,7 +9,7 @@ metadata:
   namespace: shipyard
 spec:
   chart_group:
-  - keystone-rabbitmq
-  - keystone
+    - keystone-rabbitmq
+    - keystone
   description: Deploy Keystone
   target_state: uninitialized

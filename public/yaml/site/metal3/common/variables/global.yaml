@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: global
 data:
-  CLUSTER_NAME: test1 
+  CLUSTER_NAME: test1
   KUBERNETES_VERSION: "1.16.2"

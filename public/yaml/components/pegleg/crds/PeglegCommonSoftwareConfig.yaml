@@ -11,7 +11,7 @@ spec:
     kind: PeglegCommonSoftwareConfig
     plural: peglegcommonsoftwareconfigs
     shortNames:
-    - psoftconf
+      - psoftconf
   scope: Namespaced
   subresources:
     status: {}

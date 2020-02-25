@@ -11,7 +11,7 @@ spec:
     kind: PeglegSoftwareVersions
     plural: peglegsoftwareversionss
     shortNames:
-    - psoftver
+      - psoftver
   scope: Namespaced
   subresources:
     status: {}
@@ -712,7 +712,7 @@ spec:
                           type: string
                     postgresql:
                       type: object
-        
+
                       properties:
                         type:
                           type: string

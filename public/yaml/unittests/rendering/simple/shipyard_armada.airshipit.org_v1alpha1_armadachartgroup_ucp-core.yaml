@@ -7,9 +7,9 @@ metadata:
   namespace: shipyard
 spec:
   chart_group:
-  - ucp-ingress
-  - ucp-mariadb
-  - ucp-postgresql
-  - ucp-rabbitmq
+    - ucp-ingress
+    - ucp-mariadb
+    - ucp-postgresql
+    - ucp-rabbitmq
   description: Common Airship Components
   target_state: uninitialized

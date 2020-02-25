@@ -7,5 +7,5 @@ spec:
   template:
     spec:
       containers:
-      - image: keleustes/cluster-api-controller-amd64:dev
-        name: manager
+        - image: keleustes/cluster-api-controller-amd64:dev
+          name: manager

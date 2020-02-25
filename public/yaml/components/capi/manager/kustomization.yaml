@@ -6,4 +6,4 @@ kind: Kustomization
 # YAML string, with resources separated by document
 # markers ("---").
 resources:
-- manager.yaml
+  - manager.yaml

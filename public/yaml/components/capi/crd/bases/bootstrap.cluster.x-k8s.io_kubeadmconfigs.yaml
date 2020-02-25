@@ -1,4 +1,3 @@
-
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -9,7 +8,7 @@ spec:
   group: bootstrap.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: KubeadmConfig
     listKind: KubeadmConfigList
     plural: kubeadmconfigs
@@ -85,9 +84,9 @@ spec:
                             description: ReadOnly controls write access to the volume
                             type: boolean
                         required:
-                        - hostPath
-                        - mountPath
-                        - name
+                          - hostPath
+                          - mountPath
+                          - name
                         type: object
                       type: array
                     timeoutForControlPlane:
@@ -160,9 +159,9 @@ spec:
                             description: ReadOnly controls write access to the volume
                             type: boolean
                         required:
-                        - hostPath
-                        - mountPath
-                        - name
+                          - hostPath
+                          - mountPath
+                          - name
                         type: object
                       type: array
                   type: object
@@ -184,7 +183,7 @@ spec:
                       description: Type defines the DNS add-on to be used
                       type: string
                   required:
-                  - type
+                    - type
                   type: object
                 etcd:
                   description: Etcd holds configuration for etcd.
@@ -213,10 +212,10 @@ spec:
                             communication. Required if using a TLS connection.
                           type: string
                       required:
-                      - caFile
-                      - certFile
-                      - endpoints
-                      - keyFile
+                        - caFile
+                        - certFile
+                        - endpoints
+                        - keyFile
                       type: object
                     local:
                       description: Local provides configuration knobs for configuring
@@ -255,7 +254,7 @@ spec:
                             type: string
                           type: array
                       required:
-                      - dataDir
+                        - dataDir
                       type: object
                   type: object
                 featureGates:
@@ -298,9 +297,9 @@ spec:
                         Defaults to "10.96.0.0/12".
                       type: string
                   required:
-                  - dnsDomain
-                  - podSubnet
-                  - serviceSubnet
+                    - dnsDomain
+                    - podSubnet
+                    - serviceSubnet
                   type: object
                 scheduler:
                   description: Scheduler contains extra settings for the scheduler
@@ -339,9 +338,9 @@ spec:
                             description: ReadOnly controls write access to the volume
                             type: boolean
                         required:
-                        - hostPath
-                        - mountPath
-                        - name
+                          - hostPath
+                          - mountPath
+                          - name
                         type: object
                       type: array
                   type: object
@@ -364,9 +363,9 @@ spec:
                   encoding:
                     description: Encoding specifies the encoding of the file contents.
                     enum:
-                    - base64
-                    - gzip
-                    - gzip+base64
+                      - base64
+                      - gzip
+                      - gzip+base64
                     type: string
                   owner:
                     description: Owner specifies the ownership of the file, e.g. "root:root".
@@ -380,14 +379,14 @@ spec:
                       the file, e.g. "0640".
                     type: string
                 required:
-                - content
-                - path
+                  - content
+                  - path
                 type: object
               type: array
             format:
               description: Format specifies the output format of the bootstrap data
               enum:
-              - cloud-config
+                - cloud-config
               type: string
             initConfiguration:
               description: InitConfiguration along with ClusterConfiguration are the
@@ -442,7 +441,7 @@ spec:
                           type: string
                         type: array
                     required:
-                    - token
+                      - token
                     type: object
                   type: array
                 kind:
@@ -473,8 +472,8 @@ spec:
                       format: int32
                       type: integer
                   required:
-                  - advertiseAddress
-                  - bindPort
+                    - advertiseAddress
+                    - bindPort
                   type: object
                 nodeRegistration:
                   description: NodeRegistration holds fields that relate to registering
@@ -533,8 +532,8 @@ spec:
                               the taint key.
                             type: string
                         required:
-                        - effect
-                        - key
+                          - effect
+                          - key
                         type: object
                       type: array
                   type: object
@@ -574,8 +573,8 @@ spec:
                           format: int32
                           type: integer
                       required:
-                      - advertiseAddress
-                      - bindPort
+                        - advertiseAddress
+                        - bindPort
                       type: object
                   type: object
                 discovery:
@@ -618,8 +617,8 @@ spec:
                             impersonate the control-plane.
                           type: boolean
                       required:
-                      - token
-                      - unsafeSkipCAVerification
+                        - token
+                        - unsafeSkipCAVerification
                       type: object
                     file:
                       description: File is used to specify a file or URL to a kubeconfig
@@ -632,7 +631,7 @@ spec:
                             load cluster information
                           type: string
                       required:
-                      - kubeConfigPath
+                        - kubeConfigPath
                       type: object
                     timeout:
                       description: Timeout modifies the discovery timeout
@@ -709,13 +708,13 @@ spec:
                               the taint key.
                             type: string
                         required:
-                        - effect
-                        - key
+                          - effect
+                          - key
                         type: object
                       type: array
                   type: object
               required:
-              - nodeRegistration
+                - nodeRegistration
               type: object
             ntp:
               description: NTP specifies NTP configuration
@@ -786,7 +785,7 @@ spec:
                     description: Sudo specifies a sudo role for the user
                     type: string
                 required:
-                - name
+                  - name
                 type: object
               type: array
           type: object
@@ -811,9 +810,9 @@ spec:
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""

@@ -6,7 +6,7 @@ namespace: capd-system
 namePrefix: capd-
 
 commonLabels:
-    control-plane: capd-controller-manager
+  control-plane: capd-controller-manager
 
 resources:
-- provider-components.yaml
+  - provider-components.yaml

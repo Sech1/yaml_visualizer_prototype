@@ -6,8 +6,8 @@ spec:
   template:
     spec:
       containers:
-      - name: guestbook
-        image: gcr.io/heptio-images/ks-guestbook-demo:0.1
-        env:
-        - name: test
-          value: foo
+        - name: guestbook
+          image: gcr.io/heptio-images/ks-guestbook-demo:0.1
+          env:
+            - name: test
+              value: foo

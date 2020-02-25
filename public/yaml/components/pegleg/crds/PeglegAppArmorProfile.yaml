@@ -13,7 +13,7 @@ spec:
     kind: PeglegAppArmorProfile
     plural: peglegapparmorprofiles
     shortNames:
-    - parmprof
+      - parmprof
   scope: Namespaced
   subresources:
     status: {}

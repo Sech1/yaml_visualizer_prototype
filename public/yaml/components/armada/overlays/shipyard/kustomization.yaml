@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: shipyard
 
 resources:
-- ../../operator
+  - ../../operator

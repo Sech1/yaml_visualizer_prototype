@@ -12,7 +12,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: VSphereCluster
     plural: vsphereclusters
   scope: Namespaced
@@ -213,21 +213,21 @@ spec:
                     description: The port on which the API server is serving.
                     type: integer
                 required:
-                - host
-                - port
+                  - host
+                  - port
                 type: object
               type: array
             ready:
               type: boolean
           required:
-          - ready
+            - ready
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -244,7 +244,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: VSphereMachine
     plural: vspheremachines
   scope: Namespaced
@@ -366,9 +366,9 @@ spec:
                               description: Via is an IPv4 or IPv6 address.
                               type: string
                           required:
-                          - metric
-                          - to
-                          - via
+                            - metric
+                            - to
+                            - via
                           type: object
                         type: array
                       searchDomains:
@@ -378,7 +378,7 @@ spec:
                           type: string
                         type: array
                     required:
-                    - networkName
+                      - networkName
                     type: object
                   type: array
                 preferredAPIServerCidr:
@@ -402,13 +402,13 @@ spec:
                         description: Via is an IPv4 or IPv6 address.
                         type: string
                     required:
-                    - metric
-                    - to
-                    - via
+                      - metric
+                      - to
+                      - via
                     type: object
                   type: array
               required:
-              - devices
+                - devices
               type: object
             ntpServers:
               description: NTPServers is a list of NTP servers to use instead of the
@@ -444,9 +444,9 @@ spec:
                 type: string
               type: array
           required:
-          - datacenter
-          - network
-          - template
+            - datacenter
+            - network
+            - template
           type: object
         status:
           description: VSphereMachineStatus defines the observed state of VSphereMachine
@@ -464,8 +464,8 @@ spec:
                       InternalIP.
                     type: string
                 required:
-                - address
-                - type
+                  - address
+                  - type
                 type: object
               type: array
             errorMessage:
@@ -521,7 +521,7 @@ spec:
                     description: NetworkName is the name of the network.
                     type: string
                 required:
-                - macAddr
+                  - macAddr
                 type: object
               type: array
             ready:
@@ -536,9 +536,9 @@ spec:
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -555,7 +555,7 @@ spec:
   group: infrastructure.cluster.x-k8s.io
   names:
     categories:
-    - cluster-api
+      - cluster-api
     kind: VSphereMachineTemplate
     plural: vspheremachinetemplates
   scope: Namespaced
@@ -684,10 +684,10 @@ spec:
                             description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                             type: string
                         required:
-                        - apiVersion
-                        - kind
-                        - name
-                        - uid
+                          - apiVersion
+                          - kind
+                          - name
+                          - uid
                         type: object
                       type: array
                   type: object
@@ -795,9 +795,9 @@ spec:
                                       description: Via is an IPv4 or IPv6 address.
                                       type: string
                                   required:
-                                  - metric
-                                  - to
-                                  - via
+                                    - metric
+                                    - to
+                                    - via
                                   type: object
                                 type: array
                               searchDomains:
@@ -807,7 +807,7 @@ spec:
                                   type: string
                                 type: array
                             required:
-                            - networkName
+                              - networkName
                             type: object
                           type: array
                         preferredAPIServerCidr:
@@ -833,13 +833,13 @@ spec:
                                 description: Via is an IPv4 or IPv6 address.
                                 type: string
                             required:
-                            - metric
-                            - to
-                            - via
+                              - metric
+                              - to
+                              - via
                             type: object
                           type: array
                       required:
-                      - devices
+                        - devices
                       type: object
                     ntpServers:
                       description: NTPServers is a list of NTP servers to use instead
@@ -875,22 +875,22 @@ spec:
                         type: string
                       type: array
                   required:
-                  - datacenter
-                  - network
-                  - template
+                    - datacenter
+                    - network
+                    - template
                   type: object
               required:
-              - spec
+                - spec
               type: object
           required:
-          - template
+            - template
           type: object
       type: object
   version: v1alpha2
   versions:
-  - name: v1alpha2
-    served: true
-    storage: true
+    - name: v1alpha2
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -904,26 +904,26 @@ metadata:
   name: leader-election-role
   namespace: system
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - configmaps/status
-  verbs:
-  - get
-  - update
-  - patch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps/status
+    verbs:
+      - get
+      - update
+      - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -931,103 +931,103 @@ metadata:
   creationTimestamp: null
   name: manager-role
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - clusters
-  - clusters/status
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - cluster.x-k8s.io
-  resources:
-  - machines
-  - machines/status
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - create
-  - get
-  - list
-  - patch
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - vsphereclusters
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - vsphereclusters/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - vspheremachines
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - infrastructure.cluster.x-k8s.io
-  resources:
-  - vspheremachines/status
-  verbs:
-  - get
-  - patch
-  - update
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - clusters
+      - clusters/status
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - cluster.x-k8s.io
+    resources:
+      - machines
+      - machines/status
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - vsphereclusters
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - vsphereclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - vspheremachines
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - infrastructure.cluster.x-k8s.io
+    resources:
+      - vspheremachines/status
+    verbs:
+      - get
+      - patch
+      - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: proxy-role
 rules:
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
-- apiGroups:
-  - authorization.k8s.io
-  resources:
-  - subjectaccessreviews
-  verbs:
-  - create
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1039,9 +1039,9 @@ roleRef:
   kind: Role
   name: leader-election-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1052,9 +1052,9 @@ roleRef:
   kind: ClusterRole
   name: manager-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1065,9 +1065,9 @@ roleRef:
   kind: ClusterRole
   name: proxy-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: system
+  - kind: ServiceAccount
+    name: default
+    namespace: system
 ---
 apiVersion: v1
 kind: Service
@@ -1080,9 +1080,9 @@ metadata:
   namespace: system
 spec:
   ports:
-  - name: https
-    port: 8443
-    targetPort: https
+    - name: https
+      port: 8443
+      targetPort: https
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -1094,20 +1094,20 @@ spec:
   template:
     spec:
       containers:
-      - args:
-        - --enable-leader-election
-        env:
-        - name: VSPHERE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              key: username
-              name: manager-bootstrap-credentials
-        - name: VSPHERE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: password
-              name: manager-bootstrap-credentials
-        image: gcr.io/cluster-api-provider-vsphere/release/manager:latest
-        imagePullPolicy: Always
-        name: manager
+        - args:
+            - --enable-leader-election
+          env:
+            - name: VSPHERE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: manager-bootstrap-credentials
+            - name: VSPHERE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: manager-bootstrap-credentials
+          image: gcr.io/cluster-api-provider-vsphere/release/manager:latest
+          imagePullPolicy: Always
+          name: manager
       terminationGracePeriodSeconds: 10
