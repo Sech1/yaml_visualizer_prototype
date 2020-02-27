@@ -1,0 +1,38 @@
+.graphHeader {
+    color: white;
+    background-color: black;
+    margin-bottom: 10px !important;
+}
+
+#jsmind_container {
+    overflow: hidden;
+    width: 100%;
+    height: 800px !important;
+    background:url('https://jgraph.github.io/mxgraph/javascript/examples/editors/images/grid.gif');
+    border: 1px solid black;
+    margin-bottom: 10px !important;
+}
+
+#json-text-container {
+    width: 100% !important;
+    height: 600px !important;
+}
+
+hr.style18 {
+    height: 30px;
+    border-style: solid;
+    border-color: #8c8b8b;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    margin-bottom: 0 !important;
+}
+hr.style18:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: #8c8b8b;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}

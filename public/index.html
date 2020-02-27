@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="jsMind/style/jsmind.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <!-- Sets the basepath for the library if not in same directory -->
     <script type="text/javascript">
         mxBasePath = 'mxGraph/src';
@@ -9,18 +11,45 @@
     <meta charset="utf-8">
     <title>YAML Visualizer Prototype</title>
 </head>
+
 <body>
-<h1>Yaml Graph</h1>
+<div class="container">
+    <div class="row w-100 graphHeader">
+        <div class="col">
+            <h2 class="graphHeader">Yaml Graph</h2>
+        </div>
+    </div>
+</div>
+
 <!-- Creates a container for the graph with a grid wallpaper -->
-<div id="jsmind_container"
-     style="overflow:hidden;width:1200px;height:1000px;background:url('https://jgraph.github.io/mxgraph/javascript/examples/editors/images/grid.gif')">
+<div class="container w-100">
+    <div class="row w-100">
+        <div class="col">
+            <div id="jsmind_container">
+            </div>
+        </div>
+    </div>
 </div>
-<div id="json-container" style="margin-top: 20px;">
-    <textarea id="json-text-container" style="width: 500px; height: 400px;"></textarea>
+<div class="container">
+    <div class="row w-100">
+        <div class="col w-100"><hr class="style18"></div>
+    </div>
 </div>
+<div class="container w-100">
+    <div class="row w-100">
+        <div class="col w-100">
+            <div id="json-container">
+                <textarea id="json-text-container"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 <script src="jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="jsMind/js/jsmind.js"></script>
 <script type="text/javascript" src="jsMind/js/jsmind.draggable.js"></script>
 <script type="text/javascript" src="jsMind/js/jsmind.screenshot.js"></script>
