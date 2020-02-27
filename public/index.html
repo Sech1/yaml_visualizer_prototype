@@ -13,38 +13,37 @@
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row w-100 graphHeader">
-        <div class="col">
-            <h2 class="graphHeader">Yaml Graph</h2>
+<nav class="navbar fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="mindmap-svgrepo-com.svg" width="30" height="30" class="d-inline-block align-top" id="svg" alt="">
+        Yaml Graph
+    </a>
+</nav>
+<div class="container-fluid master-container">
+    <!-- Creates a container for the graph with a grid wallpaper -->
+    <div class="container-fluid w-100 jsmind-master-container">
+        <div class="row w-100">
+            <div class="col">
+                <div id="jsmind_container">
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- Creates a container for the graph with a grid wallpaper -->
-<div class="container-fluid w-100">
-    <div class="row w-100">
-        <div class="col">
-            <div id="jsmind_container">
+    <div class="container-fluid">
+        <div class="row w-100 text-center">
+            <div class="col w-100"><hr class="style18"></div>
+        </div>
+    </div>
+    <div class="container-fluid w-100 json-master-container">
+        <div class="row w-100">
+            <div class="col w-100 text-center">
+                <div id="json-container">
+                    <textarea id="json-text-container"></textarea>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="row w-100">
-        <div class="col w-100"><hr class="style18"></div>
-    </div>
-</div>
-<div class="container-fluid w-100">
-    <div class="row w-100">
-        <div class="col w-100">
-            <div id="json-container">
-                <textarea id="json-text-container"></textarea>
-            </div>
-        </div>
-    </div>
-</div>
-
 </body>
 
 <script src="jquery-3.4.1.min.js"></script>
