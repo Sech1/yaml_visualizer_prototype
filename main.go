@@ -3,14 +3,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"gopkg.in/yaml.v2"
 )
 
 type JsonData struct {
@@ -88,7 +89,9 @@ func main() {
 		var yamlArray []YamlDataObj
 		for i, v := range yamlFiles {
 			yamlArray = ReadYaml(v, yamlArray)
+			//yamlArray = ReadYaml("pikachu", yamlArray)
 			fmt.Println(yamlArray[i])
+			fmt.Println("boi")
 		}
 		msg := ReturnGraphJson(yamlArray)
 		var test = string(msg)
@@ -120,16 +123,40 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 					newNode.Topic = v.YamlName
 					newNode.Children = []JsMindGraphObj{}
 					for _, vk := range valObj {
-						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
-							Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
+						var holder=vk.(string)
+						 holder2 := strings.SplitN(holder, "/", -1) 
+						//var startingNode JsMindGraphObj
+						//vk2 is an array of the string vk.(string) split up buy the "/"
+						//this loop is suposed to add each word file name from vk.(string)
+						//to tempObj.Children
+						for _,vk2 :=range holder2{
+						
+						var tempObj = JsMindGraphObj{Id: vk2, Topic: vk2,
+							Direction: "right", Expanded: true, Children: []JsMindGraphObj{}}
+						//im making a new item to add to tempObj.Children
+						// this item means nothing and is only a placeholder for testing
+						var tempObj2 = JsMindGraphObj{Id: "fake", Topic: "fake",
+							Direction: "right", Expanded: true, Children: []JsMindGraphObj{}}
+						//THIS IS THE LINE
+						tempObj.Children = append(tempObj.Children, tempObj2)
 						newNode.Children = append(newNode.Children, tempObj)
+						
+						}
+						
+						
 					}
+
+					
+					 
 					children = append(children, newNode)
 					log.Printf(valObj[0].(string))
 				}
 			}
 		}
 	}
+
+
+	
 
 	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
 		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
@@ -141,6 +168,46 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 	return returnArray
 }
 
+// Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
+func ReturnGraphJson2(yamlArray []YamlDataObj) []byte {
+	var children []JsMindGraphObj
+	for i, v := range yamlArray {
+		log.Printf("Processing Yaml # %d", i)
+		log.Printf(" [x] Pulled JSON: %s", v)
+		//test := .(map[string]interface{})["metadata"].(map[string]interface{})["name"]
+		if v.YamlObj != nil {
+			if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
+				var newNode JsMindGraphObj
+				if valObj, ok := val.([]interface{}); ok {
+					newNode.Id = "boi"
+					newNode.Expanded = true
+					newNode.Direction = "right"
+					newNode.Topic = v.YamlName
+					newNode.Children = []JsMindGraphObj{}
+					for _, vk := range valObj {
+						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
+							Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
+						newNode.Children = append(newNode.Children, tempObj)
+					}
+					children = append(children, newNode)
+					log.Printf(valObj[0].(string))
+				}
+			}
+		}
+	}
+
+
+	
+
+	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
+		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
+			Children: children}}
+	returnArray, err := json.Marshal(jsonRoot)
+	if err != nil {
+		log.Println(err)
+	}
+	return returnArray
+}
 //
 func WalkMatch(root, pattern string) ([]string, error) {
 	var matches []string
@@ -165,12 +232,15 @@ func WalkMatch(root, pattern string) ([]string, error) {
 }
 
 func readFile(filePath string, yaml *[]string) {
+	strings.Replace(filePath, "/", "hello there", -1)
 	data, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Println("File reading error", err)
 		return
 	}
+	
 	*yaml = append(*yaml, string(data))
+	
 }
 
 // Handles reading yaml files and putting the data into interfaces
@@ -193,8 +263,8 @@ func ReadYaml(filePath string, yamlArray []YamlDataObj) []YamlDataObj {
 	if err != nil {
 		fmt.Println(err)
 	}
-	yamlName := strings.Replace(filePath, fmt.Sprintf("%s/public/yaml/", myDir), "", 1)
-	yamlName = strings.Replace(yamlName, "/kustomization.yaml", "", 1)
+	yamlName := strings.Replace(filePath,myDir, "", -1)
+	yamlName = strings.Replace(yamlName, "yaml", "hello there", -1)
 	yamlObj := YamlDataObj{filePath, yamlName, body}
 	yamlArray = append(yamlArray, yamlObj)
 	return yamlArray
