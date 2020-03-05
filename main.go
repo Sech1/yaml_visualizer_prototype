@@ -105,6 +105,7 @@ func main() {
 
 // Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
 func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
+	var direction = "right"
 	var children []JsMindGraphObj
 	for i, v := range yamlArray {
 		log.Printf("Processing Yaml # %d", i)
@@ -116,7 +117,12 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 				if valObj, ok := val.([]interface{}); ok {
 					newNode.Id = v.YamlName
 					newNode.Expanded = true
-					newNode.Direction = "right"
+					newNode.Direction = direction
+					if (direction == "right") {
+						direction = "left"
+					} else {
+						direction = "right"
+					}
 					newNode.Topic = v.YamlName
 					newNode.Children = []JsMindGraphObj{}
 					for _, vk := range valObj {
