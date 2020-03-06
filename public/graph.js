@@ -20,7 +20,7 @@ function loadGraph() {
 function load_jsMind(mind) {
     var options = {
         container: 'jsmind_container',
-        editable: true,
+        editable: false,
         theme: 'orange'
     };
     var jm = new jsMind(options);
