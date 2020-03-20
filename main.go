@@ -78,22 +78,28 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// Create list of yaml files & data
+	yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "kustomization.yaml")
+	// Read all yaml files into an array
+	var yamlArray []YamlDataObj
+	for i, v := range yamlFiles {
+		yamlArray = ReadYaml(v, yamlArray)
+		fmt.Println(yamlArray[i])
+	}
+
 	// Get route for API endpoint to return json data to build mindmap
 	router.GET("/api", func(c *gin.Context) {
 		// Return list of all yaml file locations
-		yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "kustomization.yaml")
 		fmt.Println(err)
 
-		// Read all yaml files into an array
-		var yamlArray []YamlDataObj
-		for i, v := range yamlFiles {
-			yamlArray = ReadYaml(v, yamlArray)
-			fmt.Println(yamlArray[i])
-		}
 		msg := ReturnGraphJson(yamlArray)
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
+	})
+
+	router.GET("/yaml_links", func(c *gin.Context) {
+
 	})
 
 	if debug {
@@ -116,9 +122,9 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 				var newNode JsMindGraphObj
 				if valObj, ok := val.([]interface{}); ok {
 					newNode.Id = v.YamlName
-					newNode.Expanded = true
+					newNode.Expanded = false
 					newNode.Direction = direction
-					if (direction == "right") {
+					if direction == "right" {
 						direction = "left"
 					} else {
 						direction = "right"
@@ -147,7 +153,6 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 	return returnArray
 }
 
-//
 func WalkMatch(root, pattern string) ([]string, error) {
 	var matches []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
