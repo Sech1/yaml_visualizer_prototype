@@ -99,7 +99,7 @@ func main() {
 	})
 
 	router.GET("/yaml_links", func(c *gin.Context) {
-
+		c.JSON(http.StatusOK, CreateNodeLinkDict(yamlArray, myDir))
 	})
 
 	if debug {
@@ -107,6 +107,22 @@ func main() {
 	} else {
 		router.RunTLS(":8080", "/server_keys/cert.pem", "/server_keys/privkey.pem")
 	}
+}
+
+func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
+	linkMap := make(map[string]string)
+
+	for _, v := range yamlArray {
+		_, exist := linkMap[v.YamlName]
+		if !exist {
+			link := strings.Replace(v.YamlPath, directory, "", 1)
+			link = strings.Replace(link, "public", "index", 1)
+			linkMap[v.YamlName] = link
+		}
+	}
+
+	returnData, _ := json.Marshal(linkMap)
+	return returnData
 }
 
 // Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
