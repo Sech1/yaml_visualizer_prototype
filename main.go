@@ -118,6 +118,22 @@ func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
 			link := strings.Replace(v.YamlPath, directory, "", 1)
 			link = strings.Replace(link, "public", "index", 1)
 			linkMap[v.YamlName] = link
+
+			if v.YamlObj != nil {
+				if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
+					if valObj, ok := val.([]interface{}); ok {
+						for _, vk := range valObj {
+							_, exist := linkMap[vk.(string)]
+							if !exist {
+								link := strings.Replace(vk.(string), "./", "", 1)
+								link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
+									"/kustomization.yaml", "", 1), link)
+								linkMap[vk.(string)] = link
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
