@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -126,8 +127,23 @@ func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
 							_, exist := linkMap[vk.(string)]
 							if !exist {
 								link := strings.Replace(vk.(string), "./", "", 1)
-								link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
-									"/kustomization.yaml", "", 1), link)
+								if !strings.Contains("../", link) {
+									regEx := regexp.MustCompile("../")
+									matches := regEx.FindAllStringIndex(link, -1)
+									splitLink := strings.Split(link, "/")
+									directoryWalkCount := len(matches) - len(splitLink)
+									var newLink string = strings.Replace(v.YamlPath, directory, "", 1)
+									newLink = strings.Replace(newLink, "public", "index", 1)
+									var sbLink strings.Builder
+									sbLink.WriteString(newLink)
+									for i := 1; i < directoryWalkCount; i++ {
+											sbLink.WriteString(fmt.Sprintf("/%s", splitLink[i]))
+									}
+									link = sbLink.String()
+								} else {
+									link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
+										"/kustomization.yaml", "", 1), link)
+								}
 								linkMap[vk.(string)] = link
 							}
 						}
