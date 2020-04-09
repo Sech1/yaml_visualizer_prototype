@@ -8,8 +8,9 @@ function loadGraph() {
         success: function (json) {
             data = JSON.parse(atob(json));
             console.log(data);
-            load_jsMind(data);
+            load_jsMind(data)
             $("#json-text-container").val(JSON.stringify(data));
+            buildLinks();
         },
         error: function (error) {
             alert(error);
@@ -31,6 +32,32 @@ function load_jsMind(mind) {
     // alert(mind_data);
     //jm.add_node("sub2","sub23", "new node", {"background-color":"red"});
     //jm.set_node_color('sub21', 'green', '#ccc');
+}
+
+function buildLinks() {
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "/yaml_links",
+        success: function (json) {
+            data = JSON.parse(atob(json));
+            console.log(data);
+
+            $("jmnode").each(function () {
+                console.log($(this).attr("nodeid"));
+
+                var link = data[$(this).attr("nodeid")];
+                const originUrl = window.location.origin;
+                $($(this)).on("click", function () {
+                    window.open(`${originUrl}${link}`, '_blank');
+                });
+
+            });
+        },
+        error: function (error) {
+            alert(error);
+        },
+    });
 }
 
 // Old mxGraph function, probably won't be used.

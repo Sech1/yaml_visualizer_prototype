@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -78,22 +79,28 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// Create list of yaml files & data
+	yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "kustomization.yaml")
+	// Read all yaml files into an array
+	var yamlArray []YamlDataObj
+	for i, v := range yamlFiles {
+		yamlArray = ReadYaml(v, yamlArray)
+		fmt.Println(yamlArray[i])
+	}
+
 	// Get route for API endpoint to return json data to build mindmap
 	router.GET("/api", func(c *gin.Context) {
 		// Return list of all yaml file locations
-		yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "kustomization.yaml")
 		fmt.Println(err)
 
-		// Read all yaml files into an array
-		var yamlArray []YamlDataObj
-		for i, v := range yamlFiles {
-			yamlArray = ReadYaml(v, yamlArray)
-			fmt.Println(yamlArray[i])
-		}
 		msg := ReturnGraphJson(yamlArray)
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
+	})
+
+	router.GET("/yaml_links", func(c *gin.Context) {
+		c.JSON(http.StatusOK, CreateNodeLinkDict(yamlArray, myDir))
 	})
 
 	if debug {
@@ -103,8 +110,56 @@ func main() {
 	}
 }
 
+func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
+	linkMap := make(map[string]string)
+
+	for _, v := range yamlArray {
+		_, exist := linkMap[v.YamlName]
+		if !exist {
+			link := strings.Replace(v.YamlPath, directory, "", 1)
+			link = strings.Replace(link, "public", "index", 1)
+			linkMap[v.YamlName] = link
+
+			if v.YamlObj != nil {
+				if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
+					if valObj, ok := val.([]interface{}); ok {
+						for _, vk := range valObj {
+							_, exist := linkMap[vk.(string)]
+							if !exist {
+								link := strings.Replace(vk.(string), "./", "", 1)
+								if !strings.Contains("../", link) {
+									regEx := regexp.MustCompile("../")
+									matches := regEx.FindAllStringIndex(link, -1)
+									splitLink := strings.Split(link, "/")
+									directoryWalkCount := len(matches) - len(splitLink)
+									var newLink string = strings.Replace(v.YamlPath, directory, "", 1)
+									newLink = strings.Replace(newLink, "public", "index", 1)
+									var sbLink strings.Builder
+									sbLink.WriteString(newLink)
+									for i := 1; i < directoryWalkCount; i++ {
+											sbLink.WriteString(fmt.Sprintf("/%s", splitLink[i]))
+									}
+									link = sbLink.String()
+								} else {
+									link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
+										"/kustomization.yaml", "", 1), link)
+								}
+								linkMap[vk.(string)] = link
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	returnData, _ := json.Marshal(linkMap)
+	return returnData
+}
+
 // Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
 func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
+	var direction = "right"
 	var children []JsMindGraphObj
 	for i, v := range yamlArray {
 		log.Printf("Processing Yaml # %d", i)
@@ -115,8 +170,13 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 				var newNode JsMindGraphObj
 				if valObj, ok := val.([]interface{}); ok {
 					newNode.Id = v.YamlName
-					newNode.Expanded = true
-					newNode.Direction = "right"
+					newNode.Expanded = false
+					newNode.Direction = direction
+					if direction == "right" {
+						direction = "left"
+					} else {
+						direction = "right"
+					}
 					newNode.Topic = v.YamlName
 					newNode.Children = []JsMindGraphObj{}
 					for _, vk := range valObj {
@@ -141,7 +201,6 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 	return returnArray
 }
 
-//
 func WalkMatch(root, pattern string) ([]string, error) {
 	var matches []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
