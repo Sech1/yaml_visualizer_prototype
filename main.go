@@ -118,6 +118,7 @@ func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
 		if !exist {
 			link := strings.Replace(v.YamlPath, directory, "", 1)
 			link = strings.Replace(link, "public", "index", 1)
+			originalLink := link
 			linkMap[v.YamlName] = link
 
 			if v.YamlObj != nil {
@@ -126,23 +127,37 @@ func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
 						for _, vk := range valObj {
 							_, exist := linkMap[vk.(string)]
 							if !exist {
-								link := strings.Replace(vk.(string), "./", "", 1)
-								if !strings.Contains("../", link) {
-									regEx := regexp.MustCompile("../")
-									matches := regEx.FindAllStringIndex(link, -1)
-									splitLink := strings.Split(link, "/")
-									directoryWalkCount := len(matches) - len(splitLink)
-									var newLink string = strings.Replace(v.YamlPath, directory, "", 1)
+								if strings.Contains(vk.(string), ".yaml") {
+									link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
+										"/kustomization.yaml", "", 1),
+										strings.Replace(vk.(string), "./", "", 1))
+								} else if strings.Contains(vk.(string), "../") {
+									link = originalLink
+									regEx := regexp.MustCompile(`\.\./`)
+									matches := regEx.FindAllString(vk.(string), -1)
+									splitLink := strings.Split(strings.Replace(originalLink, "/kustomization.yaml", "", 1), "/")
+									directoryWalkCount := len(splitLink) - len(matches)
+									var newLink = strings.Replace(v.YamlPath, directory, "", 1)
 									newLink = strings.Replace(newLink, "public", "index", 1)
 									var sbLink strings.Builder
-									sbLink.WriteString(newLink)
 									for i := 1; i < directoryWalkCount; i++ {
-											sbLink.WriteString(fmt.Sprintf("/%s", splitLink[i]))
+										sbLink.WriteString(fmt.Sprintf("/%s", splitLink[i]))
 									}
+									sbLink.WriteString("/")
+									sbLink.WriteString(strings.Replace(vk.(string), "../", "", len(matches)))
+									sbLink.WriteString("/kustomization.yaml")
+									link = sbLink.String()
+								} else if strings.Contains(vk.(string), "./") {
+									var sbLink strings.Builder
+									sbLink.WriteString(fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
+										"/kustomization.yaml", "", 1),
+										strings.Replace(vk.(string), "./", "", 1)))
+									sbLink.WriteString("/kustomization.yaml")
 									link = sbLink.String()
 								} else {
 									link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
-										"/kustomization.yaml", "", 1), link)
+										"/kustomization.yaml", "", 1),
+										strings.Replace(vk.(string), "./", "", 1))
 								}
 								linkMap[vk.(string)] = link
 							}
