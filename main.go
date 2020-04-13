@@ -95,7 +95,7 @@ func main() {
 		// Return list of all yaml file locations
 		fmt.Println(err)
 
-		msg := makeGraph(fmt.Sprintf("%s/public/yaml/", myDir))
+		msg := makeGraph(fmt.Sprintf("%s/public/yaml/components/armada/", myDir))
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
