@@ -1,5 +1,6 @@
 package main
 
+
 import (
 	"encoding/json"
 	"fmt"
@@ -8,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"opendev.org/airship/airshipctl/pkg/document"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -61,12 +63,12 @@ func check(e error) {
 }
 
 func main() {
-	var debug = false
-	if os.Args[1] == "-d" {
+	var debug = true
+	/*if os.Args[1] == "-d" {
 		debug = true
 	} else if os.Args[1] == "-p" {
 		debug = false
-	}
+	}*/
 
 	router := gin.Default()
 	// Set a lower memory limit for multipart forms (default is 32 MiB)
@@ -93,7 +95,7 @@ func main() {
 		// Return list of all yaml file locations
 		fmt.Println(err)
 
-		msg := ReturnGraphJson(yamlArray)
+		msg := makeGraph(fmt.Sprintf("%s/public/yaml/components/armada/", myDir))
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
@@ -206,6 +208,52 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 		}
 	}
 
+	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
+		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
+			Children: children}}
+	returnArray, err := json.Marshal(jsonRoot)
+	if err != nil {
+		log.Println(err)
+	}
+	return returnArray
+}
+
+func makeGraph(root string) []byte{
+	var direction = "right"
+	var children []JsMindGraphObj
+	docBundle, err := document.NewBundleByPath(root)
+	if err != nil{
+		log.Println(err)
+	}
+	Docs, err := docBundle.GetAllDocuments()
+	for i, d := range Docs {
+		log.Printf("Processing Yaml # %d", i)
+		log.Printf(" [x] Pulled Document: %s", d.GetName())
+		if d != nil {
+		//	if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
+				var newNode JsMindGraphObj
+				//if valObj, ok := val.([]interface{}); ok {
+					newNode.Id = d.GetName()
+					newNode.Expanded = false
+					newNode.Direction = direction
+					if direction == "right" {
+						direction = "left"
+					} else {
+						direction = "right"
+					}
+					newNode.Topic = d.GetName()
+					newNode.Children = []JsMindGraphObj{}
+					/*for _, vk := range valObj {
+						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
+							Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
+						newNode.Children = append(newNode.Children, tempObj)
+					}
+					children = append(children, newNode)
+					log.Printf(valObj[0].(string))
+				}
+			}*/
+		}
+	}
 	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
 		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
 			Children: children}}
