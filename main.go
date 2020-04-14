@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	//"go/types"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -15,6 +16,21 @@ import (
 	"regexp"
 	"strings"
 )
+
+type SpaceName struct{
+	Name		string
+	children	[]DocTypes
+}
+
+type DocTypes struct{
+	Name 		string
+	children 	[]Docs
+}
+
+type Docs struct{
+	name 		string
+	filepath 	string
+}
 
 type JsonData struct {
 	Name          string          `json:"name"`
@@ -95,7 +111,7 @@ func main() {
 		// Return list of all yaml file locations
 		fmt.Println(err)
 
-		msg := makeGraph(fmt.Sprintf("%s/public/yaml/components/armada/", myDir))
+		msg := makeGraph(yamlArray)
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
@@ -175,7 +191,7 @@ func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
 }
 
 // Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
-func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
+/*func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 	var direction = "right"
 	var children []JsMindGraphObj
 	for i, v := range yamlArray {
@@ -216,23 +232,26 @@ func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
 		log.Println(err)
 	}
 	return returnArray
-}
+}*/
 
-func makeGraph(root string) []byte{
+func makeGraph(yamlArray []YamlDataObj) []byte{
 	var direction = "right"
 	var children []JsMindGraphObj
-	docBundle, err := document.NewBundleByPath(root)
-	if err != nil{
-		log.Println(err)
-	}
-	Docs, err := docBundle.GetAllDocuments()
-	for i, d := range Docs {
+	var folder []document.Document
+	//var namespaces []NameSpace
+	for i, _ := range yamlArray {
+		docBundle, err := document.NewBundleByPath(filepath.Dir(yamlArray[i].YamlPath))
 		log.Printf("Processing Yaml # %d", i)
-		log.Printf(" [x] Pulled Document: %s", d.GetName())
-		if d != nil {
-		//	if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
+		if err != nil{
+			log.Println(err)
+		} else {
+		folder, err = docBundle.GetAllDocuments()
+
+		//if v.YamlObj != nil {
+			for _, d := range folder {
+				log.Printf(" [x] Pulled Document: %s", d.GetName())
 				var newNode JsMindGraphObj
-				//if valObj, ok := val.([]interface{}); ok {
+				//if valObj := d; {
 					newNode.Id = d.GetName()
 					newNode.Expanded = false
 					newNode.Direction = direction
@@ -243,17 +262,17 @@ func makeGraph(root string) []byte{
 					}
 					newNode.Topic = d.GetName()
 					newNode.Children = []JsMindGraphObj{}
-					/*for _, vk := range valObj {
+					/*for _, vk := range Docs {
 						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
 							Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
 						newNode.Children = append(newNode.Children, tempObj)
-					}
+					}*/
 					children = append(children, newNode)
-					log.Printf(valObj[0].(string))
+					log.Printf(d.GetName())
 				}
-			}*/
+			}
 		}
-	}
+	//}
 	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
 		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
 			Children: children}}
