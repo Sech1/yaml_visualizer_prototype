@@ -17,3 +17,6 @@
 
 # GoLand User Dir
 .idea/
+
+# Mac Stuff
+.DS_Store

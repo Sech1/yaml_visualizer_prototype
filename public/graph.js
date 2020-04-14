@@ -21,8 +21,8 @@ function loadGraph() {
 function load_jsMind(mind) {
     var options = {
         container: 'jsmind_container',
-        editable: true,
-        theme: 'orange'
+        editable: false,
+        theme: 'belizehole'
     };
     var jm = new jsMind(options);
     // show it
