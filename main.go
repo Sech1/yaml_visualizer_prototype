@@ -11,7 +11,6 @@ import (
 	"opendev.org/airship/airshipctl/pkg/document"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 )
 
@@ -43,10 +42,6 @@ type YamlDataObj struct {
 	YamlPath string
 	YamlName string
 	YamlObj  interface{}
-}
-
-type Request struct {
-	RequestedId string
 }
 
 func main() {
@@ -102,70 +97,7 @@ func main() {
 	}
 }
 
-// Handles looping through yamlArray to create links to yaml documents
-// Used by API to enable view yaml on-click functionality.
-func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
-	linkMap := make(map[string]string)
-
-	for _, v := range yamlArray {
-		_, exist := linkMap[v.YamlName]
-		if !exist {
-			link := strings.Replace(v.YamlPath, directory, "", 1)
-			link = strings.Replace(link, "public", "index", 1)
-			originalLink := link
-			linkMap[v.YamlName] = link
-
-			if v.YamlObj != nil {
-				if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
-					if valObj, ok := val.([]interface{}); ok {
-						for _, vk := range valObj {
-							_, exist := linkMap[vk.(string)]
-							if !exist {
-								if strings.Contains(vk.(string), ".yaml") {
-									link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
-										"/kustomization.yaml", "", 1),
-										strings.Replace(vk.(string), "./", "", 1))
-								} else if strings.Contains(vk.(string), "../") {
-									link = originalLink
-									regEx := regexp.MustCompile(`\.\./`)
-									matches := regEx.FindAllString(vk.(string), -1)
-									splitLink := strings.Split(strings.Replace(originalLink, "/kustomization.yaml", "", 1), "/")
-									directoryWalkCount := len(splitLink) - len(matches)
-									var newLink = strings.Replace(v.YamlPath, directory, "", 1)
-									newLink = strings.Replace(newLink, "public", "index", 1)
-									var sbLink strings.Builder
-									for i := 1; i < directoryWalkCount; i++ {
-										sbLink.WriteString(fmt.Sprintf("/%s", splitLink[i]))
-									}
-									sbLink.WriteString("/")
-									sbLink.WriteString(strings.Replace(vk.(string), "../", "", len(matches)))
-									sbLink.WriteString("/kustomization.yaml")
-									link = sbLink.String()
-								} else if strings.Contains(vk.(string), "./") {
-									var sbLink strings.Builder
-									sbLink.WriteString(fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
-										"/kustomization.yaml", "", 1),
-										strings.Replace(vk.(string), "./", "", 1)))
-									sbLink.WriteString("/kustomization.yaml")
-									link = sbLink.String()
-								} else {
-									link = fmt.Sprintf("%s/%s", strings.Replace(linkMap[v.YamlName],
-										"/kustomization.yaml", "", 1),
-										strings.Replace(vk.(string), "./", "", 1))
-								}
-								linkMap[vk.(string)] = link
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	returnData, _ := json.Marshal(linkMap)
-	return returnData
-}
-
+// Builds a graph representation based off of kustomization files stored on the server.
 func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byte {
 	// Map of string that correlates to an array of documents
 	nameSpaceMap := make(map[string][]document.Document)
@@ -173,15 +105,17 @@ func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byt
 	var children []JsMindGraphObj
 	var folder []document.Document
 
-	//var namespaces []NameSpace
+	// For each kustomization file build a bundle
 	for i := range yamlArray {
 		docBundle, err := document.NewBundleByPath(filepath.Dir(yamlArray[i].YamlPath))
 		log.Printf("Processing Yaml # %d", i)
 		if err != nil {
 			log.Println(err)
 		} else {
+			// Get all documents within that bundle
 			folder, err = docBundle.GetAllDocuments()
 			if folder != nil {
+				// For each document find the namespace and add it to the map.
 				for _, d := range folder {
 					nameSpaceMap[d.GetNamespace()] = append(nameSpaceMap[d.GetNamespace()], d)
 				}
@@ -189,35 +123,48 @@ func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byt
 		}
 	}
 
+	// Loop through all found unqiue namespaces
 	for nameSpace, value := range nameSpaceMap {
 		var name string
 		var id string
+		// If there is no namespace add placeholder - this may need to be changed.
 		if nameSpace == "" {
 			name = "No Namespace"
+			// Generate a unique Id in the linkmap
 			id = GenerateNodeId(uniqueIdArray, "NoNamespace")
 		} else {
+			// If namespace isn't empty string set it
 			name = nameSpace
+			// Generate a unique id
 			id = GenerateNodeId(uniqueIdArray, nameSpace)
 		}
 
+		// Create a node for each namespace
 		var newNode = CreateGenericNode(id, name, direction, uniqueIdArray, nil)
 
+		// Create an empty map to store types
 		nodeKindMap := make(map[string][]document.Document)
+		// loop through resources and fetch all unique kinds add their resources
 		for _, resource := range value {
 			nodeKindMap[resource.GetKind()] = append(nodeKindMap[resource.GetKind()], resource)
 		}
+		// Loop through all unique kinds
 		for kindValue, kind := range nodeKindMap {
+			// Create a node for each kind
 			var newKindNode = CreateGenericNode(kindValue, kindValue, direction, uniqueIdArray, nil)
+			// Loop through each document in kinds
 			for _, documentObj := range kind {
+				// Create a node for each document
 				var newDocumentNode = CreateGenericNode(documentObj.GetName(), documentObj.GetName(), direction,
 					uniqueIdArray, documentObj)
-				var yamlData, _ = documentObj.MarshalJSON()
-				log.Printf(string(yamlData))
+				// Append new node to children of parent node. (Document -> Kind)
 				newKindNode.Children = append(newKindNode.Children, newDocumentNode)
 			}
+			// Append kind nodes to namespace nodes
 			newNode.Children = append(newNode.Children, newKindNode)
 		}
 
+		// Add namespace node to master children list
 		children = append(children, newNode)
 		if direction == "right" {
 			direction = "left"
@@ -226,9 +173,11 @@ func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byt
 		}
 	}
 
+	// Create root node and add all children
 	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
 		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
 			Children: children}}
+	// Convert into json
 	returnArray, err := json.Marshal(jsonRoot)
 	if err != nil {
 		log.Println(err)
