@@ -15,31 +15,6 @@ import (
 	"strings"
 )
 
-type SpaceName struct {
-	Name     string
-	children []DocTypes
-}
-
-type DocTypes struct {
-	Name     string
-	children []Docs
-}
-
-type Docs struct {
-	name     string
-	filepath string
-}
-
-type JsonData struct {
-	Name          string          `json:"name"`
-	Included      bool            `json:"included"`
-	ParentObjects []ParentObjects `json:"parentObjects"`
-}
-
-type ParentObjects struct {
-	Name string
-}
-
 // Individual graph object as directed by jsMind.
 type JsMindGraphObj struct {
 	Id        string           `json:"id"`
@@ -70,7 +45,13 @@ type YamlDataObj struct {
 	YamlObj  interface{}
 }
 
+type Request struct {
+	RequestedId string
+}
+
 func main() {
+	// This map is used to keep track of node id's and the Json Data that correlates to them.
+	linkHashMap := make(map[string][]uint8)
 	var debug bool
 	if os.Args[1] == "-d" {
 		debug = true
@@ -103,14 +84,15 @@ func main() {
 		// Return list of all yaml file locations
 		fmt.Println(err)
 
-		msg := makeGraph(yamlArray)
+		msg := MakeGraph(yamlArray, &linkHashMap)
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
 	})
 
 	router.GET("/yaml_links", func(c *gin.Context) {
-		c.JSON(http.StatusOK, CreateNodeLinkDict(yamlArray, myDir))
+		var request = c.Request.URL.Query()
+		c.JSON(http.StatusOK, linkHashMap[request.Get("requestedId")])
 	})
 
 	if debug {
@@ -184,57 +166,13 @@ func CreateNodeLinkDict(yamlArray []YamlDataObj, directory string) []byte {
 	return returnData
 }
 
-// Function that handles turning the yaml interfaces into JSON data and creating the required relationships.
-/*func ReturnGraphJson(yamlArray []YamlDataObj) []byte {
-	var direction = "right"
-	var children []JsMindGraphObj
-	for i, v := range yamlArray {
-		log.Printf("Processing Yaml # %d", i)
-		log.Printf(" [x] Pulled JSON: %s", v)
-		//test := .(map[string]interface{})["metadata"].(map[string]interface{})["name"]
-		if v.YamlObj != nil {
-			if val, ok := v.YamlObj.(map[string]interface{})["resources"]; ok {
-				var newNode JsMindGraphObj
-				if valObj, ok := val.([]interface{}); ok {
-					newNode.Id = v.YamlName
-					newNode.Expanded = false
-					newNode.Direction = direction
-					if direction == "right" {
-						direction = "left"
-					} else {
-						direction = "right"
-					}
-					newNode.Topic = v.YamlName
-					newNode.Children = []JsMindGraphObj{}
-					for _, vk := range valObj {
-						var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
-							Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
-						newNode.Children = append(newNode.Children, tempObj)
-					}
-					children = append(children, newNode)
-					log.Printf(valObj[0].(string))
-				}
-			}
-		}
-	}
-
-	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
-		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
-			Children: children}}
-	returnArray, err := json.Marshal(jsonRoot)
-	if err != nil {
-		log.Println(err)
-	}
-	return returnArray
-}*/
-
-func makeGraph(yamlArray []YamlDataObj) []byte {
+func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byte {
 	// Map of string that correlates to an array of documents
 	nameSpaceMap := make(map[string][]document.Document)
 	var direction = "right"
 	var children []JsMindGraphObj
 	var folder []document.Document
-	uniqueIdArray := make([]string, 0)
+
 	//var namespaces []NameSpace
 	for i := range yamlArray {
 		docBundle, err := document.NewBundleByPath(filepath.Dir(yamlArray[i].YamlPath))
@@ -256,22 +194,25 @@ func makeGraph(yamlArray []YamlDataObj) []byte {
 		var id string
 		if nameSpace == "" {
 			name = "No Namespace"
-			id = GenerateNodeId(&uniqueIdArray, "NoNamespace")
+			id = GenerateNodeId(uniqueIdArray, "NoNamespace")
 		} else {
 			name = nameSpace
-			id = GenerateNodeId(&uniqueIdArray, nameSpace)
+			id = GenerateNodeId(uniqueIdArray, nameSpace)
 		}
 
-		var newNode = CreateGenericNode(id, name, direction, &uniqueIdArray)
+		var newNode = CreateGenericNode(id, name, direction, uniqueIdArray, nil)
 
 		nodeKindMap := make(map[string][]document.Document)
 		for _, resource := range value {
 			nodeKindMap[resource.GetKind()] = append(nodeKindMap[resource.GetKind()], resource)
 		}
 		for kindValue, kind := range nodeKindMap {
-			var newKindNode = CreateGenericNode(kindValue, kindValue, direction, &uniqueIdArray)
+			var newKindNode = CreateGenericNode(kindValue, kindValue, direction, uniqueIdArray, nil)
 			for _, documentObj := range kind {
-				var newDocumentNode = CreateGenericNode(documentObj.GetName(), documentObj.GetName(), direction, &uniqueIdArray)
+				var newDocumentNode = CreateGenericNode(documentObj.GetName(), documentObj.GetName(), direction,
+					uniqueIdArray, documentObj)
+				var yamlData, _ = documentObj.MarshalJSON()
+				log.Printf(string(yamlData))
 				newKindNode.Children = append(newKindNode.Children, newDocumentNode)
 			}
 			newNode.Children = append(newNode.Children, newKindNode)
@@ -285,27 +226,6 @@ func makeGraph(yamlArray []YamlDataObj) []byte {
 		}
 	}
 
-	/*log.Printf(" [x] Pulled Document: %s", d.GetName())
-	var newNode JsMindGraphObj
-	//if valObj := d; {
-	newNode.Id = d.GetName()
-	newNode.Expanded = false
-	newNode.Direction = direction
-	if direction == "right" {
-		direction = "left"
-	} else {
-		direction = "right"
-	}
-	newNode.Topic = d.GetName()
-	newNode.Children = []JsMindGraphObj{}
-	/*for _, vk := range Docs {
-		var tempObj = JsMindGraphObj{Id: vk.(string), Topic: vk.(string),
-			Direction: "", Expanded: true, Children: []JsMindGraphObj{}}
-		newNode.Children = append(newNode.Children, tempObj)
-	}*/
-	/*children = append(children, newNode)
-	log.Printf(d.GetName())*/
-
 	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
 		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
 			Children: children}}
@@ -316,7 +236,8 @@ func makeGraph(yamlArray []YamlDataObj) []byte {
 	return returnArray
 }
 
-func CreateGenericNode(id string, name string, direction string, uniqueIdArray *[]string) JsMindGraphObj {
+// Generates generic nodes used inside the json graph object.
+func CreateGenericNode(id string, name string, direction string, uniqueIdArray *map[string][]uint8, documentObj document.Document) JsMindGraphObj {
 	var newNode JsMindGraphObj
 	newNode.Id = GenerateNodeId(uniqueIdArray, id)
 	newNode.Topic = name
@@ -324,19 +245,33 @@ func CreateGenericNode(id string, name string, direction string, uniqueIdArray *
 	newNode.Direction = direction
 	newNode.Children = []JsMindGraphObj{}
 
-	*uniqueIdArray = append(*uniqueIdArray, newNode.Id)
+	// If documentObj isn't nil - this node has a .yaml associated with it.
+	// Find the set the id index to the JSON representation of that yaml.
+	if documentObj != nil {
+		(*uniqueIdArray)[newNode.Id], _ = documentObj.MarshalJSON()
+		// If documentObj is nil , this node has no yaml associated with it
+	} else {
+		(*uniqueIdArray)[newNode.Id] = nil
+	}
 
 	return newNode
 }
 
-func GenerateNodeId(uniqueIdArray *[]string, id string) string {
-	_, idUsed := Find(*uniqueIdArray, id)
+// This is used to check if an id has been used before, if it has it will create a new unique id.
+// If it hasn't it returns the id passed in.
+func GenerateNodeId(uniqueIdArray *map[string][]uint8, id string) string {
+	// Use the Find function to see if an id exists.
+	_, idUsed := Find(uniqueIdArray, id)
 	if idUsed {
-		id = CreateUnusedId(*uniqueIdArray, id)
+		// If it does - create unique id
+		id = CreateUnusedId(uniqueIdArray, id)
 	}
+	// If it doesn't, return Id passed in.
 	return id
 }
 
+// This function is used to walk the directory structure and find all files of a given pattern & return
+// them inside an array of strings.
 func WalkMatch(root, pattern string) ([]string, error) {
 	var matches []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -357,15 +292,6 @@ func WalkMatch(root, pattern string) ([]string, error) {
 		return nil, err
 	}
 	return matches, nil
-}
-
-func readFile(filePath string, yaml *[]string) {
-	data, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		fmt.Println("File reading error", err)
-		return
-	}
-	*yaml = append(*yaml, string(data))
 }
 
 // Handles reading yaml files and putting the data into interfaces
@@ -415,27 +341,31 @@ func convert(i interface{}) interface{} {
 
 // Function to check if a string exists in an array
 // Used to check if a unique Id has been used before.
-func Find(slice []string, val string) (int, bool) {
-	for i, item := range slice {
-		if item == val {
-			return i, true
-		}
+func Find(slice *map[string][]uint8, val string) (int, bool) {
+	// If key exists in slice return true
+	if _, ok := (*slice)[val]; ok {
+		return 1, true
+	} else {
+		// If it doesn't exist return false
+		return 0, false
 	}
-	return -1, false
 }
 
 // This is used to create a string when an Id is used
-func CreateUnusedId(slice []string, id string) string {
+func CreateUnusedId(slice *map[string][]uint8, id string) string {
 	idExists := true
 	newId := ""
 	var val = 0
+	// Loop until an id value is incremented that does not currently exist in the map.
 	for {
 		newId = fmt.Sprintf("%s%d", id, val)
 		_, idExists = Find(slice, newId)
+		// Break if unique id has been found
 		if !idExists {
 			break
 		}
 		val++
 	}
+	// Once unique id is found return
 	return newId
 }

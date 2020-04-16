@@ -69,3 +69,31 @@ hr.style18:before {
     border-width: 0 0 1px 0;
     border-radius: 20px;
 }
+
+#jsonData {
+    white-space: pre-wrap;
+}
+
+span.key {
+    color: #9cabcb;
+}
+
+span.string {
+    color: #8ab398;
+}
+
+.modal-content {
+    background-color: #2a2e3a;
+}
+
+h5#modalLongTitle {
+    color: white;
+}
+
+button.close {
+    color: white;
+}
+
+button.close:hover{
+    color: floralwhite;
+}
