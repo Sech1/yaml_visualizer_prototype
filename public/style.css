@@ -94,6 +94,13 @@ button.close {
     color: white;
 }
 
-button.close:hover{
+button.close:hover {
     color: floralwhite;
+}
+
+jmexpander {
+    border-color: black;
+    height: 20px;
+    width: 20px;
+    background-color: gray;
 }
