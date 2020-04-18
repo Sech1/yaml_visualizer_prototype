@@ -7,7 +7,7 @@
 #### This assumes you have Go Installed 
 ##### You also need Gin Gonic & yaml.v2 installed properly as a go packages
 
-Instructions to install Gin-Gonic can be found [here](https://github.com/gin-gonic/gin)
+Instructions to install Gin-Gonic can be found [here](https://github.com/gin-gonic/gin)<br>
 Instructions to install yaml.v2 can be found [here](https://gopkg.in/yaml.v2)
 > go get -u github.com/gin-gonic/gin <br>
 > go get gopkg.in/yaml.v2
