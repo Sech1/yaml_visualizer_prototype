@@ -123,7 +123,7 @@ func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byt
 		}
 	}
 
-	// Loop through all found unqiue namespaces
+	// Loop through all found unique namespaces
 	for nameSpace, value := range nameSpaceMap {
 		var name string
 		var id string

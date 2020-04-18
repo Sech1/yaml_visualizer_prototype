@@ -1,3 +1,6 @@
+**This project uses [JsMind](https://github.com/hizzgdev/jsmind) to build the mindmap in javascript**
+
+---
 #### This assumes you have Go Installed 
 ##### You also need Gin Gonic & yaml.v2 installed properly as a go packages
 
