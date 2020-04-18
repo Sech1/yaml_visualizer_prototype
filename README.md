@@ -1,4 +1,5 @@
-**This project uses:**<br>
+**This project uses:**
+<br>
 **[JsMind](https://github.com/hizzgdev/jsmind) to build the mindmap in javascript**<br>
 **[Gin](https://github.com/gin-gonic/gin) for the webserver back-end**<br>
 **[yaml.v2](https://github.com/go-yaml/yaml) for golang yaml support**<br>
