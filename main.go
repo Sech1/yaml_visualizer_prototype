@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/thinkerou/favicon"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -58,6 +59,7 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.Use(favicon.New("./public/favicon.ico"))
 	// Set a lower memory limit for multipart forms (default is 32 MiB)
 	router.MaxMultipartMemory = 8 << 20 // 8 MiB
 	router.Static("/index", "./public")

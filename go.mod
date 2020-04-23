@@ -10,6 +10,7 @@ require (
 	github.com/golang/protobuf v1.3.5 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/thinkerou/favicon v0.1.0
 	golang.org/x/sys v0.0.0-20200409092240-59c9f1ba88fa // indirect
 	gopkg.in/yaml.v2 v2.2.8
 	k8s.io/api v0.18.1 // indirect
