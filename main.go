@@ -47,11 +47,14 @@ type YamlDataObj struct {
 func main() {
 	// This map is used to keep track of node id's and the Json Data that correlates to them.
 	linkHashMap := make(map[string][]uint8)
+	nameSpaceMap := make(map[string][]document.Document)
 	var debug bool
 	if os.Args[1] == "-d" {
 		debug = true
+		gin.SetMode(gin.DebugMode)
 	} else if os.Args[1] == "-p" {
 		debug = false
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	router := gin.Default()
@@ -79,15 +82,26 @@ func main() {
 		// Return list of all yaml file locations
 		fmt.Println(err)
 
-		msg := MakeGraph(yamlArray, &linkHashMap)
+		msg := MakeGraph(yamlArray, &linkHashMap, &nameSpaceMap)
 		var test = string(msg)
 		log.Printf(test)
 		c.JSON(http.StatusOK, msg)
 	})
 
+	// Returns the json data at the requested map id
+	// This is used to show the yaml json data when a node is clicked.
 	router.GET("/yaml_links", func(c *gin.Context) {
 		var request = c.Request.URL.Query()
 		c.JSON(http.StatusOK, linkHashMap[request.Get("requestedId")])
+	})
+
+	// Returns an array of strings, used to populate the filter options form
+	router.GET("/graph_options", func(c *gin.Context) {
+		nameSpaces := make([]string, 0, len(nameSpaceMap))
+		for namespace, _ := range nameSpaceMap {
+			nameSpaces = append(nameSpaces, namespace)
+		}
+		c.JSON(http.StatusOK, nameSpaces)
 	})
 
 	if debug {
@@ -98,9 +112,16 @@ func main() {
 }
 
 // Builds a graph representation based off of kustomization files stored on the server.
-func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byte {
+func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8,
+	nameSpaceMap *map[string][]document.Document) []byte {
 	// Map of string that correlates to an array of documents
-	nameSpaceMap := make(map[string][]document.Document)
+	if len(*uniqueIdArray) > 0 {
+		*uniqueIdArray = make(map[string][]uint8)
+	}
+	if len(*nameSpaceMap) > 0 {
+		*nameSpaceMap = make(map[string][]document.Document)
+	}
+
 	var direction = "right"
 	var children []JsMindGraphObj
 	var folder []document.Document
@@ -117,14 +138,14 @@ func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8) []byt
 			if folder != nil {
 				// For each document find the namespace and add it to the map.
 				for _, d := range folder {
-					nameSpaceMap[d.GetNamespace()] = append(nameSpaceMap[d.GetNamespace()], d)
+					(*nameSpaceMap)[d.GetNamespace()] = append((*nameSpaceMap)[d.GetNamespace()], d)
 				}
 			}
 		}
 	}
 
 	// Loop through all found unique namespaces
-	for nameSpace, value := range nameSpaceMap {
+	for nameSpace, value := range *nameSpaceMap {
 		var name string
 		var id string
 		// If there is no namespace add placeholder - this may need to be changed.

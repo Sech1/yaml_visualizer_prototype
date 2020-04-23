@@ -20,6 +20,20 @@
     </a>
 </nav>
 <div class="container-fluid master-container">
+    <!-- Select for loading different graph namespaces -->
+    <div class="container-fluid json-master-container">
+        <div class="row w-100 text-left">
+            <div class="col-xs-12 col-sm-8 col-lg-4 col-xl-3">
+                <div class="form-group">
+                    <label for="graphFilter">Graph Filter:</label>
+                    <select class="form-control form-control-sm" id="graphFilter">
+                        <option value="" disabled selected hidden>Select a namespace to filter</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Creates a container for the graph with a grid wallpaper -->
     <div class="container-fluid w-100 jsmind-master-container">
         <div class="row w-100">
@@ -31,7 +45,9 @@
     </div>
     <div class="container-fluid">
         <div class="row w-100 text-center">
-            <div class="col w-100"><hr class="style18"></div>
+            <div class="col w-100">
+                <hr class="style18">
+            </div>
         </div>
     </div>
     <div class="container-fluid w-100 json-master-container">
@@ -46,7 +62,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

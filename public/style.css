@@ -7,6 +7,10 @@
     margin-left: 0 !important;
 }
 
+body {
+    background-color: whitesmoke;
+}
+
 .graphHeader {
     color: white;
     background-color: black;
@@ -40,7 +44,7 @@
     overflow: hidden;
     width: 100%;
     height: 800px !important;
-    background: url('https://jgraph.github.io/mxgraph/javascript/examples/editors/images/grid.gif');
+    background: white url('https://jgraph.github.io/mxgraph/javascript/examples/editors/images/grid.gif');
     border: 1px solid black;
     margin-bottom: 10px !important;
 }

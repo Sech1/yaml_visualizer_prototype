@@ -1,6 +1,7 @@
 let data = null;
 
 function loadGraph() {
+    $("#graphFilter").prop("selectedIndex", 0);
     $.ajax({
         dataType: "json",
         type: "GET",
@@ -11,6 +12,7 @@ function loadGraph() {
             load_jsMind(data);
             $("#json-text-container").val(JSON.stringify(data));
             buildLinks();
+            buildFilterOptions();
         },
         error: function (error) {
             alert(error);
@@ -53,6 +55,38 @@ function buildLinks() {
                 },
             });
         });
+    });
+}
+
+function buildFilterOptions() {
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "/graph_options",
+        success: function (json) {
+            for (let i = 0; i < json.length; i++) {
+                if(json[i] === "") {
+                    json[i] = "no namespace"
+                }
+            }
+            json.sort();
+            console.log(json);
+            const graphFilter = $("#graphFilter");
+            if(graphFilter.length > 1) {
+                graphFilter.find("option").remove().end()
+                    .append('<option value="" disabled selected hidden>Select a namespace to filter</option>')
+                    .val("")
+            }
+            graphFilter.append($('<option></option>').val("showAll")
+                .text("Render all namespaces (default)"));
+            for (let i = 0; i < json.length; i++) {
+                graphFilter.append($('<option></option>').val(json[i]).text(json[i]));
+            }
+            graphFilter.prop("selectedIndex", 0);
+        },
+        error: function (error) {
+            alert(error);
+        },
     });
 }
 
