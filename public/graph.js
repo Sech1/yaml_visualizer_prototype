@@ -84,6 +84,7 @@ function buildFilterOptions() {
             }
             graphFilter.prop("selectedIndex", 0);
             createFilterOnSelect();
+            graphFilter.prop("disabled", false);
         },
         error: function (error) {
             alert(error);
@@ -93,6 +94,8 @@ function buildFilterOptions() {
 
 function createFilterOnSelect() {
     $("#graphFilter").on("change", function (e) {
+        const filterSelect = $(this);
+        filterSelect.prop("disabled", true);
         $("#jsmind_container").off().html("");
         let selectedFilter = $(this).children("option:selected").val();
         if (selectedFilter === "no namespace") {
@@ -112,9 +115,11 @@ function createFilterOnSelect() {
                 load_jsMind(data);
                 $("#json-text-container").val(JSON.stringify(data));
                 buildLinks();
+                filterSelect.prop("disabled", false);
             },
             error: function (error) {
                 alert(error);
+                filterSelect.prop("disabled", false);
             },
         });
     })
