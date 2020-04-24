@@ -65,14 +65,14 @@ function buildFilterOptions() {
         url: "/graph_options",
         success: function (json) {
             for (let i = 0; i < json.length; i++) {
-                if(json[i] === "") {
+                if (json[i] === "") {
                     json[i] = "no namespace"
                 }
             }
             json.sort();
             console.log(json);
             const graphFilter = $("#graphFilter");
-            if(graphFilter.length > 1) {
+            if (graphFilter.length > 1) {
                 graphFilter.find("option").remove().end()
                     .append('<option value="" disabled selected hidden>Select a namespace to filter</option>')
                     .val("")
@@ -83,11 +83,41 @@ function buildFilterOptions() {
                 graphFilter.append($('<option></option>').val(json[i]).text(json[i]));
             }
             graphFilter.prop("selectedIndex", 0);
+            createFilterOnSelect();
         },
         error: function (error) {
             alert(error);
         },
     });
+}
+
+function createFilterOnSelect() {
+    $("#graphFilter").on("change", function (e) {
+        $("#jsmind_container").off().html("");
+        let selectedFilter = $(this).children("option:selected").val();
+        if (selectedFilter === "no namespace") {
+            selectedFilter = "";
+        }
+
+        $.ajax({
+            dataType: "json",
+            type: "GET",
+            url: "/filter_namespace",
+            data: {
+                requestedNamespace: selectedFilter
+            },
+            success: function (json) {
+                data = JSON.parse(atob(json));
+                console.log(data);
+                load_jsMind(data);
+                $("#json-text-container").val(JSON.stringify(data));
+                buildLinks();
+            },
+            error: function (error) {
+                alert(error);
+            },
+        });
+    })
 }
 
 function syntaxHighlight(json) {

@@ -106,6 +106,20 @@ func main() {
 		c.JSON(http.StatusOK, nameSpaces)
 	})
 
+	// Returns the json data at the requested map id
+	// This is used to show the yaml json data when a node is clicked.
+	router.GET("/filter_namespace", func(c *gin.Context) {
+		var request = c.Request.URL.Query()
+		var nameSpace = nameSpaceMap[request.Get("requestedNamespace")]
+		var msg []byte
+		if request.Get("requestedNamespace") == "showAll" {
+			msg = MakeGraph(yamlArray, &linkHashMap, &nameSpaceMap)
+		} else {
+			msg = MakeFilteredGraph(&linkHashMap, nameSpace, request.Get("requestedNamespace"))
+		}
+		c.JSON(http.StatusOK, msg)
+	})
+
 	if debug {
 		router.Run(":8080")
 	} else {
@@ -199,6 +213,54 @@ func MakeGraph(yamlArray []YamlDataObj, uniqueIdArray *map[string][]uint8,
 	// Create root node and add all children
 	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
 		Data: JsMindGraphObj{Id: "root", Topic: "Yaml Root Directory", Direction: "", Expanded: true,
+			Children: children}}
+	// Convert into json
+	returnArray, err := json.Marshal(jsonRoot)
+	if err != nil {
+		log.Println(err)
+	}
+	return returnArray
+}
+
+func MakeFilteredGraph(uniqueIdArray *map[string][]uint8, nameSpace []document.Document, filter string) []byte {
+
+	var direction = "right"
+	var children []JsMindGraphObj
+
+	// Create an empty map to store types
+	nodeKindMap := make(map[string][]document.Document)
+	// loop through resources and fetch all unique kinds add their resources
+	for _, resource := range nameSpace {
+		nodeKindMap[resource.GetKind()] = append(nodeKindMap[resource.GetKind()], resource)
+	}
+	// Loop through all unique kinds
+	for kindValue, kind := range nodeKindMap {
+		// Create a node for each kind
+		var newKindNode = CreateGenericNode(kindValue, kindValue, direction, uniqueIdArray, nil)
+		// Loop through each document in kinds
+		for _, documentObj := range kind {
+			// Create a node for each document
+			var newDocumentNode = CreateGenericNode(documentObj.GetName(), documentObj.GetName(), direction,
+				uniqueIdArray, documentObj)
+			// Append new node to children of parent node. (Document -> Kind)
+			newKindNode.Children = append(newKindNode.Children, newDocumentNode)
+		}
+		// Append kind nodes to root nodes
+		children = append(children, newKindNode)
+
+		if direction == "right" {
+			direction = "left"
+		} else {
+			direction = "right"
+		}
+	}
+
+	if filter == "" {
+		filter = "No Namespace"
+	}
+	// Create root node and add all children
+	jsonRoot := JsMindJsonObj{Meta: MetaObj{Name: "jsMindYaml", Author: "yaml", Version: "1.0"}, Format: "node_tree",
+		Data: JsMindGraphObj{Id: "root", Topic: filter, Direction: "", Expanded: true,
 			Children: children}}
 	// Convert into json
 	returnArray, err := json.Marshal(jsonRoot)
