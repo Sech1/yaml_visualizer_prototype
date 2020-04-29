@@ -1,0 +1,8 @@
+Necessary additions for integration into Octant as a plug-in
+
+Finding the root of the file structure has not been implemented, currently it is hardcoded in and passed into the WalkMatch function
+
+Javascript is not supported in Octant and as such does not allow much of the JS based feactures to work properly
+
+The proper Go plugin driver program to call the plugin will need to be implemented or a way to initiate the plugin to pull files and build the mind map.
+
