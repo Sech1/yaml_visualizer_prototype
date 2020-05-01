@@ -71,7 +71,7 @@ func main() {
 	}
 
 	// Create list of yaml files & data
-	yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml/", myDir), "kustomization.yaml")
+	yamlFiles, err := WalkMatch(fmt.Sprintf("%s/public/yaml-examples/", myDir), "kustomization.yaml")
 	// Read all yaml files into an array
 	var yamlArray []YamlDataObj
 	for i, v := range yamlFiles {
@@ -348,7 +348,7 @@ func ReadYaml(filePath string, yamlArray []YamlDataObj) []YamlDataObj {
 	if err != nil {
 		fmt.Println(err)
 	}
-	yamlName := strings.Replace(filePath, fmt.Sprintf("%s/public/yaml/", myDir), "", 1)
+	yamlName := strings.Replace(filePath, fmt.Sprintf("%s/public/yaml-examples/", myDir), "", 1)
 	yamlName = strings.Replace(yamlName, "/kustomization.yaml", "", 1)
 	yamlObj := YamlDataObj{filePath, yamlName, body}
 	yamlArray = append(yamlArray, yamlObj)

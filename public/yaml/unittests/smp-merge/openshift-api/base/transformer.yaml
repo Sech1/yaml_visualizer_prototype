@@ -1,4 +1,0 @@
-apiVersion: api.openshift.io/v1
-kind: OpenShiftCRDRegister
-metadata:
-  name: openshiftcrdregister

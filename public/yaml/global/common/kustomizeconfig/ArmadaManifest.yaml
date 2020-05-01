@@ -1,8 +1,0 @@
-nameReference:
-  - kind: ArmadaChartGroup
-    fieldSpecs:
-      - path: spec/chartGroupRef/name
-        kind: ArmadaManifest
-
-varReference:
-

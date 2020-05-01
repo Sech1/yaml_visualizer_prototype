@@ -1,9 +1,0 @@
-resources:
-  - ./common/kustomizeconfig
-  - ./common/variables
-  - ./cluster
-  - ./controlplane
-  - ./metal3plane
-  - ./machinedeployment
-  - ./provider-components
-
