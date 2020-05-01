@@ -1,0 +1,56 @@
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: MachineDeployment
+metadata:
+  name: md-0
+  labels:
+    cluster.x-k8s.io/cluster-name: $(ConfigMap.global.data.CLUSTER_NAME)
+    nodepool: nodepool-0
+spec:
+  clusterName: $(ConfigMap.global.data.CLUSTER_NAME)
+  replicas: 2
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: $(ConfigMap.global.data.CLUSTER_NAME)
+      nodepool: nodepool-0
+  template:
+    metadata:
+      labels:
+        cluster.x-k8s.io/cluster-name: $(ConfigMap.global.data.CLUSTER_NAME)
+        nodepool: nodepool-0
+    spec:
+      clusterName: $(ConfigMap.global.data.CLUSTER_NAME)
+      version: $(ConfigMap.global.data.KUBERNETES_VERSION)
+      bootstrap:
+        configRef:
+          name: md-0
+          apiVersion: bootstrap.cluster.x-k8s.io/v1alpha2
+          kind: KubeadmConfigTemplate
+      infrastructureRef:
+        name: md-0
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+        kind: BareMetalMachineTemplate
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+kind: BareMetalMachineTemplate
+metadata:
+  name: md-0
+spec:
+  template:
+    clusterName: $(ConfigMap.global.data.CLUSTER_NAME)
+    spec:
+      image:
+        url: "http://172.22.0.1/images/rhcos-ootpa-latest.qcow2"
+        checksum: "97830b21ed272a3d854615beb54cf004"
+---
+apiVersion: bootstrap.cluster.x-k8s.io/v1alpha2
+kind: KubeadmConfigTemplate
+metadata:
+  name: md-0
+spec:
+  template:
+    spec:
+      joinConfiguration:
+        nodeRegistration:
+          name: '{{ ds.meta_data.hostname }}'
+          kubeletExtraArgs:
+            cloud-provider: baremetal

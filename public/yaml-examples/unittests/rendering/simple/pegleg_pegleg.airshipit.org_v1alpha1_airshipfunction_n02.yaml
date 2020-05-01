@@ -1,0 +1,6 @@
+apiVersion: pegleg.airshipit.org/v1alpha1
+kind: AirshipFunction
+metadata:
+  name: n02
+  namespace: pegleg
+spec: n02 site-level-override spec

@@ -1,0 +1,81 @@
+# This is the config to install Kubeflow on an existing k8s cluster.
+# If the cluster already has istio, comment out the istio install part below.
+
+apiVersion: kubeflow.airshipit.org/v1beta1
+kind: KfDef
+metadata:
+  name: app
+  namespace: kubeflow
+spec:
+  repos:
+    - name: manifests
+      root: manifests-master
+      uri: https://github.com/kubeflow/manifests/archive/master.tar.gz
+  applications:
+    - kustomizeConfig:
+        parameters:
+          - name: namespace
+            value: istio-system
+        repoRef:
+          name: manifests
+          path: istio/istio-crds
+      name: istio-crds
+    - kustomizeConfig:
+        parameters:
+          - name: namespace
+            value: istio-system
+        repoRef:
+          name: manifests
+          path: istio/istio-install
+      name: istio-install
+    - kustomizeConfig:
+        parameters:
+          - name: clusterRbacConfig
+            value: "OFF"
+        repoRef:
+          name: manifests
+          path: istio/istio
+      name: istio
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: application/application-crds
+      name: application-crds
+    - kustomizeConfig:
+        overlays:
+          - application
+        repoRef:
+          name: manifests
+          path: application/application
+      name: application
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: metacontroller
+      name: metacontroller
+    - kustomizeConfig:
+        overlays:
+          - istio
+          - application
+        repoRef:
+          name: manifests
+          path: argo
+      name: argo
+    - kustomizeConfig:
+        parameters:
+          - initRequired: true
+            name: usageId
+            value: <randomly-generated-id>
+          - initRequired: true
+            name: reportUsage
+            value: "true"
+        repoRef:
+          name: manifests
+          path: common/spartakus
+      name: spartakus
+  enableApplications: true
+  packageManager: kustomize
+  skipInitProject: true
+  useBasicAuth: false
+  useIstio: true
+  version: master

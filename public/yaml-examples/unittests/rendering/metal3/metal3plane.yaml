@@ -1,0 +1,128 @@
+apiVersion: v1
+data:
+  CLUSTER_NAME: test1
+  KUBERNETES_VERSION: 1.16.2
+kind: ConfigMap
+metadata:
+  name: global
+  namespace: default
+---
+apiVersion: v1
+data:
+  password: MWYyZDFlMmU2N2Rm
+  username: YWRtaW4=
+kind: Secret
+metadata:
+  name: demo-externally-provisioned-secret
+  namespace: default
+type: Opaque
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-0
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.10:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-1
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.11:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-2
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.12:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-3
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.13:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-4
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.14:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-5
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.15:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-6
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.16:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-7
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.17:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-8
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.18:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: metal3-9
+  namespace: default
+spec:
+  bmc:
+    address: ipmi://192.168.122.19:6233
+    credentialsName: demo-externally-provisioned-secret
+  online: false

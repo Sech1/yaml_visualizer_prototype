@@ -1,0 +1,76 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+crds:
+  - kustomizeconfig/ArmadaChartGroup.json
+  - kustomizeconfig/ArmadaChart.json
+  - kustomizeconfig/ArmadaManifest.json
+  - kustomizeconfig/DeckhandCertificateAuthorityKey.json
+  - kustomizeconfig/DeckhandCertificateAuthority.json
+  - kustomizeconfig/DeckhandCertificateKey.json
+  - kustomizeconfig/DeckhandCertificate.json
+  - kustomizeconfig/DeckhandPassphrase.json
+  - kustomizeconfig/DeckhandPrivateKey.json
+  - kustomizeconfig/DeckhandPublicKey.json
+  - kustomizeconfig/DrydockBaremetalNode.json
+  - kustomizeconfig/DrydockBootAction.json
+  - kustomizeconfig/DrydockHardwareProfile.json
+  - kustomizeconfig/DrydockHostProfile.json
+  - kustomizeconfig/DrydockNetworkLink.json
+  - kustomizeconfig/DrydockNetwork.json
+  - kustomizeconfig/DrydockRegion.json
+  - kustomizeconfig/PeglegAccountCatalogue.json
+  - kustomizeconfig/PeglegAppArmorProfile.json
+  - kustomizeconfig/PeglegCommonAddresses.json
+  - kustomizeconfig/PeglegCommonSoftwareConfig.json
+  - kustomizeconfig/PeglegEndpointCatalogue.json
+  - kustomizeconfig/PeglegScript.json
+  - kustomizeconfig/PeglegSeccompProfile.json
+  - kustomizeconfig/PeglegSiteDefinition.json
+  - kustomizeconfig/PeglegSoftwareVersions.json
+  - kustomizeconfig/PromenadeDocker.json
+  - kustomizeconfig/PromenadeGenesis.json
+  - kustomizeconfig/PromenadeHostSystem.json
+  - kustomizeconfig/PromenadeKubelet.json
+  - kustomizeconfig/PromenadeKubernetesNetwork.json
+  - kustomizeconfig/PromenadePKICatalog.json
+  - kustomizeconfig/ShipyardDeploymentConfiguration.json
+  - kustomizeconfig/ShipyardDeploymentStrategy.json
+
+configurations:
+  - kustomizeconfig/ArmadaChartGroup.yaml
+  - kustomizeconfig/ArmadaChart.yaml
+  - kustomizeconfig/ArmadaManifest.yaml
+  - kustomizeconfig/DeckhandCertificateAuthorityKey.yaml
+  - kustomizeconfig/DeckhandCertificateAuthority.yaml
+  - kustomizeconfig/DeckhandCertificateKey.yaml
+  - kustomizeconfig/DeckhandCertificate.yaml
+  - kustomizeconfig/DeckhandPassphrase.yaml
+  - kustomizeconfig/DeckhandPrivateKey.yaml
+  - kustomizeconfig/DeckhandPublicKey.yaml
+  - kustomizeconfig/DrydockBaremetalNode.yaml
+  - kustomizeconfig/DrydockBootAction.yaml
+  - kustomizeconfig/DrydockHardwareProfile.yaml
+  - kustomizeconfig/DrydockHostProfile.yaml
+  - kustomizeconfig/DrydockNetworkLink.yaml
+  - kustomizeconfig/DrydockNetwork.yaml
+  - kustomizeconfig/DrydockRegion.yaml
+  - kustomizeconfig/PeglegAccountCatalogue.yaml
+  - kustomizeconfig/PeglegAppArmorProfile.yaml
+  - kustomizeconfig/PeglegCommonAddresses.yaml
+  - kustomizeconfig/PeglegCommonSoftwareConfig.yaml
+  - kustomizeconfig/PeglegEndpointCatalogue.yaml
+  - kustomizeconfig/PeglegScript.yaml
+  - kustomizeconfig/PeglegSeccompProfile.yaml
+  - kustomizeconfig/PeglegSiteDefinition.yaml
+  - kustomizeconfig/PeglegSoftwareVersions.yaml
+  - kustomizeconfig/PromenadeDocker.yaml
+  - kustomizeconfig/PromenadeGenesis.yaml
+  - kustomizeconfig/PromenadeHostSystem.yaml
+  - kustomizeconfig/PromenadeKubelet.yaml
+  - kustomizeconfig/PromenadeKubernetesNetwork.yaml
+  - kustomizeconfig/PromenadePKICatalog.yaml
+  - kustomizeconfig/ShipyardDeploymentConfiguration.yaml
+  - kustomizeconfig/ShipyardDeploymentStrategy.yaml
+

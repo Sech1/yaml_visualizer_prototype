@@ -1,0 +1,8 @@
+---
+apiVersion: pegleg.airshipit.org/v1alpha1
+kind: AirshipFunction
+metadata:
+  name: aa02
+  namespace: pegleg
+spec: |-
+  aa02 string spec
