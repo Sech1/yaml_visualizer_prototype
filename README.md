@@ -5,6 +5,8 @@
 **[yaml.v2](https://github.com/go-yaml/yaml) for golang yaml support**<br>
 
 ---
+[A working example of this project is hosted at https://graph.sech.dev](https://graph.sech.dev)
+---
 #### This assumes you have Go Installed 
 ##### You also need Gin Gonic & yaml.v2 installed properly as a go packages
 
