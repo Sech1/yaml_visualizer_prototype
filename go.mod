@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/emicklei/go-restful v2.12.0+incompatible // indirect
-	github.com/gin-gonic/gin v1.6.2
+	github.com/gin-gonic/gin v1.7.0
 	github.com/go-openapi/spec v0.19.7 // indirect
 	github.com/go-openapi/swag v0.19.8 // indirect
 	github.com/golang/protobuf v1.3.5 // indirect
